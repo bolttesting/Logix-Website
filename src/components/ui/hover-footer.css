@@ -1,0 +1,28 @@
+.text-hover-effect {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  user-select: none;
+  cursor: pointer;
+  overflow: visible;
+}
+
+.text-hover-effect text {
+  font-family: Helvetica, Arial, var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  fill: none;
+}
+
+.text-hover-effect__ghost {
+  stroke: #e5e5e5;
+}
+
+.text-hover-effect__trace {
+  stroke: #3ca2fa;
+}
+
+.text-hover-effect__fill {
+  fill: none;
+}

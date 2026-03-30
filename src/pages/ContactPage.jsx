@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import Icon from '../components/Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { supabase } from '../lib/supabase';
+import OfficesMapSection from '../components/OfficesMapSection';
 
 export default function ContactPage() {
   const { settings, refresh } = useSiteData();
@@ -193,12 +194,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="contact-map">
-        <div className="contact-map__placeholder">
-          <Icon name="map" size={48} />
-          <p>Map Location</p>
-        </div>
-      </section>
+      <OfficesMapSection />
     </main>
   );
 }

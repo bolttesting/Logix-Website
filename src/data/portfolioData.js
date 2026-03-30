@@ -75,12 +75,12 @@ const descriptions = [
 ];
 
 const gradients = [
-  'linear-gradient(135deg, rgba(1, 98, 162, 0.2) 0%, rgba(14, 165, 233, 0.15) 100%)',
+  'linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(14, 165, 233, 0.15) 100%)',
   'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.15) 100%)',
-  'linear-gradient(135deg, rgba(238, 119, 35, 0.2) 0%, rgba(245, 158, 11, 0.15) 100%)',
+  'linear-gradient(135deg, rgba(20, 184, 166, 0.2) 0%, rgba(45, 212, 191, 0.15) 100%)',
   'linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(59, 130, 246, 0.15) 100%)',
-  'linear-gradient(135deg, rgba(1, 98, 162, 0.2) 0%, rgba(238, 119, 35, 0.15) 100%)',
-  'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(1, 98, 162, 0.15) 100%)',
+  'linear-gradient(135deg, rgba(124, 58, 237, 0.2) 0%, rgba(20, 184, 166, 0.15) 100%)',
+  'linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(124, 58, 237, 0.15) 100%)',
 ];
 
 const categories = ['web', 'mobile', 'web', 'web', 'mobile', 'web', 'web', 'mobile', 'web', 'web', 'web', 'web', 'web', 'web', 'mobile', 'mobile', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web', 'web'];

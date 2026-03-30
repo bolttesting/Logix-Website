@@ -1,0 +1,471 @@
+/**
+ * Light mode polish — dark mode stays as-authored.
+ * Relies on [data-theme='light'] tokens in index.css.
+ */
+
+/* Dream CTA uses solid accent + var(--bg-primary) text — force white in light mode */
+[data-theme='light'] .dream__btn {
+  color: #ffffff;
+}
+
+[data-theme='light'] .portfolio-filter__btn.active {
+  color: #ffffff;
+}
+
+/* —— Footer map gradient —— */
+[data-theme='light'] .footer__bg-gradient {
+  background: radial-gradient(125% 125% at 50% 10%, rgba(13, 148, 136, 0.12) 50%, rgba(59, 130, 246, 0.08) 100%);
+}
+
+[data-theme='light'] .text-hover-effect__ghost {
+  stroke: #cbd5e1;
+}
+
+[data-theme='light'] .text-hover-effect__trace {
+  stroke: #0d9488;
+}
+
+/* —— HERO (home) —— */
+[data-theme='light'] .hero {
+  --hero-accent: #0f766e;
+  --hero-accent-strong: #0d9488;
+  --hero-accent-2: #7c3aed;
+  --hero-accent-glow: rgba(13, 148, 136, 0.25);
+  --hero-surface: rgba(255, 255, 255, 0.92);
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -25%, rgba(124, 58, 237, 0.08), transparent 55%),
+    radial-gradient(ellipse 80% 50% at 100% 40%, rgba(20, 184, 166, 0.06), transparent 50%),
+    linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #eef2ff 100%);
+}
+
+[data-theme='light'] .hero__shader {
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+}
+
+[data-theme='light'] .hero__noise {
+  opacity: 0.025;
+}
+
+[data-theme='light'] .hero__title-line {
+  color: #0f172a;
+}
+
+[data-theme='light'] .hero__title-gradient {
+  background: linear-gradient(105deg, #0f172a 0%, #0d9488 42%, #7c3aed 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+[data-theme='light'] .hero__desc {
+  color: #475569;
+}
+
+[data-theme='light'] .hero__pill {
+  color: #334155;
+  background: rgba(15, 23, 42, 0.055);
+  border-color: rgba(15, 23, 42, 0.12);
+}
+
+[data-theme='light'] .hero__footnote {
+  color: #64748b;
+}
+
+[data-theme='light'] .hero__btn--outline {
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-theme='light'] .hero__btn--outline:hover {
+    background: rgba(13, 148, 136, 0.08);
+    border-color: rgba(13, 148, 136, 0.45);
+    color: #0f766e;
+  }
+}
+
+[data-theme='light'] .hero__btn--primary {
+  color: #ffffff;
+  box-shadow: 0 4px 24px rgba(13, 148, 136, 0.35), 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+}
+
+[data-theme='light'] .hero__visual-frame {
+  border-color: rgba(13, 148, 136, 0.2);
+  box-shadow:
+    0 0 0 1px rgba(15, 23, 42, 0.06) inset,
+    0 20px 50px rgba(15, 23, 42, 0.1),
+    0 0 60px rgba(124, 58, 237, 0.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-theme='light'] .hero__visual:hover .hero__visual-frame {
+    border-color: rgba(13, 148, 136, 0.35);
+    box-shadow:
+      0 0 0 1px rgba(15, 23, 42, 0.08) inset,
+      0 24px 56px rgba(15, 23, 42, 0.12),
+      0 0 72px rgba(124, 58, 237, 0.1);
+  }
+}
+
+[data-theme='light'] .hero__visual-header {
+  background: rgba(241, 245, 249, 0.95);
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .hero__visual-title {
+  color: #64748b;
+}
+
+[data-theme='light'] .hero__visual-body {
+  background: #ffffff;
+}
+
+[data-theme='light'] .hero__board-row {
+  background: rgba(15, 23, 42, 0.03);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .hero__board-label {
+  color: #334155;
+}
+
+[data-theme='light'] .hero__board-tag {
+  color: #64748b;
+}
+
+[data-theme='light'] .hero__board-row--queued .hero__board-dot {
+  background: #94a3b8;
+}
+
+[data-theme='light'] .hero__visual-metrics {
+  background: rgba(241, 245, 249, 0.9);
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .hero__metric {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .hero__metric-value {
+  color: #0f172a;
+}
+
+[data-theme='light'] .hero__metric-label {
+  color: #64748b;
+}
+
+[data-theme='light'] .hero__badge {
+  border-color: rgba(13, 148, 136, 0.35);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04) inset;
+}
+
+/* —— Homepage: .home-landing token tweaks —— */
+[data-theme='light'] .home-landing {
+  --hl-i: #0f766e;
+  --hl-i-strong: #0d9488;
+  --hl-i-deep: #115e59;
+  --hl-e: #6d28d9;
+  --hl-border-i: rgba(13, 148, 136, 0.35);
+  --hl-bg-i: rgba(13, 148, 136, 0.1);
+  --hl-card-hover: rgba(13, 148, 136, 0.45);
+  --hl-shadow: rgba(109, 40, 217, 0.12);
+}
+
+[data-theme='light'] .home-landing .feature-carousel__panel-left {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--hl-i-deep) 85%, #ffffff) 0%,
+    var(--hl-i-deep) 45%,
+    var(--hl-i-strong) 100%
+  );
+}
+
+[data-theme='light'] .home-landing .feature-carousel__chip--active {
+  color: #0f766e;
+}
+
+[data-theme='light'] .home-landing .feature-carousel__chip--active .feature-carousel__chip-icon {
+  color: #0f766e;
+}
+
+[data-theme='light'] .home-landing .home-marquee {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+}
+
+[data-theme='light'] .home-landing .home-marquee__row--one {
+  color: #0f172a;
+  opacity: 0.92;
+}
+
+[data-theme='light'] .home-landing .scroll-text-marquee__static-inner {
+  color: #0f766e;
+}
+
+[data-theme='light'] .home-landing .tcol-card,
+[data-theme='light'] .home-landing .expertise-card:hover,
+[data-theme='light'] .home-landing .building-card:hover,
+[data-theme='light'] .home-landing .portfolio-home__card:hover {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 0 1px rgba(13, 148, 136, 0.15);
+}
+
+[data-theme='light'] .home-landing .arc-gallery-hero__card:hover {
+  box-shadow: 0 20px 44px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(13, 148, 136, 0.12);
+}
+
+[data-theme='light'] .home-landing .testimonial-card:hover {
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
+}
+
+/* —— Feature carousel (global — expertise also uses base file) —— */
+[data-theme='light'] .feature-carousel__frame {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .feature-carousel__panel-right {
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+@media (min-width: 1024px) {
+  [data-theme='light'] .feature-carousel__panel-right {
+    border-left-color: rgba(15, 23, 42, 0.1);
+  }
+}
+
+[data-theme='light'] .feature-carousel__card {
+  border-color: var(--bg-primary);
+  background: var(--bg-primary);
+}
+
+/* —— Client commits orbit —— */
+[data-theme='light'] .orbital {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124, 58, 237, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(20, 184, 166, 0.06), transparent 50%),
+    linear-gradient(180deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+  border-color: var(--border-subtle);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme='light'] .orbital__node-btn {
+  background: #ffffff;
+  color: #0f172a;
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+[data-theme='light'] .orbital__node-btn--related {
+  background: rgba(13, 148, 136, 0.15);
+  color: #0f766e;
+  border-color: rgba(13, 148, 136, 0.4);
+}
+
+[data-theme='light'] .orbital__node-btn--open {
+  background: #0f766e;
+  color: #ffffff;
+  border-color: #0f766e;
+  box-shadow: 0 8px 28px rgba(13, 148, 136, 0.35);
+}
+
+[data-theme='light'] .orbital__node-label {
+  color: #475569;
+}
+
+[data-theme='light'] .orbital__node-label--open {
+  color: #0f172a;
+}
+
+[data-theme='light'] .orbital-card {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme='light'] .orbital-card__head {
+  border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .orbital-card__title {
+  color: #0f172a;
+}
+
+[data-theme='light'] .orbital-card__text {
+  color: #475569;
+}
+
+[data-theme='light'] .orbital-card__date {
+  color: #64748b;
+}
+
+[data-theme='light'] .orbital-card__energy-row {
+  color: #475569;
+}
+
+[data-theme='light'] .orbital-card__energy {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .orbital-card__related {
+  border-top-color: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .orbital-card__energy-track {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .orbital-badge--completed {
+  color: #ffffff;
+  background: #0f172a;
+  border-color: rgba(15, 23, 42, 0.2);
+}
+
+[data-theme='light'] .orbital-badge--in-progress {
+  color: #ffffff;
+  background: #0d9488;
+  border-color: #0f766e;
+}
+
+[data-theme='light'] .orbital-badge--pending {
+  color: #334155;
+  background: rgba(241, 245, 249, 0.95);
+  border-color: rgba(15, 23, 42, 0.15);
+}
+
+/* —— About page hero —— */
+[data-theme='light'] .about-hero__bg {
+  background:
+    radial-gradient(ellipse 100% 80% at 50% 40%, rgba(124, 58, 237, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 50% at 50% 55%, rgba(20, 184, 166, 0.08), transparent),
+    radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.06), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.06), transparent 40%),
+    linear-gradient(180deg, #f8fafc 0%, #eef2ff 45%, #f1f5f9 100%);
+}
+
+/* —— Card stack (portfolio home) —— */
+[data-theme='light'] .card-stack__glow-bottom {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+[data-theme='light'] .card-stack__card {
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme='light'] .card-stack-default__overlay {
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.65) 0%, transparent 55%, transparent 100%);
+}
+
+[data-theme='light'] .card-stack-default__title {
+  color: #ffffff;
+}
+
+[data-theme='light'] .card-stack-default__desc {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* —— World map (contact / offices): brand-tinted chrome, no black drop —— */
+[data-theme='light'] .world-map__label span {
+  background: rgba(255, 255, 255, 0.97);
+  color: #0f172a;
+  border-color: rgba(13, 148, 136, 0.28);
+  box-shadow:
+    0 4px 18px rgba(13, 148, 136, 0.12),
+    0 2px 8px rgba(124, 58, 237, 0.08);
+}
+
+[data-theme='light'] .world-map__tooltip {
+  background: rgba(255, 255, 255, 0.96);
+  color: #0f172a;
+  border-color: rgba(13, 148, 136, 0.25);
+  box-shadow:
+    0 10px 28px rgba(13, 148, 136, 0.14),
+    0 4px 12px rgba(124, 58, 237, 0.1);
+}
+
+/* —— Return to top —— */
+[data-theme='light'] .return-top {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+
+[data-theme='light'] .return-top:hover {
+  border-color: rgba(13, 148, 136, 0.45);
+  color: #0d9488;
+}
+
+/* —— Navbar search —— */
+[data-theme='light'] .navbar-search {
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+}
+
+/* —— CTA pills (navbar + hero use `light` variant in light theme) —— */
+[data-theme='light'] .btn-cross-arrow--light {
+  border-color: color-mix(in srgb, var(--accent-orange, #14b8a6) 55%, var(--accent-blue, #7c3aed));
+  box-shadow:
+    0 2px 14px rgba(15, 23, 42, 0.06),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-theme='light'] .btn-cross-arrow--light:hover {
+    border-color: var(--accent-blue-light, #a78bfa);
+    box-shadow:
+      0 4px 22px rgba(124, 58, 237, 0.14),
+      0 0 20px rgba(20, 184, 166, 0.1),
+      0 1px 0 rgba(255, 255, 255, 1) inset;
+  }
+}
+
+[data-theme='light'] .btn-animated-gradient--light {
+  box-shadow:
+    0 12px 32px -8px rgba(91, 33, 182, 0.28),
+    0 4px 14px rgba(15, 23, 42, 0.07),
+    0 1px 0 rgba(255, 255, 255, 0.45) inset;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-theme='light'] .btn-animated-gradient--light:hover {
+    box-shadow:
+      0 16px 40px -10px rgba(91, 33, 182, 0.35),
+      0 0 28px rgba(124, 58, 237, 0.18),
+      0 1px 0 rgba(255, 255, 255, 0.5) inset;
+  }
+}
+
+/* —— Offices map wrap —— */
+[data-theme='light'] .offices-map__map-wrap {
+  border-color: rgba(13, 148, 136, 0.22);
+  box-shadow:
+    0 20px 50px rgba(13, 148, 136, 0.12),
+    0 8px 24px rgba(124, 58, 237, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+[data-theme='light'] .offices-map__glow {
+  background: radial-gradient(
+    ellipse,
+    rgba(13, 148, 136, 0.14) 0%,
+    rgba(124, 58, 237, 0.1) 42%,
+    transparent 68%
+  );
+}
+
+[data-theme='light'] .offices-map__card:hover {
+  border-color: rgba(13, 148, 136, 0.35);
+  box-shadow:
+    0 14px 36px rgba(13, 148, 136, 0.1),
+    0 6px 18px rgba(124, 58, 237, 0.06);
+}
+
+/* —— Service page hero (glow works with theme-aware gradient in JSX) —— */
+[data-theme='light'] .service-hero__glow {
+  background: radial-gradient(ellipse at center, rgba(13, 148, 136, 0.18) 0%, transparent 65%);
+}
+
+[data-theme='light'] .service-hero__icon {
+  filter: drop-shadow(0 4px 16px rgba(13, 148, 136, 0.25));
+}
+

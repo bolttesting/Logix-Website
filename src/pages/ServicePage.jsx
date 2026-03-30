@@ -1,22 +1,55 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Icon from '../components/Icons';
+import { useTheme } from '../context/ThemeContext';
 import { servicesMenu, servicePageContent } from '../data/servicesData';
 
 const serviceThemes = {
-  'app-development': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #0a3d5c 50%, #0f172a 100%)', accent: '#0162a2', icon: 'mobile' },
-  'web-development': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #1a4a6e 50%, #0f172a 100%)', accent: '#2380c4', icon: 'globe' },
-  'desktop-development': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #2d2519 50%, #0f172a 100%)', accent: '#ee7723', icon: 'desktop' },
-  'seo-services': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #3d2a14 50%, #0f172a 100%)', accent: '#ee7723', icon: 'search' },
-  'digital-marketing': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #2d1f3d 50%, #0f172a 100%)', accent: '#ee7723', icon: 'megaphone' },
-  'ui-ux-design': { heroBg: 'linear-gradient(135deg, #0f172a 0%, #0a3d5c 50%, #0f172a 100%)', accent: '#0162a2', icon: 'design' },
+  'app-development': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 45%, #ecfeff 100%)',
+    accent: '#7c3aed',
+    icon: 'mobile',
+  },
+  'web-development': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #312e81 50%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #f8fafc 100%)',
+    accent: '#a78bfa',
+    icon: 'globe',
+  },
+  'desktop-development': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #115e59 50%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #ecfdf5 0%, #b2f5ea 45%, #f0fdfa 100%)',
+    accent: '#14b8a6',
+    icon: 'desktop',
+  },
+  'seo-services': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #134e4a 45%, #1e1b4b 55%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #ecfeff 0%, #d1fae5 40%, #e0e7ff 55%, #f8fafc 100%)',
+    accent: '#2dd4bf',
+    icon: 'search',
+  },
+  'digital-marketing': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #3b0764 50%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #faf5ff 0%, #ede9fe 50%, #fdf4ff 100%)',
+    accent: '#c4b5fd',
+    icon: 'megaphone',
+  },
+  'ui-ux-design': {
+    heroBg: 'linear-gradient(135deg, #0f172a 0%, #312e81 50%, #0f172a 100%)',
+    heroBgLight: 'linear-gradient(135deg, #f8fafc 0%, #e0e7ff 40%, #ccfbf1 100%)',
+    accent: '#14b8a6',
+    icon: 'design',
+  },
 };
 
 export default function ServicePage() {
   const { slug } = useParams();
+  const { theme: colorTheme } = useTheme();
   const service = servicesMenu.find((s) => s.id === slug);
   const theme = serviceThemes[slug] || serviceThemes['app-development'];
   const pageContent = servicePageContent[slug] || servicePageContent['app-development'];
+  const heroBg = colorTheme === 'light' ? theme.heroBgLight : theme.heroBg;
 
   if (!service) {
     return (
@@ -35,7 +68,7 @@ export default function ServicePage() {
   return (
     <main className="service-page" style={{ '--service-accent': theme.accent }}>
       {/* Hero */}
-      <section className="service-hero" style={{ background: theme.heroBg }}>
+      <section className="service-hero" style={{ background: heroBg }}>
         <div className="service-hero__glow" />
         <div className="service-hero__content">
           <motion.span

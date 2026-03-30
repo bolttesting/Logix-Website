@@ -1,0 +1,88 @@
+.btn-animated-gradient {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  padding: 0 1.5rem;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  font-family: var(--font-body), system-ui, sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+}
+
+.btn-animated-gradient:active {
+  transform: scale(0.98);
+}
+
+.btn-animated-gradient:focus {
+  outline: none;
+}
+
+.btn-animated-gradient:focus-visible {
+  outline: 2px solid var(--accent-orange, #14b8a6);
+  outline-offset: 2px;
+}
+
+/* Dark — brand teal / violet */
+.btn-animated-gradient--dark {
+  border-color: color-mix(in srgb, var(--accent-orange, #14b8a6) 35%, var(--accent-blue-light, #a78bfa));
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--bg-primary, #0a0a0f) 88%, var(--accent-orange, #14b8a6)),
+    color-mix(in srgb, var(--bg-secondary, #0f0f14) 65%, var(--accent-blue, #7c3aed))
+  );
+  color: #ffffff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-animated-gradient--dark:hover {
+    border-color: var(--accent-blue-light, #a78bfa);
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.55),
+      0 0 24px rgba(124, 58, 237, 0.2),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  }
+}
+
+/* Light */
+.btn-animated-gradient--light {
+  border-color: color-mix(in srgb, var(--accent-blue-light, #a78bfa) 70%, #c0c6fc);
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, #9ba3fd 55%, #e8eaff),
+    color-mix(in srgb, var(--accent-blue, #7c3aed) 75%, #3d5af1)
+  );
+  color: #ffffff;
+}
+
+.btn-animated-gradient__glow {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.btn-animated-gradient__label {
+  position: relative;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-animated-gradient__glow {
+    transition: none;
+  }
+}

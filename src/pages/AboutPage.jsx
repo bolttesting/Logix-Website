@@ -4,21 +4,21 @@ import Icon, { Stars } from '../components/Icons'
 import { useSiteData } from '../context/SiteDataContext'
 
 const innovationServices = [
-  { icon: 'desktop', color: '#0162a2', title: 'Web & Mobile App Development', desc: 'Building scalable and responsive applications that work seamlessly across all devices.' },
-  { icon: 'design', color: '#2380c4', title: 'UI/UX Design', desc: 'Creating intuitive and engaging user experiences that drive conversion and satisfaction.' },
-  { icon: 'megaphone', color: '#ee7723', title: 'Digital Marketing', desc: 'Strategic campaigns that amplify your brand and connect you with your target audience.' },
-  { icon: 'gear', color: '#0162a2', title: 'Software Development', desc: 'Custom software solutions tailored to your unique business requirements.' },
-  { icon: 'cloud', color: '#2380c4', title: 'Cloud Solutions', desc: 'Secure, scalable cloud infrastructure to power your digital transformation.' },
-  { icon: 'wrench', color: '#ee7723', title: 'IT Consultancy', desc: 'Expert guidance to optimize your technology stack and processes.' },
+  { icon: 'desktop', color: '#7c3aed', title: 'Web & Mobile App Development', desc: 'Building scalable and responsive applications that work seamlessly across all devices.' },
+  { icon: 'design', color: '#a78bfa', title: 'UI/UX Design', desc: 'Creating intuitive and engaging user experiences that drive conversion and satisfaction.' },
+  { icon: 'megaphone', color: '#14b8a6', title: 'Digital Marketing', desc: 'Strategic campaigns that amplify your brand and connect you with your target audience.' },
+  { icon: 'gear', color: '#7c3aed', title: 'Software Development', desc: 'Custom software solutions tailored to your unique business requirements.' },
+  { icon: 'cloud', color: '#a78bfa', title: 'Cloud Solutions', desc: 'Secure, scalable cloud infrastructure to power your digital transformation.' },
+  { icon: 'wrench', color: '#14b8a6', title: 'IT Consultancy', desc: 'Expert guidance to optimize your technology stack and processes.' },
 ]
 
 const processSteps = [
-  { name: 'Discovery', desc: 'We learn your goals, audience, and requirements.', icon: 'search', color: '#0162a2' },
-  { name: 'Planning', desc: 'Strategy, roadmap, and milestones are defined.', icon: 'folder', color: '#2380c4' },
-  { name: 'Design', desc: 'Wireframes and UI/UX that bring ideas to life.', icon: 'design', color: '#ee7723' },
-  { name: 'Development', desc: 'Agile development with regular check-ins.', icon: 'code', color: '#0162a2' },
-  { name: 'Testing', desc: 'Rigorous QA ensures quality at every stage.', icon: 'check', color: '#ee7723' },
-  { name: 'Deployment', desc: 'Launch, monitor, and support post-go-live.', icon: 'zap', color: '#2380c4' },
+  { name: 'Discovery', desc: 'We learn your goals, audience, and requirements.', icon: 'search', color: '#7c3aed' },
+  { name: 'Planning', desc: 'Strategy, roadmap, and milestones are defined.', icon: 'folder', color: '#a78bfa' },
+  { name: 'Design', desc: 'Wireframes and UI/UX that bring ideas to life.', icon: 'design', color: '#14b8a6' },
+  { name: 'Development', desc: 'Agile development with regular check-ins.', icon: 'code', color: '#7c3aed' },
+  { name: 'Testing', desc: 'Rigorous QA ensures quality at every stage.', icon: 'check', color: '#14b8a6' },
+  { name: 'Deployment', desc: 'Launch, monitor, and support post-go-live.', icon: 'zap', color: '#a78bfa' },
 ]
 
 const timeline = [
@@ -31,12 +31,12 @@ const timeline = [
 ]
 
 const principles = [
-  { icon: 'lightbulb', color: '#0162a2', title: 'Innovation', desc: 'Constantly pushing boundaries to deliver cutting-edge solutions.' },
-  { icon: 'heart', color: '#ee7723', title: 'Client-Centricity', desc: 'Your success is our success. We put you at the center.' },
-  { icon: 'shield', color: '#2380c4', title: 'Integrity', desc: 'Honest, transparent, and ethical in everything we do.' },
-  { icon: 'star', color: '#ee7723', title: 'Excellence', desc: 'Striving for the highest quality in every deliverable.' },
-  { icon: 'handshake', color: '#0162a2', title: 'Collaboration', desc: 'Working together to achieve extraordinary results.' },
-  { icon: 'check', color: '#2380c4', title: 'Accountability', desc: 'Taking ownership and delivering on our promises.' },
+  { icon: 'lightbulb', color: '#7c3aed', title: 'Innovation', desc: 'Constantly pushing boundaries to deliver cutting-edge solutions.' },
+  { icon: 'heart', color: '#14b8a6', title: 'Client-Centricity', desc: 'Your success is our success. We put you at the center.' },
+  { icon: 'shield', color: '#a78bfa', title: 'Integrity', desc: 'Honest, transparent, and ethical in everything we do.' },
+  { icon: 'star', color: '#14b8a6', title: 'Excellence', desc: 'Striving for the highest quality in every deliverable.' },
+  { icon: 'handshake', color: '#7c3aed', title: 'Collaboration', desc: 'Working together to achieve extraordinary results.' },
+  { icon: 'check', color: '#a78bfa', title: 'Accountability', desc: 'Taking ownership and delivering on our promises.' },
 ]
 
 const expertise = {

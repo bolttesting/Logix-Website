@@ -1,27 +1,110 @@
 import { motion } from 'framer-motion';
+import RadialOrbitalTimeline from './RadialOrbitalTimeline';
 
-const steps = [
-  'Project Planning',
-  'UI/UX Design',
-  'Development Phase',
-  'Quality Assurance',
-  'Deployment',
-  'Support & Maintenance',
-  'Marketing & SEO',
-  'Client Feedback',
-];
-
-const promises = [
-  { title: 'Transparent Communication', desc: 'Regular updates and clear timelines.' },
-  { title: 'On-Time Delivery', desc: 'We respect deadlines.' },
-  { title: 'Quality Assured', desc: 'Rigorous testing every phase.' },
-  { title: 'Ongoing Support', desc: 'We stay with you after launch.' },
+/** Process steps as orbital timeline nodes (icons from ./Icons.jsx). */
+const WORK_TIMELINE = [
+  {
+    id: 1,
+    title: 'Project Planning',
+    date: 'Phase 1',
+    content:
+      'Discovery workshops, scope, and success metrics so everyone agrees on what “done” looks like before design or code starts.',
+    category: 'Strategy',
+    icon: 'folder',
+    relatedIds: [2, 8],
+    status: 'completed',
+    energy: 94,
+  },
+  {
+    id: 2,
+    title: 'UI/UX Design',
+    date: 'Phase 2',
+    content:
+      'Flows, prototypes, and a cohesive UI system—validated with you early so engineering builds the right thing.',
+    category: 'Design',
+    icon: 'sparkles',
+    relatedIds: [1, 3],
+    status: 'completed',
+    energy: 91,
+  },
+  {
+    id: 3,
+    title: 'Development Phase',
+    date: 'Phase 3',
+    content:
+      'Iterative builds with reviews, feature flags where useful, and clean handoffs between design and engineering.',
+    category: 'Build',
+    icon: 'code',
+    relatedIds: [2, 4],
+    status: 'in-progress',
+    energy: 88,
+  },
+  {
+    id: 4,
+    title: 'Quality Assurance',
+    date: 'Phase 4',
+    content:
+      'Test plans across devices and browsers, regression checks, and polish passes so releases feel stable.',
+    category: 'QA',
+    icon: 'check',
+    relatedIds: [3, 5],
+    status: 'in-progress',
+    energy: 85,
+  },
+  {
+    id: 5,
+    title: 'Deployment',
+    date: 'Phase 5',
+    content:
+      'Staging, production deploys, monitoring hooks, and rollback-ready releases when traffic matters.',
+    category: 'Launch',
+    icon: 'cloud',
+    relatedIds: [4, 6],
+    status: 'pending',
+    energy: 78,
+  },
+  {
+    id: 6,
+    title: 'Support & Maintenance',
+    date: 'Phase 6',
+    content:
+      'SLAs, incident response, and small improvements so your product stays fast and dependable.',
+    category: 'Ops',
+    icon: 'wrench',
+    relatedIds: [5, 7],
+    status: 'pending',
+    energy: 72,
+  },
+  {
+    id: 7,
+    title: 'Marketing & SEO',
+    date: 'Phase 7',
+    content:
+      'Landing pages, analytics, and search-friendly structure so growth work connects to the live product.',
+    category: 'Growth',
+    icon: 'megaphone',
+    relatedIds: [6, 8],
+    status: 'pending',
+    energy: 68,
+  },
+  {
+    id: 8,
+    title: 'Client Feedback',
+    date: 'Ongoing',
+    content:
+      'Structured reviews, surveys, and roadmap input—we treat feedback as a first-class input to the next cycle.',
+    category: 'Partnership',
+    icon: 'users',
+    relatedIds: [7, 1],
+    status: 'pending',
+    energy: 90,
+  },
 ];
 
 export default function ClientCommits() {
   return (
     <section className="section commits">
-      <div className="commits__inner">
+      <div className="commits__inner commits__inner--orbital">
         <motion.div
           className="commits__header"
           initial={{ opacity: 0, y: 24 }}
@@ -29,44 +112,14 @@ export default function ClientCommits() {
           viewport={{ once: true }}
         >
           <h2 className="commits__title">Our Client Commits</h2>
-          <p className="commits__subtitle">We provide an excellent user experience.</p>
+          <p className="commits__subtitle">
+            How we work—explore each phase on the orbit. Click a node for details; related steps pulse.
+          </p>
         </motion.div>
 
-        <div className="commits__grid">
-          <div className="commits__process">
-            <h3 className="commits__col-title">How We Work</h3>
-            <ol className="commits__list">
-              {steps.map((step, i) => (
-                <motion.li
-                  key={step}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <span className="commits__num">{String(i + 1).padStart(2, '0')}</span>
-                  {step}
-                </motion.li>
-              ))}
-            </ol>
-          </div>
-          <div className="commits__promise-col">
-            <h3 className="commits__col-title">What We Promise</h3>
-            <ul className="commits__promise-list">
-              {promises.map((item, i) => (
-                <motion.li
-                  key={item.title}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.15 + i * 0.05 }}
-                >
-                  <strong>{item.title}</strong>
-                  <span>{item.desc}</span>
-                </motion.li>
-              ))}
-            </ul>
-          </div>
+        <div className="commits__orbital-wrap">
+          <p className="commits__orbital-hint">How We Work</p>
+          <RadialOrbitalTimeline timelineData={WORK_TIMELINE} />
         </div>
       </div>
     </section>

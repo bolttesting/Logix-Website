@@ -1,0 +1,141 @@
+.offices-map {
+  position: relative;
+  padding-top: clamp(4rem, 9vw, 6rem);
+  padding-bottom: clamp(4.5rem, 10vw, 7.5rem);
+  overflow: visible;
+}
+
+.offices-map__glow {
+  position: absolute;
+  pointer-events: none;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: min(98vw, 1240px);
+  height: min(72vw, 520px);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(20, 184, 166, 0.09) 0%,
+    rgba(124, 58, 237, 0.05) 45%,
+    transparent 68%
+  );
+  filter: blur(36px);
+  z-index: 0;
+}
+
+.offices-map__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(1680px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+}
+
+.offices-map__header {
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto clamp(2rem, 5vw, 2.75rem);
+}
+
+.offices-map__badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-orange);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  background: rgba(20, 184, 166, 0.08);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.offices-map__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3.2vw, 2.35rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+.offices-map__lead {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.offices-map__map-wrap {
+  margin-bottom: clamp(2.5rem, 6vw, 3.5rem);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.offices-map__grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .offices-map__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.offices-map__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.offices-map__card:hover {
+  border-color: rgba(20, 184, 166, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+}
+
+.offices-map__city {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.offices-map__link {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-orange);
+  text-decoration: none;
+  margin-bottom: 0.35rem;
+}
+
+.offices-map__link:hover {
+  text-decoration: underline;
+}
+
+.offices-map__phone {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 0.85rem;
+}
+
+.offices-map__phone:hover {
+  color: var(--text-primary);
+}
+
+.offices-map__address {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}

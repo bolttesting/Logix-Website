@@ -1,20 +1,38 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Stars } from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
+import { TestimonialsColumn } from './TestimonialsColumn';
 
 const defaultTestimonials = [
-  { name: 'Sarah Johnson', role: 'CEO, TechStart', text: 'Exceptional work from start to finish. They delivered our web app on time and exceeded our expectations. Highly recommend!', avatar: 'SJ' },
-  { name: 'Michael Chen', role: 'Founder, InnovateLab', text: 'The team understood our vision perfectly. The mobile app they built has transformed our user engagement. Five stars!', avatar: 'MC' },
-  { name: 'Emma Roberts', role: 'Director, ScaleUp', text: 'Professional, responsive, and results-driven. Our digital presence has grown significantly since working with them.', avatar: 'ER' },
+  {
+    name: 'Sarah Johnson',
+    role: 'CEO, TechStart',
+    text: 'Exceptional work from start to finish. They delivered our web app on time and exceeded our expectations. Highly recommend!',
+    avatar: 'SJ',
+  },
+  {
+    name: 'Michael Chen',
+    role: 'Founder, InnovateLab',
+    text: 'The team understood our vision perfectly. The mobile app they built has transformed our user engagement. Five stars!',
+    avatar: 'MC',
+  },
+  {
+    name: 'Emma Roberts',
+    role: 'Director, ScaleUp',
+    text: 'Professional, responsive, and results-driven. Our digital presence has grown significantly since working with them.',
+    avatar: 'ER',
+  },
 ];
 
 export default function Testimonials() {
+  const reduceMotion = useReducedMotion();
   const { testimonials: data = [] } = useSiteData();
   const testimonials = data.length ? data : defaultTestimonials;
+
   return (
     <section className="section testimonials">
       <div className="testimonials__glow" />
-      <div className="section__inner">
+      <div className="section__inner section__inner--testimonials">
         <motion.div
           className="testimonials__header"
           initial={{ opacity: 0, y: 30 }}
@@ -27,32 +45,46 @@ export default function Testimonials() {
           <p className="testimonials__subtitle">Client Success Stories</p>
           <span className="testimonials__accent-line" />
         </motion.div>
-        <div className="testimonials__grid">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              className="testimonial-card"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
-              whileHover={{ y: -4 }}
-            >
-              <span className="testimonial-card__quote">"</span>
-              <p className="testimonial-card__text">{t.text}</p>
-              <div className="testimonial-card__stars">
-                <Stars count={5} size={16} />
-              </div>
-              <div className="testimonial-card__author">
-                <div className="testimonial-card__avatar">{t.avatar}</div>
-                <div>
-                  <span className="testimonial-card__name">{t.name}</span>
-                  <span className="testimonial-card__role">{t.role}</span>
+
+        {reduceMotion ? (
+          <div className="testimonials__grid">
+            {testimonials.map((t, i) => (
+              <motion.div
+                key={t.name}
+                className="testimonial-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+              >
+                <span className="testimonial-card__quote">"</span>
+                <p className="testimonial-card__text">{t.text}</p>
+                <div className="testimonial-card__stars">
+                  <Stars count={5} size={16} />
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                <div className="testimonial-card__author">
+                  <div className="testimonial-card__avatar">{t.avatar}</div>
+                  <div>
+                    <span className="testimonial-card__name">{t.name}</span>
+                    <span className="testimonial-card__role">{t.role}</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="testimonials__marquee">
+            <div className="testimonials__marquee-col">
+              <TestimonialsColumn testimonials={testimonials} duration={36} />
+            </div>
+            <div className="testimonials__marquee-col">
+              <TestimonialsColumn testimonials={testimonials} duration={44} reverse />
+            </div>
+            <div className="testimonials__marquee-col">
+              <TestimonialsColumn testimonials={testimonials} duration={52} />
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

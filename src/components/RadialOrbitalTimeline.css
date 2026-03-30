@@ -1,0 +1,449 @@
+.orbital {
+  width: 100%;
+  min-height: min(72vh, 640px);
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(124, 58, 237, 0.12), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, rgba(20, 184, 166, 0.08), transparent 50%),
+    linear-gradient(180deg, #07080d 0%, #0a0c12 50%, #08090e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.orbital__stage {
+  position: relative;
+  width: 100%;
+  max-width: 56rem;
+  height: 100%;
+  min-height: inherit;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem 3rem;
+  box-sizing: border-box;
+}
+
+.orbital__orbit-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbital__hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem;
+  height: 4rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbital__hub-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: orbital-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.orbital__hub-ring--1 {
+  width: 5rem;
+  height: 5rem;
+  opacity: 0.7;
+}
+
+.orbital__hub-ring--2 {
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.45;
+  animation-delay: 0.5s;
+}
+
+.orbital__hub-core {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 24px rgba(167, 139, 250, 0.45);
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbital__hub-label {
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0a0a0f;
+  line-height: 1;
+}
+
+.orbital__hub::before {
+  content: '';
+  position: absolute;
+  inset: -0.25rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #a855f7, #3b82f6, #14b8a6);
+  opacity: 0.95;
+  z-index: 0;
+  animation: orbital-hub-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes orbital-ping {
+  75%,
+  100% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes orbital-hub-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 1;
+    filter: brightness(1.08);
+  }
+}
+
+.orbital__ring-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rem;
+  height: 24rem;
+  max-width: 92vw;
+  max-height: 92vw;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.orbital__node {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -20px;
+  margin-top: -20px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.orbital__node:focus-visible {
+  outline: 2px solid rgba(20, 184, 166, 0.8);
+  outline-offset: 4px;
+}
+
+.orbital__node-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+}
+
+.orbital__node-glow--pulse {
+  animation: orbital-node-pulse 1s ease-in-out infinite;
+}
+
+@keyframes orbital-node-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}
+
+.orbital__node-btn {
+  position: relative;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: #0a0a0f;
+  color: #fafafa;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.orbital__node-btn--related {
+  background: rgba(255, 255, 255, 0.5);
+  color: #0a0a0f;
+  border-color: #fff;
+  animation: orbital-node-pulse 1.2s ease-in-out infinite;
+}
+
+.orbital__node-btn--open {
+  background: #fff;
+  color: #0a0a0f;
+  border-color: #fff;
+  transform: scale(1.45);
+  box-shadow: 0 8px 28px rgba(255, 255, 255, 0.25);
+}
+
+.orbital__node-label {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  margin-top: 0.5rem;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  transition: color 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.orbital__node-label--open {
+  color: #fff;
+  transform: translateX(-50%) scale(1.05);
+}
+
+.orbital-card {
+  position: absolute;
+  left: 50%;
+  top: 4.5rem;
+  transform: translateX(-50%);
+  width: 16rem;
+  max-width: calc(100vw - 2rem);
+  background: rgba(8, 9, 14, 0.92);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 28px rgba(255, 255, 255, 0.06);
+  z-index: 220;
+  text-align: left;
+  cursor: default;
+}
+
+.orbital-card__pin {
+  position: absolute;
+  left: 50%;
+  top: -0.75rem;
+  width: 1px;
+  height: 0.75rem;
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateX(-50%);
+}
+
+.orbital-card__head {
+  padding: 0.85rem 1rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.orbital-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.orbital-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.orbital-badge--completed {
+  color: #fff;
+  background: #0a0a0f;
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.orbital-badge--in-progress {
+  color: #0a0a0f;
+  background: #fff;
+  border-color: #0a0a0f;
+}
+
+.orbital-badge--pending {
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(10, 10, 15, 0.55);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+.orbital-card__date {
+  font-size: 0.65rem;
+  font-family: ui-monospace, monospace;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.orbital-card__title {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fafafa;
+  line-height: 1.25;
+}
+
+.orbital-card__body {
+  padding: 0.65rem 1rem 1rem;
+}
+
+.orbital-card__text {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.orbital-card__energy {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.orbital-card__energy-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  margin-bottom: 0.35rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.orbital-card__energy-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.orbital-card__energy-value {
+  font-family: ui-monospace, monospace;
+}
+
+.orbital-card__energy-track {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.orbital-card__energy-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3b82f6, #a855f7);
+  transition: width 0.4s ease;
+}
+
+.orbital-card__related {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.orbital-card__related-title {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 0.45rem;
+}
+
+.orbital-card__related-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.orbital-card__related-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.45rem;
+  font-size: 0.65rem;
+  font-family: inherit;
+  color: rgba(255, 255, 255, 0.88);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.orbital-card__related-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .orbital {
+    min-height: 560px;
+    border-radius: 16px;
+  }
+
+  .orbital__stage {
+    padding: 1.25rem 0.45rem 2rem;
+  }
+
+  .orbital__orbit-area {
+    min-height: 380px;
+  }
+
+  .orbital__ring-line {
+    width: 18rem;
+    height: 18rem;
+  }
+
+  .orbital-card {
+    width: 14rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbital__hub-ring,
+  .orbital__hub::before {
+    animation: none;
+  }
+
+  .orbital__node-glow--pulse,
+  .orbital__node-btn--related {
+    animation: none;
+  }
+}

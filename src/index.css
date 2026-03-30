@@ -1,31 +1,31 @@
 :root {
-  /* Brand colors */
-  --accent-orange: #ee7723;
-  --accent-blue: #0162a2;
-  --accent-blue-light: #2380c4;
-  
+  /* Brand — teal + violet (--accent-orange / --neon-* are legacy names; values are primary accent) */
+  --accent-orange: #14b8a6;
+  --accent-blue: #7c3aed;
+  --accent-blue-light: #a78bfa;
+
   --bg-primary: #0a0a0f;
   --bg-secondary: #0f0f14;
   --bg-card: #14141c;
   --bg-card-hover: #1a1a24;
-  
-  --neon-green: #ee7723;
-  --neon-green-dim: rgba(238, 119, 35, 0.8);
-  --purple: #0162a2;
-  --purple-magenta: #2380c4;
-  
+
+  --neon-green: #14b8a6;
+  --neon-green-dim: rgba(20, 184, 166, 0.8);
+  --purple: #7c3aed;
+  --purple-magenta: #a78bfa;
+
   --text-primary: #ffffff;
   --text-secondary: #a1a1aa;
   --text-muted: #71717a;
-  
+
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-glow: rgba(238, 119, 35, 0.4);
-  
+  --border-glow: rgba(20, 184, 166, 0.4);
+
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
-  
-  --glow-green: 0 0 20px rgba(238, 119, 35, 0.3);
-  --glow-purple: 0 0 20px rgba(1, 98, 162, 0.3);
+
+  --glow-green: 0 0 20px rgba(20, 184, 166, 0.3);
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.3);
 }
 
 * {
@@ -50,8 +50,8 @@ body {
   position: fixed;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(238, 119, 35, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(1, 98, 162, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(20, 184, 166, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
   z-index: 0;
@@ -90,4 +90,32 @@ body {
   background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
   bottom: -100px;
   left: -100px;
+}
+
+/* —— Light theme (header toggle + persistence) —— */
+[data-theme='light'] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --border-subtle: rgba(15, 23, 42, 0.1);
+  --border-glow: rgba(13, 148, 136, 0.35);
+
+  --glow-green: 0 0 20px rgba(20, 184, 166, 0.2);
+  --glow-purple: 0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+[data-theme='light'] .grid-bg {
+  background-image:
+    linear-gradient(rgba(13, 148, 136, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 58, 237, 0.05) 1px, transparent 1px);
+}
+
+[data-theme='light'] .gradient-orb {
+  opacity: 0.12;
 }

@@ -1,18 +1,12 @@
 import { motion } from 'framer-motion';
 import Icon from './Icons';
+import { CpuArchitecture } from './CpuArchitecture';
 
 const stats = [
   { value: '73+', label: 'Projects', icon: 'folder' },
   { value: '12k', label: 'Active Clients', icon: 'users' },
   { value: '50+', label: 'Team Members', icon: 'handshake' },
   { value: '8', label: 'Years Experience', icon: 'star' },
-];
-
-const priorities = [
-  { title: 'Quality', x: '5%', y: '10%', delay: 0 },
-  { title: 'Innovation', x: '60%', y: '5%', delay: 0.1 },
-  { title: 'Client Success', x: '10%', y: '55%', delay: 0.2 },
-  { title: 'Strategic Vision', x: '55%', y: '60%', delay: 0.3 },
 ];
 
 export default function Mission() {
@@ -28,34 +22,8 @@ export default function Mission() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="mission__visual-wrap">
-            <div className="mission__center-ring" />
-            <div className="mission__center-dot" />
-            {priorities.map((item, i) => (
-              <motion.div
-                key={item.title}
-                className="mission__float-badge"
-                style={{ left: item.x, top: item.y }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + item.delay, duration: 0.5 }}
-              >
-                <span className="mission__float-title">{item.title}</span>
-              </motion.div>
-            ))}
-            <svg className="mission__connections" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-              <defs>
-                <linearGradient id="missionGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#ee7723" />
-                  <stop offset="100%" stopColor="#0162a2" />
-                </linearGradient>
-              </defs>
-              <line x1="50" y1="50" x2="18" y2="18" stroke="url(#missionGrad1)" strokeWidth="0.6" opacity="0.35" />
-              <line x1="50" y1="50" x2="72" y2="12" stroke="url(#missionGrad1)" strokeWidth="0.6" opacity="0.35" />
-              <line x1="50" y1="50" x2="18" y2="68" stroke="url(#missionGrad1)" strokeWidth="0.6" opacity="0.35" />
-              <line x1="50" y1="50" x2="68" y2="72" stroke="url(#missionGrad1)" strokeWidth="0.6" opacity="0.35" />
-            </svg>
+          <div className="mission__visual-wrap mission__visual-wrap--cpu">
+            <CpuArchitecture text="LC" className="mission__cpu-arch" />
           </div>
         </motion.div>
         <motion.div

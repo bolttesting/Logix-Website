@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Icon from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
+import { TextHoverEffect, FooterBackgroundGradient } from './ui/hover-footer';
 
 const quickLinks = [
   { label: 'Home', to: '/' },
@@ -21,9 +22,9 @@ const services = [
 ];
 
 const socialLinks = [
-  { name: 'LinkedIn', href: '#' },
-  { name: 'Twitter', href: '#' },
-  { name: 'Instagram', href: '#' },
+  { name: 'LinkedIn', href: '#', icon: 'linkedin' },
+  { name: 'Twitter', href: '#', icon: 'twitter' },
+  { name: 'Instagram', href: '#', icon: 'instagram' },
 ];
 
 export default function Footer() {
@@ -33,6 +34,7 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      <FooterBackgroundGradient />
       <div className="footer__inner">
         <div className="footer__top">
           <div className="footer__brand">
@@ -40,13 +42,6 @@ export default function Footer() {
               Logix<span className="footer__logo-accent">Contact</span>
             </Link>
             <p className="footer__slogan">Web & App Development Agency</p>
-            <div className="footer__social">
-              {socialLinks.map((s) => (
-                <a key={s.name} href={s.href} className="footer__social-link" aria-label={s.name}>
-                  <Icon name="share" size={18} />
-                </a>
-              ))}
-            </div>
           </div>
           <div className="footer__cols">
             <div className="footer__col">
@@ -63,7 +58,9 @@ export default function Footer() {
               <h4>Services</h4>
               <ul>
                 {services.map((s) => (
-                  <li key={s}><Link to="/#services">{s}</Link></li>
+                  <li key={s}>
+                    <Link to="/#services">{s}</Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -79,7 +76,19 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer__bottom">
-          <span>© {new Date().getFullYear()} Logix Contact. All rights reserved.</span>
+          <div className="footer__social footer__social--bottom">
+            {socialLinks.map((s) => (
+              <a key={s.name} href={s.href} className="footer__social-link" aria-label={s.name}>
+                <Icon name={s.icon} size={18} />
+              </a>
+            ))}
+          </div>
+          <p className="footer__copyright">
+            © {new Date().getFullYear()} Logix Contact. All rights reserved.
+          </p>
+        </div>
+        <div className="footer__brand-mark">
+          <TextHoverEffect text="Logix Contact" duration={0} viewBox="0 0 640 110" />
         </div>
       </div>
     </footer>

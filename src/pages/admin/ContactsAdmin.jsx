@@ -55,7 +55,7 @@ export default function ContactsAdmin() {
                 <tr key={item.id}>
                   <td style={{ whiteSpace: 'nowrap' }}>{formatDate(item.created_at)}</td>
                   <td>{item.name}</td>
-                  <td><a href={`mailto:${item.email}`} style={{ color: '#ee7723' }}>{item.email}</a></td>
+                  <td><a href={`mailto:${item.email}`} style={{ color: '#14b8a6' }}>{item.email}</a></td>
                   <td>{item.subject || '-'}</td>
                   <td style={{ maxWidth: 200 }}>{item.message?.slice(0, 60)}...</td>
                   <td>

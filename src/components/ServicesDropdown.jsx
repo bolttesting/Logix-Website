@@ -92,7 +92,8 @@ export default function ServicesDropdown() {
       onMouseLeave={handleTriggerLeave}
     >
       <button
-        className={`navbar__link navbar__link--btn ${open ? 'navbar__link--active' : ''}`}
+        type="button"
+        className={`navbar__ghost navbar__link--btn ${open ? 'navbar__ghost--active' : ''}`}
         onClick={() => setOpen(!open)}
       >
         Services

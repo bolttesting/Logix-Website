@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
 
 const categoryGradients = {
-  'Web Development': 'linear-gradient(135deg, rgba(1, 98, 162, 0.35) 0%, rgba(35, 128, 196, 0.2) 50%, rgba(238, 119, 35, 0.15) 100%)',
+  'Web Development': 'linear-gradient(135deg, rgba(124, 58, 237, 0.35) 0%, rgba(167, 139, 250, 0.2) 50%, rgba(20, 184, 166, 0.15) 100%)',
   'Mobile': 'linear-gradient(135deg, rgba(16, 185, 129, 0.3) 0%, rgba(6, 182, 212, 0.2) 100%)',
   'Design': 'linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(59, 130, 246, 0.2) 100%)',
-  'DevOps': 'linear-gradient(135deg, rgba(238, 119, 35, 0.3) 0%, rgba(245, 158, 11, 0.2) 100%)',
-  'Backend': 'linear-gradient(135deg, rgba(1, 98, 162, 0.3) 0%, rgba(30, 58, 138, 0.25) 100%)',
-  'Cloud': 'linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(1, 98, 162, 0.2) 100%)',
+  'DevOps': 'linear-gradient(135deg, rgba(20, 184, 166, 0.3) 0%, rgba(45, 212, 191, 0.2) 100%)',
+  'Backend': 'linear-gradient(135deg, rgba(124, 58, 237, 0.3) 0%, rgba(76, 29, 149, 0.25) 100%)',
+  'Cloud': 'linear-gradient(135deg, rgba(14, 165, 233, 0.3) 0%, rgba(124, 58, 237, 0.2) 100%)',
 };
 
 export default function BlogPage() {

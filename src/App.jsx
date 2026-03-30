@@ -20,6 +20,7 @@ import TestimonialsAdmin from './pages/admin/TestimonialsAdmin'
 import ServicesAdmin from './pages/admin/ServicesAdmin'
 import SettingsAdmin from './pages/admin/SettingsAdmin'
 import ContactsAdmin from './pages/admin/ContactsAdmin'
+import ReturnToTop from './components/ReturnToTop'
 import './App.css'
 import './pages/AboutPage.css'
 import './pages/ContactPage.css'
@@ -57,6 +58,7 @@ function App() {
         <Route path="/services/:slug" element={<><Navbar /><ServicePage /><Footer /></>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ReturnToTop />
     </SiteDataProvider>
   )
 }
