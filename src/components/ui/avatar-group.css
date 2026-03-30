@@ -1,0 +1,224 @@
+/* Stacked avatars + hover/focus tooltip (Tailwind reference → CSS) */
+
+.avatar-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-group__slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Flex default min-width:auto uses img intrinsic width — blows up avatars */
+  min-width: 0;
+}
+
+.avatar-group__slot--offset {
+  margin-left: -0.5rem;
+}
+
+.avatar-group__tooltip {
+  position: absolute;
+  bottom: calc(100% + 0.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.125rem;
+  padding: 0.5rem 1rem;
+  min-width: max-content;
+  max-width: min(220px, 70vw);
+  text-align: center;
+  white-space: normal;
+  font-size: 0.75rem;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.18);
+  pointer-events: none;
+}
+
+.avatar-group__tooltip-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: #111827;
+}
+
+.avatar-group__tooltip-role {
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: #4b5563;
+}
+
+[data-theme='light'] .avatar-group__tooltip {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.1);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+}
+
+.avatar-group__trigger {
+  position: relative;
+  border-radius: 9999px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  line-height: 0;
+  min-width: 0;
+}
+
+.avatar-group__trigger:focus {
+  outline: none;
+}
+
+.avatar-group__trigger:focus-visible {
+  outline: 2px solid var(--accent-orange, #14b8a6);
+  outline-offset: 3px;
+}
+
+.avatar-group__img-wrap {
+  position: relative;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-group--sm .avatar-group__img-wrap {
+  width: 2rem;
+  height: 2rem;
+}
+
+.avatar-group--md .avatar-group__img-wrap {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.avatar-group--lg .avatar-group__img-wrap {
+  width: 3rem;
+  height: 3rem;
+}
+
+.avatar-group__img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 9999px;
+  border: 2px solid var(--avatar-group-ring, #08090e);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+/* Hero: ring must contrast with dark gradient — #08090e matched bg and hid the stack */
+.hero__avatar-group .avatar-group__img {
+  --avatar-group-ring: rgba(255, 255, 255, 0.5);
+  border-color: var(--avatar-group-ring);
+  box-shadow:
+    0 2px 14px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .hero__avatar-group .avatar-group__img {
+  --avatar-group-ring: rgba(15, 23, 42, 0.2);
+  box-shadow:
+    0 2px 12px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.avatar-group__more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -0.5rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 2px solid var(--avatar-group-ring, #08090e);
+  box-sizing: border-box;
+}
+
+.hero__avatar-group .avatar-group__more {
+  --avatar-group-ring: rgba(255, 255, 255, 0.45);
+  background: rgba(20, 20, 28, 0.92);
+  color: #f4f4f5;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme='light'] .hero__avatar-group .avatar-group__more {
+  --avatar-group-ring: rgba(15, 23, 42, 0.18);
+  background: #ffffff;
+  color: #334155;
+}
+
+.avatar-group--sm .avatar-group__more {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.625rem;
+}
+
+.avatar-group--md .avatar-group__more {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.avatar-group--lg .avatar-group__more {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Hero: hard cap — fixed px so circles never inherit huge layout (flex/img quirks) */
+.hero__avatar-group .avatar-group__img-wrap {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  max-width: 56px;
+  max-height: 56px;
+}
+
+.hero__avatar-group .avatar-group__more {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  min-height: 56px;
+  max-width: 56px;
+  max-height: 56px;
+  font-size: 0.8125rem;
+}
+
+.hero__avatar-group .avatar-group__slot--offset {
+  margin-left: -0.75rem;
+}
+
+.hero__avatar-group .avatar-group__trigger {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+}
+
+.hero__avatar-group .avatar-group__img {
+  border-width: 2px;
+}
+
+/* Last face (+N row): centered tooltip goes past viewport — pin to the right */
+.hero__avatar-group .avatar-group > .avatar-group__slot:last-child .avatar-group__tooltip,
+.hero__avatar-group
+  .avatar-group:has(> .avatar-group__more)
+  > .avatar-group__slot:nth-child(5)
+  .avatar-group__tooltip {
+  left: auto;
+  right: 0;
+  transform: none;
+}

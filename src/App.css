@@ -888,7 +888,32 @@
   50% { opacity: 1; transform: scaleY(1); }
 }
 
+.hero__avatar-group {
+  position: absolute;
+  right: max(2.25rem, env(safe-area-inset-right, 0px));
+  /* Desktop: lift off bottom edge so the stack stays in the hero viewport */
+  bottom: max(3rem, env(safe-area-inset-bottom, 0px));
+  /* Above hero__grid / delivery card so faces aren’t hidden underneath */
+  z-index: 25;
+  pointer-events: auto;
+}
+
+.hero__avatar-group__inner {
+  transform-origin: bottom right;
+}
+
+@media (max-width: 480px) {
+  .hero__avatar-group__inner {
+    transform: scale(0.9);
+  }
+}
+
 @media (max-width: 900px) {
+  .hero__avatar-group {
+    right: max(1.25rem, env(safe-area-inset-right, 0px));
+    bottom: max(4.5rem, env(safe-area-inset-bottom, 0px));
+  }
+
   .hero__grid { grid-template-columns: 1fr; }
   .hero__visual {
     order: -1;

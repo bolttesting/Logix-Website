@@ -3,6 +3,7 @@ import { useTheme } from '../context/ThemeContext';
 import { ShaderAnimation } from './ui/ShaderAnimation';
 import ButtonCrossArrow from './ui/ButtonCrossArrow';
 import ButtonAnimatedGradient from './ui/ButtonAnimatedGradient';
+import AvatarGroup from './ui/avatar-group';
 
 const easeOut = [0.23, 1, 0.32, 1];
 const staggerContainer = {
@@ -26,6 +27,52 @@ const BOARD_ROWS = [
   { label: 'Discovery & scope', status: 'done', tag: 'Done' },
   { label: 'Design & prototype', status: 'active', tag: 'In progress' },
   { label: 'Build & hardening', status: 'queued', tag: 'Queued' },
+];
+
+/** Hero corner avatars (Unsplash); matches “Meet the team” tone */
+const HERO_AVATAR_ITEMS = [
+  {
+    id: 1,
+    name: 'James Wilson',
+    designation: 'CEO & Founder',
+    image:
+      'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80&auto=format&fit=crop',
+  },
+  {
+    id: 2,
+    name: 'Maria Kowalski',
+    designation: 'CTO & Co-Founder',
+    image:
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&auto=format&fit=crop',
+  },
+  {
+    id: 3,
+    name: 'David Chen',
+    designation: 'Engineering Lead',
+    image:
+      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80&auto=format&fit=crop',
+  },
+  {
+    id: 4,
+    name: 'Elena Ortiz',
+    designation: 'Head of Design',
+    image:
+      'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80&auto=format&fit=crop',
+  },
+  {
+    id: 5,
+    name: 'Sam Okoro',
+    designation: 'Senior Full-Stack Developer',
+    image:
+      'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80&auto=format&fit=crop',
+  },
+  {
+    id: 6,
+    name: 'Priya Sharma',
+    designation: 'Product Manager',
+    image:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80&auto=format&fit=crop',
+  },
 ];
 
 export default function Hero() {
@@ -131,6 +178,17 @@ export default function Hero() {
           <span className="hero__scroll-line" />
         </motion.div>
       )}
+
+      <motion.div
+        className="hero__avatar-group"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.75, duration: 0.45, ease: easeOut }}
+      >
+        <div className="hero__avatar-group__inner" aria-label="Team members">
+          <AvatarGroup items={HERO_AVATAR_ITEMS} maxVisible={5} size="sm" />
+        </div>
+      </motion.div>
     </section>
   );
 }
