@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.98.0",
     "dotted-map": "^3.1.0",
     "framer-motion": "^12.34.5",
+    "lucide-react": "^1.7.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.1",

@@ -82,6 +82,25 @@
   padding: 5rem 2rem;
 }
 
+@media (max-width: 640px) {
+  .about-section {
+    padding: 3.5rem 1rem;
+  }
+
+  .about-section__header {
+    margin-bottom: 2rem;
+  }
+
+  .about-section__title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .about-section__subtitle {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
 .about-section--alt {
   background: var(--bg-secondary);
 }
@@ -166,6 +185,16 @@
 .about-section__cta {
   text-align: center;
   margin-top: 2rem;
+}
+
+.about-section--expanding-values .about-section__header {
+  margin-bottom: 2rem;
+}
+
+.about-expanding-values {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* Innovation / Principles Cards */
@@ -604,258 +633,8 @@
   }
 }
 
-/* Team */
-.about-team__grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
-
-.about-team-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  padding: 2rem;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.about-team-card:hover {
-  border-color: var(--accent-orange);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-}
-
-.about-team-card__avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-orange) 0%, var(--accent-blue) 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 1.5rem;
-  color: white;
-  margin: 0 auto 1rem;
-}
-
-.about-team-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.25rem;
-}
-
-.about-team-card p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  margin-bottom: 0.75rem;
-}
-
-.about-team-card__social {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.about-team-card__social a {
-  width: 36px;
-  height: 36px;
-  background: var(--bg-secondary);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: all 0.2s;
-}
-
-.about-team-card__social a:hover {
-  background: rgba(20, 184, 166, 0.12);
-  color: var(--accent-orange);
-}
-
-/* Slider controls (used by testimonials) */
-.about-slider__btn {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.about-slider__btn:hover:not(:disabled) {
-  border-color: var(--accent-orange);
-  color: var(--accent-orange);
-  background: rgba(20, 184, 166, 0.08);
-}
-
-.about-slider__btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.about-slider__btn svg {
-  width: 24px;
-  height: 24px;
-}
-
-.about-slider__dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--border-subtle);
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.2s;
-}
-
-.about-slider__dot:hover {
-  background: var(--text-muted);
-}
-
-.about-slider__dot--active {
-  background: var(--accent-orange);
-  width: 24px;
-  border-radius: 4px;
-}
-
-/* Testimonials Slider */
-.about-testimonials-slider {
-  display: flex;
-  align-items: stretch;
-  gap: 1rem;
-  max-width: 700px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.about-testimonials-slider__viewport {
-  flex: 1;
-  min-height: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.about-testimonials-slider .about-slider__btn {
-  align-self: center;
-}
-
-.about-testimonials-slider__nav {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-}
-
-.about-testimonials-slider .about-testimonial-card {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.about-testimonial-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  padding: 2rem;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-.about-testimonial-card:hover {
-  border-color: var(--accent-orange);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-}
-
-.about-testimonial-card__quote {
-  position: absolute;
-  top: 1rem;
-  left: 1.5rem;
-  font-size: 3rem;
-  color: var(--accent-orange);
-  opacity: 0.3;
-  font-family: Georgia, serif;
-}
-
-.about-testimonial-card__avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.about-testimonial-card h4 {
-  font-size: 1rem;
-  margin-bottom: 0.25rem;
-}
-
-.about-testimonial-card__role {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 0.75rem;
-}
-
-.about-testimonial-card p {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 0.75rem;
-}
-
-.about-testimonial-card__stars {
-  color: #fbbf24;
-  font-size: 1rem;
-}
-
 @media (max-width: 768px) {
   .about-innovation__grid {
     grid-template-columns: 1fr;
-  }
-  .about-team__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .about-testimonials-slider {
-    flex-direction: column;
-    align-items: center;
-    padding: 0 3rem;
-  }
-  .about-testimonials-slider .about-slider__btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-  }
-  .about-testimonials-slider .about-slider__btn--prev {
-    left: 0;
-  }
-  .about-testimonials-slider .about-slider__btn--next {
-    right: 0;
-  }
-}
-
-@media (max-width: 600px) {
-  .about-team__grid {
-    grid-template-columns: 1fr;
-  }
-  .about-testimonials-slider .about-slider__btn {
-    width: 40px;
-    height: 40px;
   }
 }

@@ -1,0 +1,150 @@
+/* ExpandingCards — horizontal accordion (Tailwind reference → CSS variables) */
+
+.expanding-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 0.5rem;
+  display: grid;
+  height: min(600px, 88vh);
+  transition:
+    grid-template-columns 0.5s ease-out,
+    grid-template-rows 0.5s ease-out;
+}
+
+@media (min-width: 768px) {
+  .expanding-cards {
+    height: min(500px, 85vh);
+  }
+}
+
+.expanding-cards__item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  min-height: 0;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .expanding-cards__item {
+    min-width: 80px;
+  }
+}
+
+.expanding-cards__item:focus {
+  outline: 2px solid var(--accent-orange);
+  outline-offset: 2px;
+}
+
+.expanding-cards__item:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.expanding-cards__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.3s ease-out,
+    filter 0.3s ease-out;
+  transform: scale(1.1);
+  filter: grayscale(1);
+}
+
+.expanding-cards__item[data-active='true'] .expanding-cards__img {
+  transform: scale(1);
+  filter: grayscale(0);
+}
+
+.expanding-cards__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.38) 45%, transparent 100%);
+  pointer-events: none;
+}
+
+.expanding-cards__article {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+/* Collapsed vertical label (desktop) */
+.expanding-cards__title--sideways {
+  display: none;
+  transform-origin: left center;
+  transform: rotate(90deg);
+  font-size: 0.875rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+@media (min-width: 768px) {
+  .expanding-cards__title--sideways {
+    display: block;
+  }
+}
+
+.expanding-cards__item[data-active='true'] .expanding-cards__title--sideways {
+  opacity: 0;
+}
+
+.expanding-cards__icon-wrap {
+  color: rgba(255, 255, 255, 0.92);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease-out 75ms,
+    transform 0.3s ease-out;
+}
+
+.expanding-cards__item[data-active='true'] .expanding-cards__icon-wrap {
+  opacity: 1;
+}
+
+.expanding-cards__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease-out 150ms;
+  margin: 0;
+}
+
+.expanding-cards__item[data-active='true'] .expanding-cards__title {
+  opacity: 1;
+}
+
+.expanding-cards__desc {
+  width: 100%;
+  max-width: 20rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  margin: 0;
+  transition: opacity 0.3s ease-out 220ms;
+}
+
+.expanding-cards__item[data-active='true'] .expanding-cards__desc {
+  opacity: 1;
+}

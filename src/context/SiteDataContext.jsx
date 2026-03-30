@@ -5,10 +5,14 @@ import { servicesMenu, servicePageContent } from '../data/servicesData';
 
 // Static fallbacks
 const staticTeam = [
-  { id: '1', name: 'John Doe', role: 'CEO & Founder', avatar: 'JD', bio: '' },
-  { id: '2', name: 'Jane Smith', role: 'Lead Developer', avatar: 'JS', bio: '' },
-  { id: '3', name: 'Robert Johnson', role: 'UI/UX Designer', avatar: 'RJ', bio: '' },
-  { id: '4', name: 'Emily Davis', role: 'Project Manager', avatar: 'ED', bio: '' },
+  { id: '1', name: 'James Wilson', role: 'CEO & Founder', avatar: 'JW', bio: '' },
+  { id: '2', name: 'Maria Kowalski', role: 'CTO & Co-Founder', avatar: 'MK', bio: '' },
+  { id: '3', name: 'David Chen', role: 'Engineering Lead', avatar: 'DC', bio: '' },
+  { id: '4', name: 'Elena Ortiz', role: 'Head of Design', avatar: 'EO', bio: '' },
+  { id: '5', name: 'Sam Okoro', role: 'Senior Full-Stack Developer', avatar: 'SO', bio: '' },
+  { id: '6', name: 'Priya Sharma', role: 'Product Manager', avatar: 'PS', bio: '' },
+  { id: '7', name: 'Tom Brennan', role: 'DevOps & Infrastructure', avatar: 'TB', bio: '' },
+  { id: '8', name: 'Zoe Williams', role: 'Client Success Lead', avatar: 'ZW', bio: '' },
 ];
 
 const staticTestimonials = [

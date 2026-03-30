@@ -1,0 +1,254 @@
+/* Stacking cards scroll section (Motion scroll + sticky — after Olivier Larose pattern) */
+
+/* Sticky stacking requires NO overflow:hidden on ancestors — override .about-section--innovation */
+.about-wedo-stack {
+  position: relative;
+  width: 100%;
+  background: var(--bg-secondary);
+  overflow: visible;
+}
+
+.about-wedo-stack.about-section.about-section--innovation {
+  overflow: visible;
+  padding: 0;
+}
+
+.about-wedo-stack__track {
+  position: relative;
+  width: 100%;
+}
+
+/* Intro */
+.about-wedo-stack__intro {
+  position: relative;
+  min-height: 42vh;
+  display: grid;
+  place-content: center;
+  padding: clamp(3rem, 8vw, 5rem) 1.5rem;
+  color: var(--text-primary);
+}
+
+.about-wedo-stack__intro-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(120, 120, 120, 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(120, 120, 120, 0.12) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%);
+  pointer-events: none;
+}
+
+[data-theme='light'] .about-wedo-stack__intro-grid {
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+}
+
+.about-wedo-stack__intro-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.about-wedo-stack__badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-orange);
+  border: 1px solid rgba(20, 184, 166, 0.35);
+  background: rgba(20, 184, 166, 0.08);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.about-wedo-stack__intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+.about-wedo-stack__intro-sub {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.about-wedo-stack__accent-line {
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-blue));
+  border-radius: 2px;
+  margin: 1.25rem auto 0;
+}
+
+/* Cards — each row is one viewport of scroll; sticky + higher z-index = stack on top */
+.about-wedo-stack__cards {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.about-wedo-stack-card {
+  height: 100vh;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  /* z-index set inline per index so card N+1 paints above card N */
+}
+
+.about-wedo-stack-card__surface {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: min(92%, 960px);
+  /* Fixed card height so every stack slide is identical */
+  height: 520px;
+  min-height: 520px;
+  max-height: 520px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: clamp(1rem, 3vw, 2.5rem);
+  transform-origin: top center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.about-wedo-stack__footer-cta {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+}
+
+.about-wedo-stack-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.about-wedo-stack-card__row {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  margin-top: 1.25rem;
+  min-height: 0;
+  /* Reserve fixed space for image column (same on every card) */
+  height: 250px;
+  max-height: 250px;
+}
+
+.about-wedo-stack-card__copy {
+  width: 40%;
+  flex: 0 0 40%;
+  max-width: 40%;
+  position: relative;
+  top: 0;
+  align-self: stretch;
+  overflow-y: auto;
+  max-height: 250px;
+}
+
+@media (min-width: 769px) {
+  .about-wedo-stack-card__copy {
+    top: 10%;
+  }
+}
+
+.about-wedo-stack-card__desc {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.about-wedo-stack-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-wedo-stack-card__link svg {
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.about-wedo-stack-card__img-shell {
+  position: relative;
+  width: 60%;
+  flex: 0 0 60%;
+  max-width: 60%;
+  height: 250px;
+  min-height: 250px;
+  max-height: 250px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.about-wedo-stack-card__img-motion {
+  width: 100%;
+  height: 100%;
+}
+
+.about-wedo-stack-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .about-wedo-stack-card__surface {
+    height: auto;
+    min-height: 520px;
+    max-height: none;
+  }
+
+  .about-wedo-stack-card__row {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+    flex: 1 1 auto;
+  }
+
+  .about-wedo-stack-card__copy,
+  .about-wedo-stack-card__img-shell {
+    width: 100%;
+    max-width: 100%;
+    flex: none;
+  }
+
+  .about-wedo-stack-card__copy {
+    max-height: none;
+  }
+
+  .about-wedo-stack-card__img-shell {
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+    flex-shrink: 0;
+  }
+}

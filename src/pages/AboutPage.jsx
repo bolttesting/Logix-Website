@@ -1,7 +1,24 @@
-import { useState, useCallback, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Icon, { Stars } from '../components/Icons'
+import { useMemo } from 'react'
+import { motion } from 'framer-motion'
+import Icon from '../components/Icons'
+import Testimonials from '../components/Testimonials'
+import { FloatingIconsHero } from '../components/ui/FloatingIconsHero'
+import AboutWhatWeDoStack from '../components/AboutWhatWeDoStack'
+import AboutTechStackArc from '../components/AboutTechStackArc'
+import { ExpandingCards } from '../components/ui/ExpandingCards'
+import { ProfileCardTestimonialCarousel } from '../components/ui/ProfileCardTestimonialCarousel'
+import { Lightbulb, Heart, Shield, Star, Handshake, BadgeCheck } from 'lucide-react'
 import { useSiteData } from '../context/SiteDataContext'
+import './HomeLanding.css'
+
+const WHAT_WE_DO_IMAGES = [
+  'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1551434678-e076c223a692?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=900&q=80&auto=format&fit=crop',
+]
 
 const innovationServices = [
   { icon: 'desktop', color: '#7c3aed', title: 'Web & Mobile App Development', desc: 'Building scalable and responsive applications that work seamlessly across all devices.' },
@@ -30,136 +47,126 @@ const timeline = [
   { year: '2023', title: 'Received Industry Award', desc: 'Recognized for excellence in software development.' },
 ]
 
-const principles = [
-  { icon: 'lightbulb', color: '#7c3aed', title: 'Innovation', desc: 'Constantly pushing boundaries to deliver cutting-edge solutions.' },
-  { icon: 'heart', color: '#14b8a6', title: 'Client-Centricity', desc: 'Your success is our success. We put you at the center.' },
-  { icon: 'shield', color: '#a78bfa', title: 'Integrity', desc: 'Honest, transparent, and ethical in everything we do.' },
-  { icon: 'star', color: '#14b8a6', title: 'Excellence', desc: 'Striving for the highest quality in every deliverable.' },
-  { icon: 'handshake', color: '#7c3aed', title: 'Collaboration', desc: 'Working together to achieve extraordinary results.' },
-  { icon: 'check', color: '#a78bfa', title: 'Accountability', desc: 'Taking ownership and delivering on our promises.' },
+/** Portrait fallbacks when `photo_url` / `image` not set on team_members */
+const TEAM_FALLBACK_PHOTOS = [
+  'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=960&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=960&q=80&auto=format&fit=crop',
 ]
 
-const expertise = {
-  Frontend: ['React.js', 'Angular.js', 'Vue.js', 'HTML5/CSS3', 'JavaScript/TypeScript', 'Next.js'],
-  Backend: ['Node.js', 'Python (Django/Flask)', 'PHP (Laravel)', 'Ruby on Rails', '.NET Core'],
-  Databases: ['MongoDB', 'PostgreSQL', 'MySQL', 'SQL Server'],
-  Mobile: ['React Native', 'Flutter', 'iOS (Swift/Objective-C)', 'Android (Java/Kotlin)'],
-  DevOps: ['Docker', 'Kubernetes', 'AWS', 'Azure', 'Google Cloud'],
-  'UI/UX Tools': ['Figma', 'Sketch', 'Adobe XD', 'Photoshop', 'Illustrator'],
-}
+const ourValueCards = [
+  {
+    id: 'innovation',
+    title: 'Innovation',
+    description: 'Constantly pushing boundaries to deliver cutting-edge solutions.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80&auto=format&fit=crop',
+    icon: <Lightbulb size={24} strokeWidth={1.75} />,
+  },
+  {
+    id: 'client-centricity',
+    title: 'Client-Centricity',
+    description: 'Your success is our success. We put you at the center.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80&auto=format&fit=crop',
+    icon: <Heart size={24} strokeWidth={1.75} />,
+  },
+  {
+    id: 'integrity',
+    title: 'Integrity',
+    description: 'Honest, transparent, and ethical in everything we do.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&q=80&auto=format&fit=crop',
+    icon: <Shield size={24} strokeWidth={1.75} />,
+  },
+  {
+    id: 'excellence',
+    title: 'Excellence',
+    description: 'Striving for the highest quality in every deliverable.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80&auto=format&fit=crop',
+    icon: <Star size={24} strokeWidth={1.75} />,
+  },
+  {
+    id: 'collaboration',
+    title: 'Collaboration',
+    description: 'Working together to achieve extraordinary results.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=1200&q=80&auto=format&fit=crop',
+    icon: <Handshake size={24} strokeWidth={1.75} />,
+  },
+  {
+    id: 'accountability',
+    title: 'Accountability',
+    description: 'Taking ownership and delivering on our promises.',
+    imgSrc:
+      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1200&q=80&auto=format&fit=crop',
+    icon: <BadgeCheck size={24} strokeWidth={1.75} />,
+  },
+]
 
 export default function AboutPage() {
-  const { team: teamData = [], testimonials: testimonialsData = [] } = useSiteData()
+  const { team: teamData = [] } = useSiteData()
   const team = teamData.length ? teamData : [
-    { name: 'John Doe', role: 'CEO & Founder', avatar: 'JD' },
-    { name: 'Jane Smith', role: 'Lead Developer', avatar: 'JS' },
-    { name: 'Robert Johnson', role: 'UI/UX Designer', avatar: 'RJ' },
-    { name: 'Emily Davis', role: 'Project Manager', avatar: 'ED' },
+    { id: '1', name: 'James Wilson', role: 'CEO & Founder', avatar: 'JW' },
+    { id: '2', name: 'Maria Kowalski', role: 'CTO & Co-Founder', avatar: 'MK' },
+    { id: '3', name: 'David Chen', role: 'Engineering Lead', avatar: 'DC' },
+    { id: '4', name: 'Elena Ortiz', role: 'Head of Design', avatar: 'EO' },
+    { id: '5', name: 'Sam Okoro', role: 'Senior Full-Stack Developer', avatar: 'SO' },
+    { id: '6', name: 'Priya Sharma', role: 'Product Manager', avatar: 'PS' },
+    { id: '7', name: 'Tom Brennan', role: 'DevOps & Infrastructure', avatar: 'TB' },
+    { id: '8', name: 'Zoe Williams', role: 'Client Success Lead', avatar: 'ZW' },
   ]
-  const testimonials = testimonialsData.length ? testimonialsData : [
-    { name: 'Sarah Johnson', role: 'CEO, TechStart', text: 'Exceptional work from start to finish. They delivered our web app on time and exceeded our expectations. Highly recommend!', avatar: 'SJ' },
-    { name: 'Michael Chen', role: 'Founder, InnovateLab', text: 'The team understood our vision perfectly. The mobile app they built has transformed our user engagement. Five stars!', avatar: 'MC' },
-    { name: 'Emma Roberts', role: 'Director, ScaleUp', text: 'Professional, responsive, and results-driven. Our digital presence has grown significantly since working with them.', avatar: 'ER' },
-  ]
-  const [testimonialIndex, setTestimonialIndex] = useState(0)
 
-  const nextTestimonial = useCallback(() => {
-    setTestimonialIndex((i) => (i + 1) % testimonials.length)
-  }, [])
-  const prevTestimonial = useCallback(() => {
-    setTestimonialIndex((i) => (i - 1 + testimonials.length) % testimonials.length)
-  }, [])
+  const teamProfileCarouselItems = useMemo(
+    () =>
+      team.map((member, i) => {
+        const imageUrl =
+          (typeof member.photo_url === 'string' && member.photo_url.trim()) ||
+          (typeof member.image === 'string' && member.image.trim()) ||
+          TEAM_FALLBACK_PHOTOS[i % TEAM_FALLBACK_PHOTOS.length]
 
-  useEffect(() => {
-    const t = setInterval(nextTestimonial, 5000)
-    return () => clearInterval(t)
-  }, [nextTestimonial])
+        const bio =
+          typeof member.bio === 'string' && member.bio.trim()
+            ? member.bio.trim()
+            : `${member.name} leads our ${member.role ?? 'team'} practice — shipping quality work with clients from discovery through launch.`
+
+        return {
+          name: member.name,
+          title: member.role ?? 'Team',
+          description: bio,
+          imageUrl,
+          githubUrl: member.github_url || member.githubUrl || '#',
+          twitterUrl: member.twitter_url || member.twitterUrl || '#',
+          youtubeUrl: member.youtube_url || member.youtubeUrl || '#',
+          linkedinUrl: member.linkedin_url || member.linkedinUrl || '#',
+        }
+      }),
+    [team],
+  )
 
   return (
     <main className="about-page">
-      {/* Hero */}
-      <section className="about-hero">
-        <div className="about-hero__bg" />
-        <div className="about-hero__glow" />
-        <div className="about-hero__content">
-          <motion.span
-            className="about-hero__badge"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            About Us
-          </motion.span>
-          <motion.h1
-            className="about-hero__title"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            Transforming Ideas into
-            <br />
-            <span className="about-hero__accent">Digital Realities</span>
-          </motion.h1>
-          <motion.p
-            className="about-hero__tagline"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            Web & App Development Agency · Since 2018
-          </motion.p>
-        </div>
-      </section>
+      <FloatingIconsHero
+        title="Transforming Ideas into Digital Realities"
+        subtitle="Web & app development agency since 2018 — strategy, product design, and engineering in one team. Explore the tools and stack we use to ship."
+        ctaText="Start a project"
+        ctaHref="/contact"
+      />
 
-      {/* Driving Digital Innovation */}
-      <section className="about-section about-section--innovation">
-        <div className="about-section__glow" />
-        <div className="about-section__inner">
-          <motion.div
-            className="about-section__header"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="about-section__badge">What We Do</span>
-            <h2 className="about-section__title">Driving Digital Innovation</h2>
-            <p className="about-section__subtitle">
-              We are committed to delivering exceptional results that exceed your expectations
-            </p>
-            <span className="about-section__accent-line" />
-          </motion.div>
-          <div className="about-innovation__grid">
-            {innovationServices.map((item, i) => (
-              <motion.div
-                key={item.title}
-                className="about-card about-card--innovation"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-                whileHover={{ y: -6 }}
-              >
-                <div className="about-card__icon-wrap" style={{ '--card-color': item.color }}>
-                  <span className="about-card__icon"><Icon name={item.icon} size={26} /></span>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-                <a href="/#services" className="about-card__link">
-                  Learn more <Icon name="arrowRight" size={14} />
-                </a>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div
-            className="about-section__cta"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <a href="/#services" className="about-btn about-btn--purple">Explore Services</a>
-          </motion.div>
-        </div>
-      </section>
+      <AboutWhatWeDoStack
+        items={innovationServices.map((item, i) => ({
+          title: item.title,
+          description: item.desc,
+          color: item.color,
+          image: WHAT_WE_DO_IMAGES[i % WHAT_WE_DO_IMAGES.length],
+        }))}
+      />
 
       {/* How We Work */}
       <section className="about-section about-section--alt">
@@ -241,8 +248,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Principles */}
-      <section className="about-section about-section--alt">
+      {/* Our Values — expanding image cards */}
+      <section className="about-section about-section--alt about-section--expanding-values">
         <div className="about-section__inner">
           <motion.div
             className="about-section__header"
@@ -253,30 +260,17 @@ export default function AboutPage() {
             <span className="about-section__badge">Our Values</span>
             <h2 className="about-section__title">Principles That Guide Us</h2>
             <p className="about-section__subtitle">
-              Our core values shape every decision and action we take
+              Hover, focus, or tap a card to expand it. Our core values shape every decision we make.
             </p>
           </motion.div>
-          <div className="about-innovation__grid">
-            {principles.map((item, i) => (
-              <motion.div
-                key={item.title}
-                className="about-card"
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <span className="about-card__icon" style={{ background: item.color }}><Icon name={item.icon} size={24} /></span>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </motion.div>
-            ))}
+          <div className="about-expanding-values">
+            <ExpandingCards items={ourValueCards} defaultActiveIndex={0} />
           </div>
         </div>
       </section>
 
-      {/* Our Expertise */}
-      <section className="about-section">
+      {/* Tech stack — arc + flip cards (scroll-scrubbed) */}
+      <section className="about-section about-section--tech-arc">
         <div className="about-section__inner">
           <motion.div
             className="about-section__header"
@@ -287,38 +281,16 @@ export default function AboutPage() {
             <span className="about-section__badge">Tech Stack</span>
             <h2 className="about-section__title about-section__title--muted">Our Expertise</h2>
             <p className="about-section__subtitle">
-              Leveraging cutting-edge technologies to build future-ready solutions
+              Leveraging cutting-edge technologies to build future-ready solutions. Scroll the section below to see
+              icons assemble into an arc.
             </p>
           </motion.div>
-          <motion.div
-            className="about-expertise"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            {Object.entries(expertise).map(([category, techs], ci) => (
-              <motion.div
-                key={category}
-                className="about-expertise__col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: ci * 0.08 }}
-              >
-                <h4>{category}</h4>
-                <div className="about-expertise__tags">
-                  {techs.map((tech) => (
-                    <span key={tech} className="about-expertise__tag">{tech}</span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
         </div>
+        <AboutTechStackArc />
       </section>
 
-      {/* Meet Our Team */}
-      <section className="about-section about-section--alt">
+      {/* Meet Our Team — profile card carousel */}
+      <section className="about-section about-section--alt" id="team">
         <div className="about-section__inner">
           <motion.div
             className="about-section__header"
@@ -329,97 +301,17 @@ export default function AboutPage() {
             <span className="about-section__badge">The People</span>
             <h2 className="about-section__title">Meet Our Team</h2>
             <p className="about-section__subtitle">
-              Dedicated professionals committed to bringing your vision to life
+              Faces behind the work — use the arrows or dots to browse profiles.
             </p>
           </motion.div>
-          <div className="about-team__grid">
-            {team.map((member, i) => (
-              <motion.div
-                key={member.name}
-                className="about-team-card"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08 }}
-              >
-                <div className="about-team-card__avatar">{member.avatar}</div>
-                <h3>{member.name}</h3>
-                <p>{member.role}</p>
-                <div className="about-team-card__social">
-                  <a href="#" aria-label="LinkedIn"><Icon name="share" size={16} /></a>
-                  <a href="#" aria-label="Twitter"><Icon name="share" size={16} /></a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          <ProfileCardTestimonialCarousel items={teamProfileCarouselItems} />
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="about-section">
-        <div className="about-section__inner">
-          <motion.div
-            className="about-section__header"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="about-section__badge">Reviews</span>
-            <h2 className="about-section__title">What Our Clients Say</h2>
-            <p className="about-section__subtitle">
-              Hear from our satisfied clients about their experience working with us
-            </p>
-          </motion.div>
-          <div className="about-testimonials-slider">
-            <button
-              type="button"
-              className="about-slider__btn about-slider__btn--prev"
-              onClick={prevTestimonial}
-              aria-label="Previous testimonial"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6" /></svg>
-            </button>
-            <div className="about-testimonials-slider__viewport">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={testimonialIndex}
-                  className="about-testimonial-card"
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <span className="about-testimonial-card__quote">"</span>
-                  <div className="about-testimonial-card__avatar">{testimonials[testimonialIndex].avatar}</div>
-                  <h4>{testimonials[testimonialIndex].name}</h4>
-                  <span className="about-testimonial-card__role">{testimonials[testimonialIndex].role}</span>
-                  <p>{testimonials[testimonialIndex].text}</p>
-                  <div className="about-testimonial-card__stars"><Stars count={5} size={14} /></div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <button
-              type="button"
-              className="about-slider__btn about-slider__btn--next"
-              onClick={nextTestimonial}
-              aria-label="Next testimonial"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6" /></svg>
-            </button>
-          </div>
-          <div className="about-testimonials-slider__nav">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                className={`about-slider__dot ${i === testimonialIndex ? 'about-slider__dot--active' : ''}`}
-                onClick={() => setTestimonialIndex(i)}
-                aria-label={`Go to testimonial ${i + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* What Clients Say — same block as home (marquee columns + SiteData testimonials) */}
+      <div className="home-landing">
+        <Testimonials />
+      </div>
     </main>
   )
 }
