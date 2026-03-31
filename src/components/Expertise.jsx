@@ -14,7 +14,7 @@ export default function Expertise() {
           transition={{ duration: 0.5 }}
         >
           <span className="expertise__badge">What We Do</span>
-          <h2 className="expertise__title">Our Expertise on Query</h2>
+          <h2 className="expertise__title">Our Expertise on Demand</h2>
           <p className="expertise__subtitle">We provide next-level services on demand.</p>
           <span className="expertise__accent-line" />
         </motion.div>

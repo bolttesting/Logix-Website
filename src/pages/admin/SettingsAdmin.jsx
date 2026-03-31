@@ -10,7 +10,7 @@ export default function SettingsAdmin() {
 
   useEffect(() => {
     setForm({
-      email: settings?.email || 'info@logixcontact.com',
+      email: settings?.email || 'info@logixcontact.co.uk',
       phone: settings?.phone || '+123-456-7890',
       address: settings?.address || '123 Street, City, Country',
       hours: settings?.hours || 'Mon - Fri: 9AM - 6PM',
@@ -40,7 +40,7 @@ export default function SettingsAdmin() {
         <p style={{ color: '#a1a1aa', marginBottom: '1.5rem' }}>These appear on the Contact page and in the footer.</p>
         <div className="admin-form__field">
           <label>Email</label>
-          <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="info@logixcontact.com" />
+          <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="info@logixcontact.co.uk" />
         </div>
         <div className="admin-form__field">
           <label>Phone</label>

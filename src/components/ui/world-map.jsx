@@ -60,7 +60,7 @@ export function WorldMap({
       className={`world-map ${className}`.trim()}
       style={{ backgroundColor }}
       role="img"
-      aria-label="World map with office connection routes"
+      aria-label="Stylised world map showing dotted connections between office locations"
     >
       <img
         src={dataUri}

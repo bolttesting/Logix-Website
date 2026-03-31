@@ -59,7 +59,7 @@ function FlipCard({ src, index, label, target }) {
         whileHover={{ rotateY: 180 }}
       >
         <div className="tech-flip-card__face tech-flip-card__face--front">
-          <img src={src} alt="" decoding="async" loading="lazy" />
+          <img src={src} alt={`${label} logo`} decoding="async" loading="lazy" />
         </div>
         <div className="tech-flip-card__face tech-flip-card__face--back">
           <span className="tech-flip-card__back-label">Tech</span>

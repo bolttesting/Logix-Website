@@ -9,11 +9,13 @@ import ClientCommits from '../components/ClientCommits'
 import Testimonials from '../components/Testimonials'
 import Clients from '../components/Clients'
 import Newsletter from '../components/Newsletter'
+import Seo from '../components/Seo'
 import './HomeLanding.css'
 
 export default function HomePage() {
   return (
     <div className="home-landing">
+      <Seo />
       <Hero />
       <HomeServicesMarquee />
       <Expertise />

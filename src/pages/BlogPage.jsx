@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
+import Seo from '../components/Seo';
+
+function formatDateIsoDateOnly(value) {
+  if (!value) return undefined;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
+}
 
 const categoryGradients = {
   'Web Development': 'linear-gradient(135deg, rgba(124, 58, 237, 0.35) 0%, rgba(167, 139, 250, 0.2) 50%, rgba(20, 184, 166, 0.15) 100%)',
@@ -15,6 +22,11 @@ export default function BlogPage() {
   const { blogPosts = [] } = useSiteData();
   return (
     <main className="blog-page">
+      <Seo
+        title="Blog"
+        description="Articles on web development, mobile apps, UI/UX, and cloud from Logix Contact — practical insights for UK businesses and product teams."
+        keywords="tech blog UK, web development articles, UI UX insights, software blog, Logix Contact"
+      />
       <section className="blog-hero">
         <div className="blog-hero__glow" />
         <div className="blog-hero__content">
@@ -63,7 +75,11 @@ export default function BlogPage() {
                     <div className="blog-card__image-pattern" />
                   </div>
                   <div className="blog-card__content">
-                    <time className="blog-card__date">{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</time>
+                    <time className="blog-card__date" dateTime={formatDateIsoDateOnly(post.date)}>
+                      {post.date && !Number.isNaN(new Date(post.date).getTime())
+                        ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                        : ''}
+                    </time>
                     <h2 className="blog-card__title">{post.title}</h2>
                     <p className="blog-card__excerpt">{post.excerpt}</p>
                     <span className="blog-card__read">Read more</span>

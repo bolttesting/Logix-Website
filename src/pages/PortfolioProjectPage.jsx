@@ -1,6 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useSiteData } from '../context/SiteDataContext';
+import Seo from '../components/Seo';
+import { truncateMeta } from '../config/seo';
 
 export default function PortfolioProjectPage() {
   const { id } = useParams();
@@ -18,6 +20,11 @@ export default function PortfolioProjectPage() {
   if (!project) {
     return (
       <main className="portfolio-project-page">
+        <Seo
+          title="Project not found"
+          description="This portfolio project could not be found. View our full portfolio for recent work from Logix Contact."
+          noindex
+        />
         <div className="portfolio-project__404">
           <h1>Project Not Found</h1>
           <Link to="/portfolio">Back to Portfolio</Link>
@@ -26,8 +33,16 @@ export default function PortfolioProjectPage() {
     );
   }
 
+  const projectDesc = truncateMeta(details?.overview || project.description || '');
+
   return (
     <main className="portfolio-project-page">
+      <Seo
+        title={project.name}
+        description={projectDesc || `Case study: ${project.name} — ${project.type || 'digital project'} by Logix Contact, UK product studio.`}
+        keywords={`${project.name}, portfolio, ${project.tech || ''}, ${project.type || ''}, UK web agency, Logix Contact`}
+        image={project.image}
+      />
       <motion.article
         className="portfolio-project"
         initial={{ opacity: 0 }}
@@ -36,7 +51,7 @@ export default function PortfolioProjectPage() {
       >
         <div className="portfolio-project__hero">
           {project.image && (
-            <img src={project.image} alt={project.name} className="portfolio-project__hero-img" />
+            <img src={project.image} alt={`${project.name} — project hero`} className="portfolio-project__hero-img" fetchPriority="high" decoding="async" />
           )}
           <div className="portfolio-project__hero-overlay" />
           <div className="portfolio-project__hero-content">

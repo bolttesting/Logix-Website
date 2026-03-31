@@ -92,7 +92,7 @@ const socialLinks = [
 
 export default function Footer() {
   const { settings } = useSiteData();
-  const email = settings?.email || 'info@logixcontact.com';
+  const email = settings?.email || 'info@logixcontact.co.uk';
   const phone = settings?.phone || '+123-456-7890';
   const isNarrow = useFooterAccordionMode();
 

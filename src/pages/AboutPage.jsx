@@ -9,6 +9,7 @@ import { ExpandingCards } from '../components/ui/ExpandingCards'
 import { ProfileCardTestimonialCarousel } from '../components/ui/ProfileCardTestimonialCarousel'
 import { Lightbulb, Heart, Shield, Star, Handshake, BadgeCheck } from 'lucide-react'
 import { useSiteData } from '../context/SiteDataContext'
+import Seo from '../components/Seo'
 import './HomeLanding.css'
 
 const WHAT_WE_DO_IMAGES = [
@@ -152,6 +153,11 @@ export default function AboutPage() {
 
   return (
     <main className="about-page">
+      <Seo
+        title="About Us"
+        description="Meet Logix Contact — a UK web and app agency combining strategy, product design, and engineering. Discover our team, process, and values."
+        keywords="about Logix Contact, UK web development agency, app development team UK, digital product studio United Kingdom"
+      />
       <FloatingIconsHero
         title="Transforming Ideas into Digital Realities"
         subtitle="Web & app development agency since 2018 — strategy, product design, and engineering in one team. Explore the tools and stack we use to ship."

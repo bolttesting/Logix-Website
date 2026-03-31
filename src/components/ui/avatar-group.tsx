@@ -70,7 +70,6 @@ function AvatarSlot({
         <button
           type="button"
           className="avatar-group__trigger"
-          aria-label={`${item.name}, ${item.designation}`}
           aria-expanded={isHovered}
           onFocus={onHover}
           onBlur={onLeave}
@@ -78,7 +77,7 @@ function AvatarSlot({
           <span className="avatar-group__img-wrap">
             <img
               src={item.image}
-              alt=""
+              alt={`${item.name}, ${item.designation}`}
               className="avatar-group__img"
               draggable={false}
               loading="lazy"

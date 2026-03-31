@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
 );
 
 INSERT INTO site_settings (id, email, phone, address, hours) VALUES 
-('default', 'info@logixcontact.com', '+123-456-7890', '123 Street, City, Country', 'Mon - Fri: 9AM - 6PM')
+('default', 'info@logixcontact.co.uk', '+123-456-7890', '123 Street, City, Country', 'Mon - Fri: 9AM - 6PM')
 ON CONFLICT (id) DO NOTHING;
 
 -- Portfolio projects

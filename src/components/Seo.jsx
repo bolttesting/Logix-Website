@@ -1,0 +1,154 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import {
+  SITE_NAME,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_KEYWORDS,
+  getSiteUrl,
+  LOCALE,
+  HTML_LANG,
+} from '../config/seo';
+
+function upsertMeta(attrName, attrValue, content) {
+  if (content == null || content === '') return;
+  let el = document.querySelector(`meta[${attrName}="${attrValue}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attrName, attrValue);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function upsertLink(rel, href) {
+  if (!href) return;
+  let el = document.querySelector(`link[rel="${rel}"]`);
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', rel);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
+}
+
+function removeMeta(attrName, attrValue) {
+  document.querySelector(`meta[${attrName}="${attrValue}"]`)?.remove();
+}
+
+/**
+ * Per-route SEO: title, description, Open Graph, Twitter, canonical, hreflang (UK), robots, JSON-LD WebPage.
+ */
+export default function Seo({
+  title,
+  description = DEFAULT_DESCRIPTION,
+  keywords = DEFAULT_KEYWORDS,
+  path: pathOverride,
+  image,
+  type = 'website',
+  noindex = false,
+  articlePublishedTime,
+  articleModifiedTime,
+}) {
+  const { pathname, search } = useLocation();
+  const path = pathOverride ?? `${pathname}${search}`;
+
+  useEffect(() => {
+    document.documentElement.lang = HTML_LANG;
+
+    const siteUrl = getSiteUrl();
+    const canonical = `${siteUrl}${path.startsWith('/') ? path : `/${path}`}`.split('#')[0];
+    const pageTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Web & App Development Agency UK`;
+    document.title = pageTitle;
+
+    upsertMeta('name', 'description', description);
+    upsertMeta('name', 'keywords', keywords);
+    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    upsertMeta('name', 'language', 'English');
+    upsertMeta('name', 'geo.region', 'GB');
+    upsertMeta('name', 'geo.placename', 'United Kingdom');
+
+    upsertMeta('property', 'og:title', pageTitle);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:type', type);
+    upsertMeta('property', 'og:url', canonical);
+    upsertMeta('property', 'og:locale', LOCALE);
+    upsertMeta('property', 'og:site_name', SITE_NAME);
+    if (image) {
+      upsertMeta('property', 'og:image', image.startsWith('http') ? image : `${siteUrl}${image}`);
+    } else {
+      removeMeta('property', 'og:image');
+      removeMeta('name', 'twitter:image');
+    }
+
+    upsertMeta('name', 'twitter:card', image ? 'summary_large_image' : 'summary');
+    upsertMeta('name', 'twitter:title', pageTitle);
+    upsertMeta('name', 'twitter:description', description);
+    if (image) {
+      upsertMeta('name', 'twitter:image', image.startsWith('http') ? image : `${siteUrl}${image}`);
+    }
+
+    upsertLink('canonical', canonical);
+
+    let hreflang = document.querySelector('link[rel="alternate"][hreflang="en-GB"]');
+    if (!hreflang) {
+      hreflang = document.createElement('link');
+      hreflang.setAttribute('rel', 'alternate');
+      hreflang.setAttribute('hreflang', 'en-GB');
+      document.head.appendChild(hreflang);
+    }
+    hreflang.setAttribute('href', canonical);
+
+    if (type === 'article' && articlePublishedTime) {
+      upsertMeta('property', 'article:published_time', articlePublishedTime);
+      if (articleModifiedTime) {
+        upsertMeta('property', 'article:modified_time', articleModifiedTime);
+      }
+    }
+
+    const webPage = {
+      '@context': 'https://schema.org',
+      '@type': type === 'article' ? 'BlogPosting' : 'WebPage',
+      name: pageTitle,
+      description,
+      url: canonical,
+      inLanguage: HTML_LANG,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: SITE_NAME,
+        url: siteUrl,
+      },
+    };
+    if (type === 'article' && articlePublishedTime) {
+      webPage.datePublished = articlePublishedTime;
+      if (articleModifiedTime) webPage.dateModified = articleModifiedTime;
+    }
+    if (type === 'article' && title) {
+      webPage.headline = title;
+    }
+    if (image) {
+      const imgUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+      webPage.image = [imgUrl];
+    }
+
+    let script = document.getElementById('seo-jsonld-page');
+    if (!script) {
+      script = document.createElement('script');
+      script.id = 'seo-jsonld-page';
+      script.type = 'application/ld+json';
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(webPage);
+  }, [
+    title,
+    description,
+    keywords,
+    path,
+    image,
+    type,
+    noindex,
+    articlePublishedTime,
+    articleModifiedTime,
+  ]);
+
+  return null;
+}

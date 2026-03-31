@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
+import Seo from '../components/Seo';
 
 const categories = [
   { id: 'all', label: 'All Projects' },
@@ -19,6 +20,11 @@ export default function PortfolioPage() {
 
   return (
     <main className="portfolio-page">
+      <Seo
+        title="Portfolio"
+        description="Explore web, mobile, and digital projects delivered by Logix Contact for clients in the UK and worldwide — case studies and live work."
+        keywords="web development portfolio UK, app case studies, digital agency work, Logix Contact projects"
+      />
       <section className="portfolio-hero">
         <div className="portfolio-hero__glow" />
         <div className="portfolio-hero__content">
@@ -75,7 +81,7 @@ export default function PortfolioPage() {
                 <Link to={`/portfolio/${project.id}`} className="portfolio-card__link">
                   <div className="portfolio-card__preview">
                     {project.image && (
-                      <img src={project.image} alt={project.name} className="portfolio-card__img" />
+                      <img src={project.image} alt={`${project.name} — portfolio preview`} className="portfolio-card__img" loading="lazy" decoding="async" />
                     )}
                     <span className="portfolio-card__overlay">View Project</span>
                   </div>

@@ -1,6 +1,20 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useSiteData } from '../context/SiteDataContext';
+import Seo from '../components/Seo';
+import { DEFAULT_DESCRIPTION, truncateMeta } from '../config/seo';
+
+function toIsoDate(d) {
+  if (!d) return undefined;
+  const x = new Date(d);
+  return Number.isNaN(x.getTime()) ? undefined : x.toISOString();
+}
+
+function formatDateIsoDateOnly(value) {
+  if (!value) return undefined;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
+}
 
 const fallbackContent = {
   1: `The React ecosystem continues to evolve. Key topics include component architecture, state management, and server components.`,
@@ -20,6 +34,11 @@ export default function BlogPostPage() {
   if (!post) {
     return (
       <main className="blog-post-page">
+        <Seo
+          title="Post not found"
+          description="This blog post could not be found. Browse our blog for the latest articles from Logix Contact."
+          noindex
+        />
         <div className="blog-post__404">
           <h1>Post Not Found</h1>
           <Link to="/blog">Back to Blog</Link>
@@ -28,8 +47,20 @@ export default function BlogPostPage() {
     );
   }
 
+  const cover = post.image || post.cover_image || post.coverImage;
+  const metaDesc = truncateMeta(post.excerpt || String(post.content || '').slice(0, 220));
+
   return (
     <main className="blog-post-page">
+      <Seo
+        title={post.title}
+        description={metaDesc || DEFAULT_DESCRIPTION}
+        keywords={`${post.category}, UK tech blog, web development, software, Logix Contact`}
+        type="article"
+        articlePublishedTime={toIsoDate(post.date)}
+        articleModifiedTime={toIsoDate(post.updated_at || post.updatedAt || post.date)}
+        image={cover}
+      />
       <article className="blog-post">
         <motion.div
           className="blog-post__header"
@@ -40,7 +71,11 @@ export default function BlogPostPage() {
           <Link to="/blog" className="blog-post__back">← Back to Blog</Link>
           <span className="blog-post__category">{post.category}</span>
           <h1>{post.title}</h1>
-          <time>{post.date ? new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''}</time>
+          <time dateTime={formatDateIsoDateOnly(post.date)}>
+            {post.date && !Number.isNaN(new Date(post.date).getTime())
+              ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+              : ''}
+          </time>
         </motion.div>
         <motion.div
           className="blog-post__content"

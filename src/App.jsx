@@ -21,6 +21,7 @@ import ServicesAdmin from './pages/admin/ServicesAdmin'
 import SettingsAdmin from './pages/admin/SettingsAdmin'
 import ContactsAdmin from './pages/admin/ContactsAdmin'
 import ReturnToTop from './components/ReturnToTop'
+import GlobalJsonLd from './components/GlobalJsonLd'
 import './App.css'
 import './pages/AboutPage.css'
 import './pages/ContactPage.css'
@@ -33,6 +34,7 @@ import './pages/ServicePage.css'
 function App() {
   return (
     <SiteDataProvider>
+      <GlobalJsonLd />
       <div className="grid-bg" />
       <div className="gradient-orb gradient-orb-1" />
       <div className="gradient-orb gradient-orb-2" />

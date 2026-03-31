@@ -194,13 +194,15 @@ export default function FeatureCarousel() {
                 >
                   <img
                     src={feature.image}
-                    alt=""
+                    alt={`${feature.label} — ${feature.description}`}
                     className={
                       'feature-carousel__card-img ' +
                       (isActive
                         ? 'feature-carousel__card-img--active'
                         : 'feature-carousel__card-img--muted')
                     }
+                    loading="lazy"
+                    decoding="async"
                   />
 
                   <AnimatePresence>

@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import Icon from '../components/Icons';
 import { useTheme } from '../context/ThemeContext';
 import { servicesMenu, servicePageContent } from '../data/servicesData';
+import Seo from '../components/Seo';
+import { truncateMeta } from '../config/seo';
 
 const serviceThemes = {
   'app-development': {
@@ -54,6 +56,11 @@ export default function ServicePage() {
   if (!service) {
     return (
       <main className="service-page">
+        <Seo
+          title="Service not found"
+          description="The requested service page could not be found. Explore our services from the homepage or navigation."
+          noindex
+        />
         <div className="service-page__404">
           <h1>Service Not Found</h1>
           <Link to="/">Go Home</Link>
@@ -62,11 +69,23 @@ export default function ServicePage() {
     );
   }
 
+  const seoDescription = truncateMeta(
+    pageContent?.overview ||
+      `${service.title} for UK businesses — design, build, and launch with Logix Contact.`,
+  );
+  const seoKeywords = `${service.title}, ${service.title} UK, Logix Contact, digital agency United Kingdom, software development`;
+
   const processSteps = pageContent?.process || [];
   const stepItems = processSteps.map((s) => (typeof s === 'string' ? { title: s, desc: '' } : s));
 
   return (
     <main className="service-page" style={{ '--service-accent': theme.accent }}>
+      <Seo
+        title={service.title}
+        description={seoDescription}
+        keywords={seoKeywords}
+        path={service.path}
+      />
       {/* Hero */}
       <section className="service-hero" style={{ background: heroBg }}>
         <div className="service-hero__glow" />

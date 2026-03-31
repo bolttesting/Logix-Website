@@ -71,7 +71,7 @@ export const ExpandingCards = forwardRef(function ExpandingCards(
             tabIndex={0}
             data-active={active ? 'true' : 'false'}
           >
-            <img className="expanding-cards__img" src={item.imgSrc} alt="" loading="lazy" aria-hidden />
+            <img className="expanding-cards__img" src={item.imgSrc} alt={item.title} loading="lazy" decoding="async" />
             <div className="expanding-cards__overlay" aria-hidden />
             <article className="expanding-cards__article">
               <h3 className="expanding-cards__title--sideways" aria-hidden={active}>

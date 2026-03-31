@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import Seo from '../../components/Seo';
 import './Admin.css';
 
 export default function AdminLayout() {
@@ -37,8 +38,22 @@ export default function AdminLayout() {
     navigate('/admin/login');
   };
 
-  if (loading) return <div className="admin-login"><div className="admin-login__card">Loading...</div></div>;
-  if (!user) return <div className="admin-login"><div className="admin-login__card">Redirecting to login...</div></div>;
+  if (loading) {
+    return (
+      <div className="admin-login">
+        <Seo title="Admin" description="Logix Contact admin area." noindex />
+        <div className="admin-login__card">Loading...</div>
+      </div>
+    );
+  }
+  if (!user) {
+    return (
+      <div className="admin-login">
+        <Seo title="Admin" description="Logix Contact admin area." noindex />
+        <div className="admin-login__card">Redirecting to login...</div>
+      </div>
+    );
+  }
 
   const navItems = [
     { to: '/admin', end: true, label: 'Dashboard' },
@@ -53,6 +68,7 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
+      <Seo title="Admin" description="Logix Contact content management dashboard." noindex />
       <aside className="admin-sidebar">
         <div className="admin-sidebar__logo">Logix<span>Contact</span> Admin</div>
         <nav>

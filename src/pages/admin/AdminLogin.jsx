@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
+import Seo from '../../components/Seo';
 import './Admin.css';
 
 export default function AdminLogin() {
@@ -30,6 +31,7 @@ export default function AdminLogin() {
   if (!supabase) {
     return (
       <div className="admin-login">
+        <Seo title="Admin login" description="Administrator sign-in for Logix Contact." noindex />
         <div className="admin-login__card">
           <h1>Admin Setup Required</h1>
           <p>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to your <code>.env</code> file.</p>
@@ -42,6 +44,7 @@ export default function AdminLogin() {
 
   return (
     <div className="admin-login">
+      <Seo title="Admin login" description="Sign in to the Logix Contact admin dashboard." noindex />
       <div className="admin-login__card">
         <h1>Admin Login</h1>
         <p className="admin-login__subtitle">Logix Contact Dashboard</p>

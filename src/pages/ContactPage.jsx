@@ -4,6 +4,7 @@ import Icon from '../components/Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { supabase } from '../lib/supabase';
 import OfficesMapSection from '../components/OfficesMapSection';
+import Seo from '../components/Seo';
 
 export default function ContactPage() {
   const { settings, refresh } = useSiteData();
@@ -20,7 +21,7 @@ export default function ContactPage() {
   const contactInfo = [
     { icon: 'map', label: 'Address', value: settings?.address || '123 Street, City, Country' },
     { icon: 'phone', label: 'Phone', value: settings?.phone || '+123-456-7890' },
-    { icon: 'email', label: 'Email', value: settings?.email || 'info@logixcontact.com' },
+    { icon: 'email', label: 'Email', value: settings?.email || 'info@logixcontact.co.uk' },
     { icon: 'clock', label: 'Hours', value: settings?.hours || 'Mon - Fri: 9AM - 6PM' },
   ];
 
@@ -49,6 +50,11 @@ export default function ContactPage() {
 
   return (
     <main className="contact-page">
+      <Seo
+        title="Contact"
+        description="Contact Logix Contact — UK digital product studio for web apps, mobile apps, and design. Request a quote, book a call, or ask about our services."
+        keywords="contact Logix Contact, web development enquiry UK, hire app developers UK, digital agency contact"
+      />
       <section className="contact-hero">
         <div className="contact-hero__glow" />
         <div className="contact-hero__content">
