@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
+import { getBlogPostPath } from '../utils/blogPaths';
 
 function formatDateIsoDateOnly(value) {
   if (!value) return undefined;
@@ -20,6 +21,7 @@ const categoryGradients = {
 
 export default function BlogPage() {
   const { blogPosts = [] } = useSiteData();
+  const visiblePosts = blogPosts.filter((p) => p.published !== false);
   return (
     <main className="blog-page">
       <Seo
@@ -58,7 +60,7 @@ export default function BlogPage() {
       <section className="blog-posts">
         <div className="blog-posts__inner">
           <div className="blog-grid">
-            {(blogPosts || []).map((post, i) => (
+            {visiblePosts.map((post, i) => (
               <motion.article
                 key={post.id}
                 className={`blog-card ${i === 0 ? 'blog-card--featured' : ''}`}
@@ -66,10 +68,14 @@ export default function BlogPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
               >
-                <Link to={`/blog/${post.id}`} className="blog-card__link">
+                <Link to={getBlogPostPath(post)} className="blog-card__link">
                   <div
                     className="blog-card__image"
-                    style={{ background: categoryGradients[post.category] || categoryGradients['Web Development'] }}
+                    style={{
+                      background: post.image
+                        ? `linear-gradient(180deg, rgba(8,9,14,0.2) 0%, rgba(8,9,14,0.85) 100%), url(${post.image}) center/cover no-repeat`
+                        : categoryGradients[post.category] || categoryGradients['Web Development'],
+                    }}
                   >
                     <span className="blog-card__category">{post.category}</span>
                     <div className="blog-card__image-pattern" />

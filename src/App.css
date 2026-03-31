@@ -1777,6 +1777,13 @@
   color: var(--accent-orange);
 }
 
+.testimonial-card__avatar--img {
+  display: block;
+  object-fit: cover;
+  padding: 0;
+  flex-shrink: 0;
+}
+
 .testimonial-card__name {
   display: block;
   font-size: 1rem;

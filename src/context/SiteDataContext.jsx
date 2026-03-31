@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { portfolioProjects, portfolioProjectDetails } from '../data/portfolioData';
 import { servicesMenu, servicePageContent } from '../data/servicesData';
@@ -51,29 +51,46 @@ export function SiteDataProvider({ children }) {
     try {
       const [portRes, blogRes, teamRes, testRes, settingsRes, subsRes] = await Promise.all([
         supabase.from('portfolio').select('*').order('sort_order'),
-        supabase.from('blog_posts').select('*').eq('published', true).order('date', { ascending: false }),
+        supabase.from('blog_posts').select('*').order('date', { ascending: false }),
         supabase.from('team_members').select('*').order('sort_order'),
         supabase.from('testimonials').select('*').order('sort_order'),
         supabase.from('site_settings').select('*').single(),
         supabase.from('contact_submissions').select('*').order('created_at', { ascending: false }),
       ]);
 
-      if (portRes.data?.length) {
-        const projects = portRes.data.map(p => ({ ...p, id: String(p.id) }));
-        setPortfolio(projects);
-        const details = {};
-        projects.forEach(p => { if (p.details && Object.keys(p.details).length) details[p.id] = p.details; });
-        setPortfolioDetails(details);
+      // Use DB rows only (including empty arrays). Static fallbacks use non-UUID ids and break admin saves against Supabase.
+      if (Array.isArray(portRes.data)) {
+        if (portRes.data.length > 0) {
+          const projects = portRes.data.map((p) => ({ ...p, id: String(p.id) }));
+          setPortfolio(projects);
+          const details = {};
+          projects.forEach((p) => {
+            if (p.details && Object.keys(p.details).length) details[p.id] = p.details;
+          });
+          setPortfolioDetails(details);
+        } else {
+          setPortfolio([]);
+          setPortfolioDetails({});
+        }
       } else {
-        setPortfolio(portfolioProjects.map(p => ({ ...p, id: String(p.id) })));
-        setPortfolioDetails(portfolioProjectDetails);
+        setPortfolio([]);
+        setPortfolioDetails({});
       }
-      if (blogRes.data?.length) setBlogPosts(blogRes.data.map(b => ({ ...b, id: String(b.id) })));
-      else setBlogPosts(staticBlog);
-      if (teamRes.data?.length) setTeam(teamRes.data.map(t => ({ ...t, id: String(t.id) })));
-      else setTeam(staticTeam);
-      if (testRes.data?.length) setTestimonials(testRes.data.map(t => ({ ...t, id: String(t.id) })));
-      else setTestimonials(staticTestimonials);
+      if (Array.isArray(blogRes.data)) {
+        setBlogPosts(blogRes.data.map((b) => ({ ...b, id: String(b.id) })));
+      } else {
+        setBlogPosts([]);
+      }
+      if (Array.isArray(teamRes.data)) {
+        setTeam(teamRes.data.map((t) => ({ ...t, id: String(t.id) })));
+      } else {
+        setTeam([]);
+      }
+      if (Array.isArray(testRes.data)) {
+        setTestimonials(testRes.data.map((t) => ({ ...t, id: String(t.id) })));
+      } else {
+        setTestimonials([]);
+      }
       if (settingsRes.data) setSettings({ ...staticSettings, ...settingsRes.data });
       if (subsRes.data) setContactSubmissions(subsRes.data);
 
@@ -81,7 +98,8 @@ export function SiteDataProvider({ children }) {
       if (svcRes.data?.length) setServices(svcRes.data);
       else setServices(servicesMenu);
 
-      return portRes.data?.length > 0 || blogRes.data?.length > 0 || teamRes.data?.length > 0 || testRes.data?.length > 0;
+      // true = Supabase load finished; do not treat “all tables empty” as failure (avoids re-applying static ids in useEffect)
+      return true;
     } catch (e) {
       console.warn('Supabase load failed:', e);
       return false;
@@ -91,10 +109,10 @@ export function SiteDataProvider({ children }) {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const hasData = await loadFromSupabase();
-      setUseSupabase(hasData);
+      const supabaseLoadOk = await loadFromSupabase();
+      setUseSupabase(supabaseLoadOk);
 
-      if (!hasData) {
+      if (!supabaseLoadOk) {
         setPortfolio(portfolioProjects.map(p => ({ ...p, id: String(p.id) })));
         setPortfolioDetails(portfolioProjectDetails);
         setBlogPosts(staticBlog);
@@ -106,9 +124,23 @@ export function SiteDataProvider({ children }) {
     })();
   }, [loadFromSupabase]);
 
+  /** Public site: DB projects when any exist, else original `portfolioData` (admin still uses `portfolio` only). */
+  const portfolioDisplay = useMemo(
+    () =>
+      portfolio.length > 0 ? portfolio : portfolioProjects.map((p) => ({ ...p, id: String(p.id) })),
+    [portfolio],
+  );
+
+  const portfolioDetailsDisplay = useMemo(
+    () => (portfolio.length > 0 ? portfolioDetails : portfolioProjectDetails),
+    [portfolio, portfolioDetails],
+  );
+
   const value = {
     portfolio,
     portfolioDetails,
+    portfolioDisplay,
+    portfolioDetailsDisplay,
     blogPosts,
     team,
     testimonials,

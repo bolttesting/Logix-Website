@@ -3,6 +3,12 @@ import { Stars } from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { TestimonialsColumn } from './TestimonialsColumn';
 
+function avatarIsImageUrl(avatar) {
+  if (!avatar || typeof avatar !== 'string') return false;
+  const v = avatar.trim();
+  return v.startsWith('http') || v.startsWith('/') || v.startsWith('data:');
+}
+
 const defaultTestimonials = [
   {
     name: 'Sarah Johnson',
@@ -63,7 +69,18 @@ export default function Testimonials() {
                   <Stars count={5} size={16} />
                 </div>
                 <div className="testimonial-card__author">
-                  <div className="testimonial-card__avatar">{t.avatar}</div>
+                  {avatarIsImageUrl(t.avatar) ? (
+                    <img
+                      className="testimonial-card__avatar testimonial-card__avatar--img"
+                      src={t.avatar}
+                      alt=""
+                      width={48}
+                      height={48}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="testimonial-card__avatar">{t.avatar}</div>
+                  )}
                   <div>
                     <span className="testimonial-card__name">{t.name}</span>
                     <span className="testimonial-card__role">{t.role}</span>

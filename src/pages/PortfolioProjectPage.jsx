@@ -6,10 +6,10 @@ import { truncateMeta } from '../config/seo';
 
 export default function PortfolioProjectPage() {
   const { id } = useParams();
-  const { portfolio, portfolioDetails } = useSiteData();
-  const projects = portfolio || [];
+  const { portfolioDisplay, portfolioDetailsDisplay } = useSiteData();
+  const projects = portfolioDisplay || [];
   const project = projects.find((p) => String(p.id) === String(id));
-  const details = project ? (portfolioDetails && portfolioDetails[project.id]) : null;
+  const details = project ? (portfolioDetailsDisplay && portfolioDetailsDisplay[project.id]) : null;
   const sameCategory = projects.filter(
     (p) => String(p.id) !== String(id) && p.category === project?.category
   );
@@ -175,7 +175,7 @@ export default function PortfolioProjectPage() {
           )}
 
           {/* Gallery */}
-          {details?.gallery && details.gallery.length > 1 && (
+          {details?.gallery && details.gallery.length > 0 && (
             <section className="portfolio-project__section">
               <h2 className="portfolio-project__section-title">Gallery</h2>
               <div className="portfolio-project__gallery">

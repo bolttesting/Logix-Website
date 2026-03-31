@@ -48,6 +48,12 @@ export default function Seo({
   noindex = false,
   articlePublishedTime,
   articleModifiedTime,
+  /** BlogPosting / Article: author display name */
+  articleAuthor,
+  /** BlogPosting: section (e.g. category) */
+  articleSection,
+  /** BlogPosting: visible H1 title for JSON-LD headline (when meta title differs from on-page title) */
+  headline,
 }) {
   const { pathname, search } = useLocation();
   const path = pathOverride ?? `${pathname}${search}`;
@@ -104,6 +110,12 @@ export default function Seo({
         upsertMeta('property', 'article:modified_time', articleModifiedTime);
       }
     }
+    if (type === 'article' && articleAuthor) {
+      upsertMeta('property', 'article:author', articleAuthor);
+    }
+    if (type === 'article' && articleSection) {
+      upsertMeta('property', 'article:section', articleSection);
+    }
 
     const webPage = {
       '@context': 'https://schema.org',
@@ -122,8 +134,14 @@ export default function Seo({
       webPage.datePublished = articlePublishedTime;
       if (articleModifiedTime) webPage.dateModified = articleModifiedTime;
     }
-    if (type === 'article' && title) {
-      webPage.headline = title;
+    if (type === 'article' && (headline || title)) {
+      webPage.headline = headline || title;
+    }
+    if (type === 'article' && articleAuthor) {
+      webPage.author = { '@type': 'Person', name: articleAuthor };
+    }
+    if (type === 'article' && articleSection) {
+      webPage.articleSection = articleSection;
     }
     if (image) {
       const imgUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
@@ -148,6 +166,9 @@ export default function Seo({
     noindex,
     articlePublishedTime,
     articleModifiedTime,
+    articleAuthor,
+    articleSection,
+    headline,
   ]);
 
   return null;

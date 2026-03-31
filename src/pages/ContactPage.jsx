@@ -5,6 +5,7 @@ import { useSiteData } from '../context/SiteDataContext';
 import { supabase } from '../lib/supabase';
 import OfficesMapSection from '../components/OfficesMapSection';
 import Seo from '../components/Seo';
+import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
 
 export default function ContactPage() {
   const { settings, refresh } = useSiteData();
@@ -18,11 +19,14 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
+  const emailLines = contactEmails(settings);
+  const phoneLines = contactPhones(settings);
+
   const contactInfo = [
-    { icon: 'map', label: 'Address', value: settings?.address || '123 Street, City, Country' },
-    { icon: 'phone', label: 'Phone', value: settings?.phone || '+123-456-7890' },
-    { icon: 'email', label: 'Email', value: settings?.email || 'info@logixcontact.co.uk' },
-    { icon: 'clock', label: 'Hours', value: settings?.hours || 'Mon - Fri: 9AM - 6PM' },
+    { icon: 'map', label: 'Address', kind: 'text', value: settings?.address || '123 Street, City, Country' },
+    { icon: 'phone', label: 'Phone', kind: 'phones', values: phoneLines },
+    { icon: 'email', label: 'Email', kind: 'emails', values: emailLines },
+    { icon: 'clock', label: 'Hours', kind: 'text', value: settings?.hours || 'Mon - Fri: 9AM - 6PM' },
   ];
 
   const handleSubmit = async (e) => {
@@ -101,7 +105,25 @@ export default function ContactPage() {
                   <span className="contact-info__icon"><Icon name={item.icon} size={24} /></span>
                   <div>
                     <span className="contact-info__label">{item.label}</span>
-                    <p>{item.value}</p>
+                    {item.kind === 'text' ? (
+                      <p>{item.value}</p>
+                    ) : item.kind === 'emails' ? (
+                      item.values.map((em) => (
+                        <p key={em}>
+                          <a href={`mailto:${em}`} className="contact-info__value-link">
+                            {em}
+                          </a>
+                        </p>
+                      ))
+                    ) : (
+                      item.values.map((num) => (
+                        <p key={num}>
+                          <a href={telHref(num)} className="contact-info__value-link">
+                            {num}
+                          </a>
+                        </p>
+                      ))
+                    )}
                   </div>
                 </div>
               ))}

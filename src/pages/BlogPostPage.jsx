@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
 import { DEFAULT_DESCRIPTION, truncateMeta } from '../config/seo';
+import { findBlogPostByRouteParam } from '../utils/blogPaths';
 
 function toIsoDate(d) {
   if (!d) return undefined;
@@ -25,13 +26,18 @@ const fallbackContent = {
   6: `Deploying to AWS, Azure, Vercel, Netlify—choose based on your stack.`,
 };
 
-export default function BlogPostPage() {
-  const { id } = useParams();
-  const { blogPosts = [] } = useSiteData();
-  const post = blogPosts.find((p) => String(p.id) === String(id));
-  const content = post?.content || post?.excerpt || fallbackContent[id] || 'Content coming soon.';
+function defaultBlogKeywords(category) {
+  const c = (category || '').trim();
+  return [c, 'UK tech blog', 'web development', 'software', 'Logix Contact'].filter(Boolean).join(', ');
+}
 
-  if (!post) {
+export default function BlogPostPage() {
+  const { id: routeParam } = useParams();
+  const { blogPosts = [] } = useSiteData();
+  const post = findBlogPostByRouteParam(blogPosts, routeParam);
+  const content = post?.content || post?.excerpt || fallbackContent[routeParam] || 'Content coming soon.';
+
+  if (!post || post.published === false) {
     return (
       <main className="blog-post-page">
         <Seo
@@ -48,18 +54,26 @@ export default function BlogPostPage() {
   }
 
   const cover = post.image || post.cover_image || post.coverImage;
-  const metaDesc = truncateMeta(post.excerpt || String(post.content || '').slice(0, 220));
+  const ogImage = (post.og_image && post.og_image.trim()) || cover;
+  const metaDescRaw =
+    post.seo_description?.trim() || post.excerpt || String(post.content || '').slice(0, 220);
+  const metaDesc = truncateMeta(metaDescRaw) || DEFAULT_DESCRIPTION;
+  const metaTitlePart = post.seo_title?.trim() || post.title;
+  const keywords = post.seo_keywords?.trim() || defaultBlogKeywords(post.category);
 
   return (
     <main className="blog-post-page">
       <Seo
-        title={post.title}
-        description={metaDesc || DEFAULT_DESCRIPTION}
-        keywords={`${post.category}, UK tech blog, web development, software, Logix Contact`}
+        title={metaTitlePart}
+        headline={post.title}
+        description={metaDesc}
+        keywords={keywords}
         type="article"
         articlePublishedTime={toIsoDate(post.date)}
         articleModifiedTime={toIsoDate(post.updated_at || post.updatedAt || post.date)}
-        image={cover}
+        articleAuthor={post.author_name?.trim() || undefined}
+        articleSection={post.category?.trim() || undefined}
+        image={ogImage}
       />
       <article className="blog-post">
         <motion.div
@@ -77,6 +91,16 @@ export default function BlogPostPage() {
               : ''}
           </time>
         </motion.div>
+        {cover ? (
+          <motion.div
+            className="blog-post__cover-wrap"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1, duration: 0.4 }}
+          >
+            <img className="blog-post__cover" src={cover} alt={post.title} />
+          </motion.div>
+        ) : null}
         <motion.div
           className="blog-post__content"
           initial={{ opacity: 0 }}

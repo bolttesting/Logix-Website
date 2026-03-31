@@ -15,6 +15,8 @@ The admin panel lets you manage portfolio projects, blog posts, team members, te
 3. Copy the contents of `supabase/schema.sql` and paste it
 4. Click **Run**
 5. (Optional) Run `supabase/seed.sql` to add sample data
+6. Run `supabase/storage.sql` so admin image uploads work (public `media` bucket + policies)
+7. If the project already existed before `image` / `photo_url` or **blog SEO / slug** columns were added, run `supabase/schema_extensions.sql` (adds columns + blog slug unique index)
 
 ## 3. Create Admin User
 

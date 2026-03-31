@@ -37,11 +37,29 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   excerpt TEXT,
   category TEXT,
   content TEXT,
+  image TEXT,
   date DATE DEFAULT CURRENT_DATE,
   published BOOLEAN DEFAULT true,
   sort_order INT DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  slug TEXT,
+  seo_title TEXT,
+  seo_description TEXT,
+  seo_keywords TEXT,
+  og_image TEXT,
+  author_name TEXT
 );
+
+-- If blog_posts already existed from an older schema, CREATE TABLE above is skipped — add missing columns
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS image TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT NOW();
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS slug TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS seo_title TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS seo_description TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS seo_keywords TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS og_image TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS author_name TEXT;
 
 -- Team members
 CREATE TABLE IF NOT EXISTS team_members (
@@ -49,7 +67,14 @@ CREATE TABLE IF NOT EXISTS team_members (
   name TEXT NOT NULL,
   role TEXT,
   avatar TEXT,
+  photo_url TEXT,
   bio TEXT,
+  github_url TEXT,
+  linkedin_url TEXT,
+  twitter_url TEXT,
+  youtube_url TEXT,
+  show_on_home BOOLEAN DEFAULT false,
+  home_sort_order INT DEFAULT 0,
   sort_order INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -97,6 +122,22 @@ ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
 
+-- Idempotent policies (safe to re-run after a partial or full previous run)
+DROP POLICY IF EXISTS "Public read site_settings" ON site_settings;
+DROP POLICY IF EXISTS "Admin all site_settings" ON site_settings;
+DROP POLICY IF EXISTS "Public read portfolio" ON portfolio;
+DROP POLICY IF EXISTS "Admin all portfolio" ON portfolio;
+DROP POLICY IF EXISTS "Public read blog_posts" ON blog_posts;
+DROP POLICY IF EXISTS "Admin all blog_posts" ON blog_posts;
+DROP POLICY IF EXISTS "Public read team_members" ON team_members;
+DROP POLICY IF EXISTS "Admin all team_members" ON team_members;
+DROP POLICY IF EXISTS "Public read testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Admin all testimonials" ON testimonials;
+DROP POLICY IF EXISTS "Public read services" ON services;
+DROP POLICY IF EXISTS "Admin all services" ON services;
+DROP POLICY IF EXISTS "Public insert contact_submissions" ON contact_submissions;
+DROP POLICY IF EXISTS "Admin all contact_submissions" ON contact_submissions;
+
 -- Public can read everything
 CREATE POLICY "Public read site_settings" ON site_settings FOR SELECT USING (true);
 CREATE POLICY "Public read portfolio" ON portfolio FOR SELECT USING (true);
@@ -116,3 +157,6 @@ CREATE POLICY "Admin all team_members" ON team_members FOR ALL USING (auth.role(
 CREATE POLICY "Admin all testimonials" ON testimonials FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all services" ON services FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all contact_submissions" ON contact_submissions FOR ALL USING (auth.role() = 'authenticated');
+
+-- Unique URL slugs for blog posts (optional column; multiple NULLs allowed)
+CREATE UNIQUE INDEX IF NOT EXISTS blog_posts_slug_unique ON blog_posts (slug) WHERE slug IS NOT NULL AND btrim(slug) <> '';

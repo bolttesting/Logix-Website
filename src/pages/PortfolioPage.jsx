@@ -11,12 +11,12 @@ const categories = [
 ];
 
 export default function PortfolioPage() {
-  const { portfolio } = useSiteData();
+  const { portfolioDisplay } = useSiteData();
   const [filter, setFilter] = useState('all');
 
   const filteredProjects = filter === 'all'
-    ? (portfolio || [])
-    : (portfolio || []).filter((p) => p.category === filter);
+    ? (portfolioDisplay || [])
+    : (portfolioDisplay || []).filter((p) => p.category === filter);
 
   return (
     <main className="portfolio-page">

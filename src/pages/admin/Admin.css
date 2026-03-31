@@ -491,3 +491,235 @@
   border-radius: 6px;
   font-size: 0.9rem;
 }
+
+.admin-hint {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+  margin: -1rem 0 1.25rem;
+  line-height: 1.5;
+}
+
+.admin-hint code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.admin-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e4e4e7;
+  margin: 1.75rem 0 0.75rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-section-title:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.admin-form-grid__full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 720px) {
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-select {
+  padding: 0.75rem;
+  background: #0f0f14;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #fff;
+  width: 100%;
+  font-family: inherit;
+}
+
+.admin-portfolio-editor {
+  padding-bottom: 1rem;
+}
+
+.admin-portfolio-editor__head {
+  margin-bottom: 1rem;
+}
+
+.admin-repeat-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .admin-repeat-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-btn--sm {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+.admin-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-gallery-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+}
+
+.admin-gallery-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-gallery-list img {
+  width: 72px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.admin-gallery-list__url {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.admin-upload__url {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0f0f14;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.admin-upload__preview {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.admin-upload__preview img {
+  max-width: 200px;
+  max-height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.admin-upload__error {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin: 0.35rem 0 0;
+}
+
+.admin-upload__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-upload__input {
+  font-size: 0.875rem;
+  color: #e4e4e7;
+}
+
+.admin-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #e4e4e7;
+}
+
+.admin-checkbox input {
+  width: 1rem;
+  height: 1rem;
+}
+
+.admin-slug-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.admin-slug-prefix {
+  font-size: 0.85rem;
+  color: #a1a1aa;
+}
+
+.admin-slug-input {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0f0f14;
+  color: #fff;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.9rem;
+}
+
+.admin-field-hint {
+  font-size: 0.78rem;
+  color: #71717a;
+  margin: 0.35rem 0 0;
+}
+
+.admin-field-hint--block {
+  margin: 0 0 0.75rem;
+  line-height: 1.45;
+}
+
+.admin-char-count {
+  display: block;
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-top: 0.35rem;
+}
+
+.admin-code-sm {
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  word-break: break-all;
+}

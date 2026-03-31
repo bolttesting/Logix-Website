@@ -2,7 +2,6 @@ import { useMemo, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
-import { portfolioProjects } from '../data/portfolioData';
 import { CardStack } from './ui/card-stack';
 
 /** Reliable Unsplash hero shots for portfolio cards when local assets are missing */
@@ -36,14 +35,11 @@ function useCardStackSize() {
 }
 
 export default function Clients() {
-  const { portfolio } = useSiteData();
+  const { portfolioDisplay } = useSiteData();
   const stackSize = useCardStackSize();
 
   const cardItems = useMemo(() => {
-    const list =
-      portfolio && portfolio.length > 0
-        ? portfolio
-        : portfolioProjects.map((p) => ({ ...p, id: String(p.id) }));
+    const list = portfolioDisplay || [];
     return list.slice(0, 6).map((p, i) => ({
       id: p.id,
       title: p.name,
@@ -52,7 +48,7 @@ export default function Clients() {
       href: `/portfolio/${p.id}`,
       tag: p.type,
     }));
-  }, [portfolio]);
+  }, [portfolioDisplay]);
 
   return (
     <section className="section portfolio-home" id="portfolio">

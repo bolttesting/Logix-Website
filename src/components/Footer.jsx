@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import Icon from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
+import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
 import { TextHoverEffect, FooterBackgroundGradient } from './ui/hover-footer';
 
 const ACCORDION_MQ = '(max-width: 900px)';
@@ -92,8 +93,8 @@ const socialLinks = [
 
 export default function Footer() {
   const { settings } = useSiteData();
-  const email = settings?.email || 'info@logixcontact.co.uk';
-  const phone = settings?.phone || '+123-456-7890';
+  const emailLines = contactEmails(settings);
+  const phoneLines = contactPhones(settings);
   const isNarrow = useFooterAccordionMode();
 
   const [open, setOpen] = useState({
@@ -168,12 +169,16 @@ export default function Footer() {
               isOpen={open.contact}
               onToggle={() => toggle('contact')}
             >
-              <a href={`mailto:${email}`} className="footer__contact-item">
-                {email}
-              </a>
-              <a href={`tel:${phone.replace(/\D/g, '')}`} className="footer__contact-item">
-                {phone}
-              </a>
+              {emailLines.map((em) => (
+                <a key={em} href={`mailto:${em}`} className="footer__contact-item">
+                  {em}
+                </a>
+              ))}
+              {phoneLines.map((num) => (
+                <a key={num} href={telHref(num)} className="footer__contact-item">
+                  {num}
+                </a>
+              ))}
             </FooterAccordionColumn>
           </div>
         </div>

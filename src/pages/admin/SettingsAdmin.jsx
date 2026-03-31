@@ -39,12 +39,30 @@ export default function SettingsAdmin() {
         <h2>Contact Information</h2>
         <p style={{ color: '#a1a1aa', marginBottom: '1.5rem' }}>These appear on the Contact page and in the footer.</p>
         <div className="admin-form__field">
-          <label>Email</label>
-          <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="info@logixcontact.co.uk" />
+          <label>Email addresses</label>
+          <p style={{ color: '#71717a', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>
+            One per line. All lines show on the Contact page and in the footer.
+          </p>
+          <textarea
+            rows={4}
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            placeholder={'info@logixcontact.co.uk\nhello@logixcontact.co.uk'}
+            style={{ fontFamily: 'inherit', minHeight: 88 }}
+          />
         </div>
         <div className="admin-form__field">
-          <label>Phone</label>
-          <input value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} placeholder="+123-456-7890" />
+          <label>Phone numbers</label>
+          <p style={{ color: '#71717a', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>
+            One per line (include country code where useful). Each line becomes a clickable call link.
+          </p>
+          <textarea
+            rows={4}
+            value={form.phone}
+            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            placeholder={'+44 20 1234 5678\n+971 4 123 4567'}
+            style={{ fontFamily: 'inherit', minHeight: 88 }}
+          />
         </div>
         <div className="admin-form__field">
           <label>Address</label>

@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { useSiteData } from '../context/SiteDataContext';
 import { ShaderAnimation } from './ui/ShaderAnimation';
 import ButtonCrossArrow from './ui/ButtonCrossArrow';
 import ButtonAnimatedGradient from './ui/ButtonAnimatedGradient';
@@ -71,9 +73,32 @@ const HERO_AVATAR_ITEMS = [
   },
 ];
 
+const HERO_FALLBACK_IMAGES = HERO_AVATAR_ITEMS.map((item) => item.image);
+
+function heroAvatarsFromTeam(team) {
+  const selected = (team || [])
+    .filter((m) => m.show_on_home === true)
+    .sort(
+      (a, b) =>
+        (Number(a.home_sort_order) || Number(a.sort_order) || 0) -
+        (Number(b.home_sort_order) || Number(b.sort_order) || 0),
+    );
+  if (!selected.length) return HERO_AVATAR_ITEMS;
+  return selected.map((m, i) => ({
+    id: m.id,
+    name: m.name,
+    designation: m.role || 'Team',
+    image:
+      (m.photo_url && String(m.photo_url).trim()) ||
+      HERO_FALLBACK_IMAGES[i % HERO_FALLBACK_IMAGES.length],
+  }));
+}
+
 export default function Hero() {
   const reduceMotion = useReducedMotion();
   const { theme } = useTheme();
+  const { team } = useSiteData();
+  const avatarItems = useMemo(() => heroAvatarsFromTeam(team), [team]);
   const ctaVariant = theme === 'light' ? 'light' : 'dark';
 
   return (
@@ -167,7 +192,7 @@ export default function Hero() {
           transition={{ delay: 0.75, duration: 0.45, ease: easeOut }}
         >
           <div className="hero__avatar-group__inner" aria-label="Team members">
-            <AvatarGroup items={HERO_AVATAR_ITEMS} maxVisible={5} size="sm" />
+            <AvatarGroup items={avatarItems} maxVisible={5} size="sm" />
           </div>
         </motion.div>
       </div>

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 import './avatar-group.css'
 
 export interface AvatarItem {
-  id: number
+  id: number | string
   name: string
   designation: string
   image: string

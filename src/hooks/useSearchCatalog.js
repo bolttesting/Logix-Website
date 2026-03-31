@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useSiteData } from '../context/SiteDataContext';
 import { servicesMenu } from '../data/servicesData';
+import { getBlogPostPath } from '../utils/blogPaths';
 
 const STATIC_PAGES = [
   { id: 'home', title: 'Home', to: '/', hint: 'Homepage', keywords: 'home start landing' },
@@ -15,7 +16,7 @@ const STATIC_PAGES = [
 const STATIC_IDS = new Set(STATIC_PAGES.map((s) => s.id));
 
 export function useSearchCatalog() {
-  const { blogPosts, services, portfolio } = useSiteData();
+  const { blogPosts, services, portfolioDisplay } = useSiteData();
 
   return useMemo(() => {
     const serviceSource =
@@ -28,15 +29,17 @@ export function useSearchCatalog() {
       keywords: `${s.title} ${(s.items || []).map((x) => x.title).join(' ')}`,
     }));
 
-    const blogs = (blogPosts || []).map((b) => ({
-      id: `blog-${b.id}`,
-      title: b.title,
-      to: `/blog/${b.id}`,
-      hint: b.category || 'Blog',
-      keywords: `${b.title} ${b.excerpt || ''} ${b.category || ''}`,
-    }));
+    const blogs = (blogPosts || [])
+      .filter((b) => b.published !== false)
+      .map((b) => ({
+        id: `blog-${b.id}`,
+        title: b.title,
+        to: getBlogPostPath(b),
+        hint: b.category || 'Blog',
+        keywords: `${b.title} ${b.excerpt || ''} ${b.category || ''} ${b.seo_keywords || ''} ${b.seo_title || ''}`,
+      }));
 
-    const projects = (portfolio || []).map((p) => ({
+    const projects = (portfolioDisplay || []).map((p) => ({
       id: `port-${p.id}`,
       title: p.name,
       to: `/portfolio/${p.id}`,
@@ -45,7 +48,7 @@ export function useSearchCatalog() {
     }));
 
     return [...STATIC_PAGES, ...svc, ...blogs, ...projects];
-  }, [blogPosts, services, portfolio]);
+  }, [blogPosts, services, portfolioDisplay]);
 }
 
 export function filterSearchCatalog(items, query, limit = 12) {
