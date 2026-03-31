@@ -7,6 +7,7 @@ import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
 import { parseFooterSocialLinks } from '../utils/footerSocialLinks';
 import { TextHoverEffect, FooterBackgroundGradient } from './ui/hover-footer';
 import FooterContactGlobe from './FooterContactGlobe';
+import FooterCompanyProfileDownload from './FooterCompanyProfileDownload';
 
 const ACCORDION_MQ = '(max-width: 900px)';
 
@@ -145,6 +146,9 @@ export default function Footer() {
               </span>
             </Link>
             <p className="footer__slogan">Web & App Development Agency</p>
+            <div className="footer__brand-download">
+              <FooterCompanyProfileDownload />
+            </div>
           </div>
           <div className="footer__cols">
             <FooterAccordionColumn

@@ -274,16 +274,16 @@
   border-color: var(--hl-i-strong);
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
 }
-.home-landing .newsletter__btn {
+.home-landing .slide-button__fill {
+  background: var(--hl-gradient-135);
+}
+.home-landing .slide-button__result-btn {
   background: var(--hl-gradient-135);
   color: #0c0e12;
-  transition: transform 160ms var(--hl-ease), box-shadow 200ms var(--hl-ease);
+  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.25);
 }
-.home-landing .newsletter__btn:hover {
-  box-shadow: 0 6px 28px rgba(109, 40, 217, 0.35);
-}
-.home-landing .newsletter__btn:active {
-  transform: scale(0.97);
+.home-landing .slide-button__handle {
+  color: #0c0e12;
 }
 
 /* Scroll velocity marquee (under hero) */
