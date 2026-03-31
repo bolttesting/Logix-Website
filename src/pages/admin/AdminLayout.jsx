@@ -71,7 +71,7 @@ export default function AdminLayout() {
       <Seo title="Admin" description="Logix Contact content management dashboard." noindex />
       <aside className="admin-sidebar">
         <div className="admin-sidebar__logo">Logix<span>Contact</span> Admin</div>
-        <nav>
+        <nav className="admin-sidebar__nav-wrap" aria-label="Admin sections">
           <ul className="admin-sidebar__nav">
             {navItems.map((item) => (
               <li key={item.to}>
@@ -80,8 +80,8 @@ export default function AdminLayout() {
             ))}
           </ul>
         </nav>
-        <div style={{ padding: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-          <button onClick={handleLogout} className="admin-btn admin-btn--secondary" style={{ width: '100%' }}>
+        <div className="admin-sidebar__logout">
+          <button type="button" onClick={handleLogout} className="admin-btn admin-btn--secondary admin-sidebar__logout-btn">
             Logout
           </button>
         </div>
