@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useScroll } from '../hooks/useScroll';
 import { useTheme } from '../context/ThemeContext';
 import ServicesDropdown from './ServicesDropdown';
+import { servicesMenu } from '../data/servicesData';
 import ButtonCrossArrow from './ui/ButtonCrossArrow';
 import MenuToggleIcon from './ui/MenuToggleIcon';
 import NavbarSearch from './NavbarSearch';
@@ -201,7 +202,7 @@ export default function Navbar() {
                   </button>
                 </div>
                 <div className="navbar__drawer-links">
-                  {navLinks.map((link) => (
+                  {navLinks.slice(0, 2).map((link) => (
                     <Link
                       key={link.label}
                       to={link.to}
@@ -211,27 +212,31 @@ export default function Navbar() {
                       {link.label}
                     </Link>
                   ))}
-                  <Link
-                    to="/services/app-development"
-                    className="navbar__drawer-link"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    App Development
-                  </Link>
-                  <Link
-                    to="/services/web-development"
-                    className="navbar__drawer-link"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Web Development
-                  </Link>
-                  <Link
-                    to="/services/ui-ux-design"
-                    className="navbar__drawer-link"
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    UI/UX Design
-                  </Link>
+                  <details className="navbar__drawer-services">
+                    <summary className="navbar__drawer-services-summary">Services</summary>
+                    <div className="navbar__drawer-services-list">
+                      {servicesMenu.map((svc) => (
+                        <Link
+                          key={svc.id}
+                          to={svc.path}
+                          className={`navbar__drawer-sublink${location.pathname === svc.path ? ' navbar__drawer-sublink--active' : ''}`}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {svc.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                  {navLinks.slice(2).map((link) => (
+                    <Link
+                      key={link.label}
+                      to={link.to}
+                      className="navbar__drawer-link"
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
                 <div className="navbar__drawer-footer">
                   <ButtonCrossArrow

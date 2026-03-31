@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useSiteData } from '../context/SiteDataContext';
+import { servicesMenu } from '../data/servicesData';
 
 const STATIC_PAGES = [
   { id: 'home', title: 'Home', to: '/', hint: 'Homepage', keywords: 'home start landing' },
@@ -17,7 +18,9 @@ export function useSearchCatalog() {
   const { blogPosts, services, portfolio } = useSiteData();
 
   return useMemo(() => {
-    const svc = (services || []).map((s) => ({
+    const serviceSource =
+      Array.isArray(services) && services.length > 0 ? services : servicesMenu;
+    const svc = serviceSource.map((s) => ({
       id: `svc-${s.id}`,
       title: s.title,
       to: s.path || `/services/${s.id}`,
@@ -48,7 +51,11 @@ export function useSearchCatalog() {
 export function filterSearchCatalog(items, query, limit = 12) {
   const q = query.trim().toLowerCase();
   if (!q) {
-    return items.filter((i) => STATIC_IDS.has(i.id));
+    return items.filter(
+      (i) =>
+        STATIC_IDS.has(i.id) ||
+        (typeof i.id === 'string' && i.id.startsWith('svc-')),
+    );
   }
 
   return items

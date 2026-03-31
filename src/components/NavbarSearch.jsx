@@ -47,17 +47,18 @@ export default function NavbarSearch({ open, onClose }) {
             transition={{ duration: 0.15 }}
             onClick={onClose}
           />
-          <motion.div
-            key="navbar-search-panel"
-            className="navbar-search"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Search site"
-            initial={{ opacity: 0, y: -12, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -12, scale: 0.98 }}
-            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-          >
+          <div key="navbar-search-shell" className="navbar-search-shell">
+            <motion.div
+              key="navbar-search-panel"
+              className="navbar-search"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Search site"
+              initial={{ opacity: 0, y: -12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -12, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            >
             <div className="navbar-search__head">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                 <circle cx="11" cy="11" r="8" />
@@ -102,7 +103,8 @@ export default function NavbarSearch({ open, onClose }) {
               )}
             </ul>
             <div className="navbar-search__foot">Navigate to a page or project. Shortcut: Ctrl/⌘ K</div>
-          </motion.div>
+            </motion.div>
+          </div>
         </>
       ) : null}
     </AnimatePresence>

@@ -7,17 +7,31 @@
   -webkit-backdrop-filter: blur(4px);
 }
 
+/* Flex shell keeps the panel centred; Framer transform on the panel no longer fights translateX(-50%). */
+.navbar-search-shell {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: min(18vh, 120px);
+  z-index: 1005;
+  display: flex;
+  justify-content: center;
+  padding-left: max(0.75rem, env(safe-area-inset-left));
+  padding-right: max(0.75rem, env(safe-area-inset-right));
+  padding-top: env(safe-area-inset-top);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
 [data-theme='light'] .navbar-search-backdrop {
   background: rgba(15, 23, 42, 0.25);
 }
 
 .navbar-search {
-  position: fixed;
-  left: 50%;
-  top: min(22vh, 140px);
-  transform: translateX(-50%);
-  z-index: 1005;
-  width: min(96vw, 520px);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
   max-height: min(70vh, 420px);
   display: flex;
   flex-direction: column;
@@ -26,6 +40,8 @@
   background: var(--bg-card);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
   overflow: hidden;
+  pointer-events: auto;
+  box-sizing: border-box;
 }
 
 [data-theme='light'] .navbar-search {
@@ -38,6 +54,7 @@
   gap: 0.65rem;
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-subtle);
+  min-width: 0;
 }
 
 .navbar-search__head svg {
@@ -91,6 +108,8 @@
   text-decoration: none;
   color: var(--text-primary);
   transition: background 0.15s ease;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .navbar-search__link:hover,
@@ -122,8 +141,18 @@
 }
 
 .navbar-search__foot {
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.7rem;
+  line-height: 1.35;
   color: var(--text-muted);
   border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 480px) {
+  .navbar-search__foot {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
 }
