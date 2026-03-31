@@ -9,6 +9,8 @@ export default function FooterCompanyProfileDownload() {
   const [downloadStatus, setDownloadStatus] = useState('idle');
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef(null);
+  /** Avoid double download: React Strict Mode may run state updaters twice at 100%. */
+  const downloadStartedRef = useRef(false);
 
   const clearTimers = useCallback(() => {
     if (intervalRef.current != null) {
@@ -33,6 +35,7 @@ export default function FooterCompanyProfileDownload() {
   const handleClick = useCallback(() => {
     if (downloadStatus !== 'idle') return;
 
+    downloadStartedRef.current = false;
     setDownloadStatus('downloading');
     setProgress(0);
 
@@ -44,13 +47,17 @@ export default function FooterCompanyProfileDownload() {
         const next = Math.min(100, prev + 5);
         if (next >= 100) {
           clearTimers();
-          triggerFileDownload();
-          setDownloadStatus('downloaded');
-          window.setTimeout(() => setDownloadStatus('complete'), 1500);
-          window.setTimeout(() => {
-            setDownloadStatus('idle');
-            setProgress(0);
-          }, 1600);
+          if (!downloadStartedRef.current) {
+            downloadStartedRef.current = true;
+            triggerFileDownload();
+            setDownloadStatus('downloaded');
+            window.setTimeout(() => setDownloadStatus('complete'), 1500);
+            window.setTimeout(() => {
+              setDownloadStatus('idle');
+              setProgress(0);
+              downloadStartedRef.current = false;
+            }, 1600);
+          }
         }
         return next;
       });
