@@ -31,14 +31,14 @@ export const OFFICE_LOCATIONS = [
   {
     id: 'dubai',
     city: 'Dubai',
-    email: 'dxb@logixcontact.co.uk',
+    email: 'info@logixcontact.com',
     phone: '+971 4 235 0843',
     address: 'Suite 26, Street 19 - Al Quoz 1 - Dubai - United Arab Emirates',
   },
   {
     id: 'lahore',
     city: 'Lahore',
-    email: 'info@logixcontact.co.uk',
+    email: 'info@logixcontact.com',
     phone: '+92 42 3529 1232',
     address: 'Suite 411, Block K, M.A Johar Town, Lahore',
   },
