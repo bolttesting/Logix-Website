@@ -1,0 +1,134 @@
+/* Pill + gradient + sliding label — clip via fixed viewport + sliding track (no overlapping layers) */
+
+.btn-text-change {
+  --btc-border: #656fe2;
+  --btc-from: #070e41;
+  --btc-to: #263381;
+  --btc-fg: #ffffff;
+  --btc-line: 1.35em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0 1.35rem;
+  border-radius: 999px;
+  border: 2px solid var(--btc-border);
+  background: linear-gradient(to right, var(--btc-from), var(--btc-to));
+  color: var(--btc-fg);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.btn-text-change:hover {
+  box-shadow: 0 8px 28px rgba(101, 111, 226, 0.35);
+}
+
+.btn-text-change:focus-visible {
+  outline: 2px solid rgba(101, 111, 226, 0.85);
+  outline-offset: 3px;
+}
+
+.btn-text-change:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-text-change--outline {
+  background: transparent;
+  color: #e8eaff;
+  box-shadow: none;
+}
+
+.btn-text-change--outline:hover {
+  background: rgba(101, 111, 226, 0.12);
+  box-shadow: 0 0 0 1px rgba(101, 111, 226, 0.35);
+}
+
+/* One-line tall window; two-line stack moves up on hover */
+.btn-text-change__wrap {
+  display: inline-block;
+  overflow: hidden;
+  height: var(--btc-line);
+  line-height: var(--btc-line);
+  vertical-align: middle;
+}
+
+.btn-text-change__track {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-text-change__line {
+  flex: 0 0 var(--btc-line);
+  height: var(--btc-line);
+  line-height: var(--btc-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-text-change:hover .btn-text-change__track {
+  transform: translateY(calc(-1 * var(--btc-line)));
+}
+
+.btn-text-change--block {
+  width: 100%;
+}
+
+.btn-text-change--block .btn-text-change__wrap {
+  display: block;
+  width: 100%;
+}
+
+.btn-text-change--block .btn-text-change__line {
+  justify-content: center;
+}
+
+[data-theme='light'] .btn-text-change:not(.btn-text-change--outline) {
+  --btc-border: #394481;
+  --btc-from: #f7f8ff;
+  --btc-to: #ffffff;
+  --btc-fg: #0a0a0f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='light'] .btn-text-change:not(.btn-text-change--outline):hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 24px rgba(57, 68, 129, 0.2);
+}
+
+[data-theme='light'] .btn-text-change--outline {
+  color: #1e293b;
+  border-color: #394481;
+}
+
+[data-theme='light'] .btn-text-change--outline:hover {
+  background: rgba(57, 68, 129, 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-text-change__track {
+    transition: none;
+  }
+
+  .btn-text-change:hover .btn-text-change__track {
+    transform: none;
+  }
+
+  .btn-text-change__line:last-child {
+    display: none;
+  }
+}

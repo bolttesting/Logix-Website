@@ -1468,35 +1468,9 @@
   flex-wrap: wrap;
 }
 
-.calculate__btn {
-  padding: 0.9rem 1.5rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-
-.calculate__btn--primary {
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-light));
-  color: white;
-  border: 2px solid transparent;
-}
-
-.calculate__btn--primary:hover {
-  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
-  transform: translateY(-2px);
-}
-
-.calculate__btn--outline {
-  background: transparent;
-  color: var(--accent-orange);
-  border: 2px solid rgba(20, 184, 166, 0.5);
-}
-
-.calculate__btn--outline:hover {
-  background: rgba(20, 184, 166, 0.08);
-  border-color: var(--accent-orange);
+/* CTA row uses ui/ButtonTextChange (pill + sliding label) */
+.calculate__submit-tc {
+  margin-top: 0.15rem;
 }
 
 .calculate__form-wrap {
@@ -1546,23 +1520,6 @@
   outline: none;
   border-color: var(--accent-orange);
   box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
-}
-
-.calculate__submit {
-  padding: 1rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, var(--accent-orange), #0f766e);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.calculate__submit:hover {
-  box-shadow: 0 8px 24px rgba(20, 184, 166, 0.35);
-  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

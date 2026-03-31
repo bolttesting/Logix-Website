@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Icon from './Icons';
 import { servicesMenu } from '../data/servicesData';
+import ButtonTextChange from './ui/ButtonTextChange';
 
 export default function CalculateCost() {
   const [form, setForm] = useState({ name: '', email: '', service: '', message: '' });
@@ -34,12 +35,12 @@ export default function CalculateCost() {
             <span><Icon name="sparkles" size={18} /> Quick response</span>
           </div>
           <div className="calculate__btns">
-            <a href="/contact" className="calculate__btn calculate__btn--primary">
+            <ButtonTextChange href="/contact" variant="filled">
               Estimate Your Project
-            </a>
-            <a href="#" className="calculate__btn calculate__btn--outline">
+            </ButtonTextChange>
+            <ButtonTextChange href="#" variant="outline">
               Chat Live
-            </a>
+            </ButtonTextChange>
           </div>
         </motion.div>
         <motion.form
@@ -83,9 +84,9 @@ export default function CalculateCost() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
             />
-            <button type="submit" className="calculate__submit">
+            <ButtonTextChange type="submit" variant="filled" className="btn-text-change--block calculate__submit-tc">
               Submit Now
-            </button>
+            </ButtonTextChange>
           </div>
         </motion.form>
       </div>
