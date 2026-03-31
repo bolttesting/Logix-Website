@@ -19,3 +19,6 @@ ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS og_image TEXT;
 ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS author_name TEXT;
 
 CREATE UNIQUE INDEX IF NOT EXISTS blog_posts_slug_unique ON blog_posts (slug) WHERE slug IS NOT NULL AND btrim(slug) <> '';
+
+-- Floating WhatsApp CTA (digits for wa.me; editable in Admin → Settings)
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS whatsapp TEXT;

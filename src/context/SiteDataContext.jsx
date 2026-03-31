@@ -30,7 +30,13 @@ const staticBlog = [
   { id: '6', title: 'Getting Started with Cloud Deployment', excerpt: 'Deploy to AWS, Azure, or Vercel...', category: 'Cloud', date: '2025-02-15' },
 ];
 
-const staticSettings = { email: 'info@logixcontact.co.uk', phone: '+123-456-7890', address: '123 Street, City, Country', hours: 'Mon - Fri: 9AM - 6PM' };
+const staticSettings = {
+  email: 'info@logixcontact.co.uk',
+  phone: '+123-456-7890',
+  address: '123 Street, City, Country',
+  hours: 'Mon - Fri: 9AM - 6PM',
+  whatsapp: '',
+};
 
 const SiteDataContext = createContext(null);
 

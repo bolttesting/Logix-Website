@@ -8,8 +8,12 @@ CREATE TABLE IF NOT EXISTS site_settings (
   address TEXT,
   hours TEXT,
   social_links JSONB DEFAULT '{}',
+  whatsapp TEXT,
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- If site_settings already existed without whatsapp (older DBs), add column
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS whatsapp TEXT;
 
 INSERT INTO site_settings (id, email, phone, address, hours) VALUES 
 ('default', 'info@logixcontact.co.uk', '+123-456-7890', '123 Street, City, Country', 'Mon - Fri: 9AM - 6PM')

@@ -21,6 +21,7 @@ import ServicesAdmin from './pages/admin/ServicesAdmin'
 import SettingsAdmin from './pages/admin/SettingsAdmin'
 import ContactsAdmin from './pages/admin/ContactsAdmin'
 import ReturnToTop from './components/ReturnToTop'
+import WhatsAppFloat from './components/WhatsAppFloat'
 import GlobalJsonLd from './components/GlobalJsonLd'
 import './App.css'
 import './pages/AboutPage.css'
@@ -74,6 +75,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ReturnToTop />
+      {!isAdminLogin && <WhatsAppFloat />}
     </>
   )
 

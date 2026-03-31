@@ -5,7 +5,7 @@ import './Admin.css';
 
 export default function SettingsAdmin() {
   const { settings, refresh } = useSiteData();
-  const [form, setForm] = useState({ email: '', phone: '', address: '', hours: '' });
+  const [form, setForm] = useState({ email: '', phone: '', address: '', hours: '', whatsapp: '' });
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -14,6 +14,7 @@ export default function SettingsAdmin() {
       phone: settings?.phone || '+123-456-7890',
       address: settings?.address || '123 Street, City, Country',
       hours: settings?.hours || 'Mon - Fri: 9AM - 6PM',
+      whatsapp: settings?.whatsapp ?? '',
     });
   }, [settings]);
 
@@ -37,7 +38,9 @@ export default function SettingsAdmin() {
       </div>
       <div className="admin-card">
         <h2>Contact Information</h2>
-        <p style={{ color: '#a1a1aa', marginBottom: '1.5rem' }}>These appear on the Contact page and in the footer.</p>
+        <p style={{ color: '#a1a1aa', marginBottom: '1.5rem' }}>
+          These appear on the Contact page and in the footer. WhatsApp controls the floating chat button on the public site.
+        </p>
         <div className="admin-form__field">
           <label>Email addresses</label>
           <p style={{ color: '#71717a', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>
@@ -62,6 +65,19 @@ export default function SettingsAdmin() {
             onChange={(e) => setForm({ ...form, phone: e.target.value })}
             placeholder={'+44 20 1234 5678\n+971 4 123 4567'}
             style={{ fontFamily: 'inherit', minHeight: 88 }}
+          />
+        </div>
+        <div className="admin-form__field">
+          <label>WhatsApp number (floating button)</label>
+          <p style={{ color: '#71717a', fontSize: '0.85rem', margin: '0 0 0.5rem' }}>
+            Country code + number, digits only (spaces ok). Example: <code style={{ color: '#a1a1aa' }}>447911123456</code> or{' '}
+            <code style={{ color: '#a1a1aa' }}>971501234567</code>. Leave empty to hide the button.
+          </p>
+          <input
+            value={form.whatsapp}
+            onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+            placeholder="447911123456"
+            autoComplete="tel"
           />
         </div>
         <div className="admin-form__field">
