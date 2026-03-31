@@ -6,6 +6,7 @@ import { supabase } from '../lib/supabase';
 import OfficesMapSection from '../components/OfficesMapSection';
 import Seo from '../components/Seo';
 import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
+import { parseFooterSocialLinks } from '../utils/footerSocialLinks';
 
 export default function ContactPage() {
   const { settings, refresh } = useSiteData();
@@ -21,6 +22,7 @@ export default function ContactPage() {
 
   const emailLines = contactEmails(settings);
   const phoneLines = contactPhones(settings);
+  const socialLinks = parseFooterSocialLinks(settings?.social_links);
 
   const contactInfo = [
     { icon: 'map', label: 'Address', kind: 'text', value: settings?.address || '123 Street, City, Country' },
@@ -128,12 +130,21 @@ export default function ContactPage() {
                 </div>
               ))}
             </div>
-            <div className="contact-info__social">
-              <a href="#" aria-label="Facebook"><Icon name="globe" size={20} /></a>
-              <a href="#" aria-label="Twitter"><Icon name="megaphone" size={20} /></a>
-              <a href="#" aria-label="LinkedIn"><Icon name="users" size={20} /></a>
-              <a href="#" aria-label="Instagram"><Icon name="design" size={20} /></a>
-            </div>
+            {socialLinks.length > 0 ? (
+              <div className="contact-info__social">
+                {socialLinks.map((s) => (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    aria-label={s.name}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icon name={s.icon} size={20} />
+                  </a>
+                ))}
+              </div>
+            ) : null}
           </motion.div>
 
           <motion.div

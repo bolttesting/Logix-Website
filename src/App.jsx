@@ -9,6 +9,10 @@ import BlogPostPage from './pages/BlogPostPage'
 import PortfolioPage from './pages/PortfolioPage'
 import PortfolioProjectPage from './pages/PortfolioProjectPage'
 import ServicePage from './pages/ServicePage'
+import TermsPage from './pages/policy/TermsPage'
+import PrivacyPage from './pages/policy/PrivacyPage'
+import RefundPolicyPage from './pages/policy/RefundPolicyPage'
+import ServiceAgreementPage from './pages/policy/ServiceAgreementPage'
 import { SiteDataProvider } from './context/SiteDataContext'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminLogin from './pages/admin/AdminLogin'
@@ -72,6 +76,10 @@ function App() {
         <Route path="/portfolio" element={<><Navbar /><PortfolioPage /><Footer /></>} />
         <Route path="/portfolio/:id" element={<><Navbar /><PortfolioProjectPage /><Footer /></>} />
         <Route path="/services/:slug" element={<><Navbar /><ServicePage /><Footer /></>} />
+        <Route path="/legal/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
+        <Route path="/legal/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
+        <Route path="/legal/refunds" element={<><Navbar /><RefundPolicyPage /><Footer /></>} />
+        <Route path="/legal/service-agreement" element={<><Navbar /><ServiceAgreementPage /><Footer /></>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ReturnToTop />

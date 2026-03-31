@@ -186,7 +186,8 @@
 }
 
 .admin-form__field input,
-.admin-form__field textarea {
+.admin-form__field textarea,
+.admin-form__field select {
   width: 100%;
   padding: 0.75rem 1rem;
   background: #0f0f14;
@@ -197,7 +198,8 @@
 }
 
 .admin-form__field input:focus,
-.admin-form__field textarea:focus {
+.admin-form__field textarea:focus,
+.admin-form__field select:focus {
   outline: none;
   border-color: #14b8a6;
 }
@@ -749,4 +751,39 @@
   padding: 0.2rem 0.45rem;
   border-radius: 4px;
   word-break: break-all;
+}
+
+.admin-social-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-social-row {
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(15, 15, 20, 0.6);
+}
+
+.admin-social-row__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 960px) {
+  .admin-social-row__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-social-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }

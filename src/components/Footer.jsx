@@ -4,7 +4,9 @@ import { ChevronDown } from 'lucide-react';
 import Icon from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
+import { parseFooterSocialLinks } from '../utils/footerSocialLinks';
 import { TextHoverEffect, FooterBackgroundGradient } from './ui/hover-footer';
+import FooterContactGlobe from './FooterContactGlobe';
 
 const ACCORDION_MQ = '(max-width: 900px)';
 
@@ -85,14 +87,16 @@ const services = [
   'IT Consultancy',
 ];
 
-const socialLinks = [
-  { name: 'LinkedIn', href: '#', icon: 'linkedin' },
-  { name: 'Twitter', href: '#', icon: 'twitter' },
-  { name: 'Instagram', href: '#', icon: 'instagram' },
+const policyLinks = [
+  { label: 'Terms & Conditions', to: '/legal/terms' },
+  { label: 'Privacy Policy', to: '/legal/privacy' },
+  { label: 'Refund Policy', to: '/legal/refunds' },
+  { label: 'Service & contract policy', to: '/legal/service-agreement' },
 ];
 
 export default function Footer() {
   const { settings } = useSiteData();
+  const socialLinks = parseFooterSocialLinks(settings?.social_links);
   const emailLines = contactEmails(settings);
   const phoneLines = contactPhones(settings);
   const isNarrow = useFooterAccordionMode();
@@ -101,13 +105,15 @@ export default function Footer() {
     quick: true,
     services: false,
     contact: false,
+    policies: false,
+    presence: false,
   });
 
   useEffect(() => {
     if (!isNarrow) {
-      setOpen({ quick: true, services: true, contact: true });
+      setOpen({ quick: true, services: true, contact: true, policies: true, presence: true });
     } else {
-      setOpen({ quick: true, services: false, contact: false });
+      setOpen({ quick: true, services: false, contact: false, policies: false, presence: false });
     }
   }, [isNarrow]);
 
@@ -125,8 +131,18 @@ export default function Footer() {
       <div className="footer__inner">
         <div className="footer__top">
           <div className="footer__brand">
-            <Link to="/" className="footer__logo">
-              Logix<span className="footer__logo-accent">Contact</span>
+            <Link to="/" className="footer__brand-link" aria-label="Logix Contact home">
+              <img
+                src="/LC.png"
+                alt=""
+                width={64}
+                height={64}
+                decoding="async"
+                className="footer__logo-mark"
+              />
+              <span className="footer__logo" aria-hidden="true">
+                Logix<span className="footer__logo-accent">Contact</span>
+              </span>
             </Link>
             <p className="footer__slogan">Web & App Development Agency</p>
           </div>
@@ -162,6 +178,21 @@ export default function Footer() {
               </ul>
             </FooterAccordionColumn>
             <FooterAccordionColumn
+              sectionId="policies"
+              title="Policies"
+              isNarrow={isNarrow}
+              isOpen={open.policies}
+              onToggle={() => toggle('policies')}
+            >
+              <ul>
+                {policyLinks.map((link) => (
+                  <li key={link.to}>
+                    <Link to={link.to}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </FooterAccordionColumn>
+            <FooterAccordionColumn
               sectionId="contact"
               title="Contact"
               className="footer__col--contact"
@@ -170,26 +201,51 @@ export default function Footer() {
               onToggle={() => toggle('contact')}
             >
               {emailLines.map((em) => (
-                <a key={em} href={`mailto:${em}`} className="footer__contact-item">
-                  {em}
+                <a key={em} href={`mailto:${em}`} className="footer__contact-item footer__contact-item--row">
+                  <span className="footer__contact-icon" aria-hidden>
+                    <Icon name="email" size={18} />
+                  </span>
+                  <span className="footer__contact-text">{em}</span>
                 </a>
               ))}
               {phoneLines.map((num) => (
-                <a key={num} href={telHref(num)} className="footer__contact-item">
-                  {num}
+                <a key={num} href={telHref(num)} className="footer__contact-item footer__contact-item--row">
+                  <span className="footer__contact-icon" aria-hidden>
+                    <Icon name="phone" size={18} />
+                  </span>
+                  <span className="footer__contact-text">{num}</span>
                 </a>
               ))}
+            </FooterAccordionColumn>
+            <FooterAccordionColumn
+              sectionId="presence"
+              title="Global presence"
+              className="footer__col--globe"
+              isNarrow={isNarrow}
+              isOpen={open.presence}
+              onToggle={() => toggle('presence')}
+            >
+              <FooterContactGlobe />
             </FooterAccordionColumn>
           </div>
         </div>
         <div className="footer__bottom">
-          <div className="footer__social footer__social--bottom">
-            {socialLinks.map((s) => (
-              <a key={s.name} href={s.href} className="footer__social-link" aria-label={s.name}>
-                <Icon name={s.icon} size={18} />
-              </a>
-            ))}
-          </div>
+          {socialLinks.length > 0 ? (
+            <div className="footer__social footer__social--bottom">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.id}
+                  href={s.url}
+                  className="footer__social-link"
+                  aria-label={s.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon name={s.icon} size={18} />
+                </a>
+              ))}
+            </div>
+          ) : null}
           <p className="footer__copyright">
             © {new Date().getFullYear()} Logix Contact. All rights reserved.
           </p>

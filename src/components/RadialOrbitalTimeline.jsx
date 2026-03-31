@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Icon from './Icons';
+import OrbitalBeams from './OrbitalBeams';
 import './RadialOrbitalTimeline.css';
 
 const STATUS_CLASS = {
@@ -25,6 +26,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
   const containerRef = useRef(null);
   const orbitRef = useRef(null);
   const nodeRefs = useRef({});
+  const [orbitBox, setOrbitBox] = useState({ w: 0, h: 0 });
 
   useEffect(() => {
     const el = containerRef.current;
@@ -32,6 +34,16 @@ export default function RadialOrbitalTimeline({ timelineData }) {
     const ro = new ResizeObserver(() => {
       const w = el.clientWidth;
       setOrbitRadius(Math.min(200, Math.max(104, w * 0.34)));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const el = orbitRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(() => {
+      setOrbitBox({ w: el.clientWidth, h: el.clientHeight });
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -141,15 +153,29 @@ export default function RadialOrbitalTimeline({ timelineData }) {
             transform: `translate(${centerOffset.x}px, ${centerOffset.y}px)`,
           }}
         >
-          <div className="orbital__hub" aria-label="LC">
-            <span className="orbital__hub-ring orbital__hub-ring--1" aria-hidden />
-            <span className="orbital__hub-ring orbital__hub-ring--2" aria-hidden />
-            <span className="orbital__hub-core">
-              <span className="orbital__hub-label">LC</span>
-            </span>
-          </div>
+          <OrbitalBeams
+            width={orbitBox.w}
+            height={orbitBox.h}
+            rotationAngle={rotationAngle}
+            orbitRadius={orbitRadius}
+            nodeCount={timelineData.length}
+            reducedMotion={prefersReducedMotion}
+          />
 
           <div className="orbital__ring-line" aria-hidden />
+
+          <div className="orbital__hub" aria-label="Logix Contact">
+            <span className="orbital__hub-core">
+              <img
+                src="/LC.png"
+                alt=""
+                width={48}
+                height={48}
+                decoding="async"
+                className="orbital__hub-logo"
+              />
+            </span>
+          </div>
 
           {timelineData.map((item, index) => {
             const position = calculateNodePosition(index, timelineData.length);
@@ -190,10 +216,10 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                 <div
                   className={`orbital__node-glow ${isPulsing ? 'orbital__node-glow--pulse' : ''}`}
                   style={{
-                    width: `${item.energy * 0.5 + 40}px`,
-                    height: `${item.energy * 0.5 + 40}px`,
-                    marginLeft: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
-                    marginTop: `-${(item.energy * 0.5 + 40 - 40) / 2}px`,
+                    width: `${item.energy * 0.5 + 52}px`,
+                    height: `${item.energy * 0.5 + 52}px`,
+                    marginLeft: `-${(item.energy * 0.5 + 52 - 52) / 2}px`,
+                    marginTop: `-${(item.energy * 0.5 + 52 - 52) / 2}px`,
                   }}
                 />
 
@@ -206,7 +232,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
                     .filter(Boolean)
                     .join(' ')}
                 >
-                  <Icon name={item.icon} size={16} />
+                  <Icon name={item.icon} size={20} />
                 </div>
 
                 <div className={`orbital__node-label ${isExpanded ? 'orbital__node-label--open' : ''}`}>
