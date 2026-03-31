@@ -138,7 +138,7 @@
 
 [data-theme='light'] .home-landing .tcol-card,
 [data-theme='light'] .home-landing .expertise-card:hover,
-[data-theme='light'] .home-landing .building-card:hover,
+[data-theme='light'] .home-landing .card-hover-effect__cell:hover .card-hover-effect__inner,
 [data-theme='light'] .home-landing .portfolio-home__card:hover {
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08), 0 0 1px rgba(13, 148, 136, 0.15);
 }

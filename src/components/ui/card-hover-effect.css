@@ -1,0 +1,123 @@
+.card-hover-effect {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.card-hover-effect__cell {
+  position: relative;
+  display: block;
+  padding: 1px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  overflow: visible;
+}
+
+.card-hover-effect__highlight {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(20, 184, 166, 0.35) 0%,
+    rgba(124, 58, 237, 0.28) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(20, 184, 166, 0.25) inset,
+    0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.card-hover-effect__inner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  border-radius: 15px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 2rem;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.card-hover-effect__cell:hover .card-hover-effect__inner {
+  border-color: rgba(20, 184, 166, 0.35);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.card-hover-effect__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  margin-bottom: 1.1rem;
+  background: linear-gradient(135deg, rgba(20, 184, 166, 0.18), rgba(124, 58, 237, 0.12));
+  border: 1px solid rgba(20, 184, 166, 0.22);
+  color: var(--accent-orange);
+}
+
+.card-hover-effect__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: var(--text-primary);
+}
+
+.card-hover-effect__desc {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  margin-bottom: 1.1rem;
+}
+
+.card-hover-effect__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--accent-orange);
+  transition: color 0.2s ease;
+}
+
+.card-hover-effect__cell:hover .card-hover-effect__cta {
+  color: var(--accent-blue-light);
+}
+
+@media (max-width: 768px) {
+  .card-hover-effect {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .card-hover-effect {
+    grid-template-columns: 1fr;
+  }
+}
+
+[data-theme='light'] .card-hover-effect__inner {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.1);
+}
+
+[data-theme='light'] .card-hover-effect__highlight {
+  background: linear-gradient(
+    135deg,
+    rgba(13, 148, 136, 0.2) 0%,
+    rgba(124, 58, 237, 0.15) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(13, 148, 136, 0.2) inset,
+    0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+[data-theme='light'] .card-hover-effect__cell:hover .card-hover-effect__inner {
+  border-color: rgba(13, 148, 136, 0.35);
+}

@@ -1,14 +1,43 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import Icon from './Icons';
+import { HoverEffect } from './ui/card-hover-effect';
 
 const offerings = [
-  { icon: 'desktop', title: 'Web Applications', desc: 'Custom web apps built for scale and performance.' },
-  { icon: 'mobile', title: 'Mobile Applications', desc: 'iOS and Android apps that users love.' },
-  { icon: 'bot', title: 'AI Solutions', desc: 'Intelligent systems that automate and optimize.' },
-  { icon: 'design', title: 'UI/UX Design', desc: 'Beautiful, intuitive experiences from concept to code.' },
-  { icon: 'gear', title: 'Custom Software', desc: 'Tailored solutions for unique business needs.' },
-  { icon: 'trending', title: 'Digital Marketing', desc: 'Data-driven campaigns that convert.' },
+  {
+    icon: 'desktop',
+    title: 'Web Applications',
+    description: 'Custom web apps built for scale, performance, and SEO — from marketing sites to complex platforms.',
+    link: '/services/web-development',
+  },
+  {
+    icon: 'mobile',
+    title: 'Mobile Applications',
+    description: 'Native and cross-platform apps for iOS and Android that feel fast, polished, and on-brand.',
+    link: '/services/app-development',
+  },
+  {
+    icon: 'bot',
+    title: 'AI Solutions',
+    description: 'Practical AI integrations and automation that support your product without the hype.',
+    link: '/services/digital-marketing',
+  },
+  {
+    icon: 'design',
+    title: 'UI/UX Design',
+    description: 'Research-led interfaces, design systems, and prototypes your engineers can ship with confidence.',
+    link: '/services/ui-ux-design',
+  },
+  {
+    icon: 'gear',
+    title: 'Custom Software',
+    description: 'Desktop, internal tools, and specialized builds when off-the-shelf products are not enough.',
+    link: '/services/desktop-development',
+  },
+  {
+    icon: 'trending',
+    title: 'Digital Marketing',
+    description: 'SEO, content, and campaigns that connect your product story to the right audiences.',
+    link: '/services/seo-services',
+  },
 ];
 
 export default function BuildingTomorrow() {
@@ -28,30 +57,8 @@ export default function BuildingTomorrow() {
           <p className="building__subtitle">Comprehensive solutions for modern businesses.</p>
           <span className="building__accent-line" />
         </motion.div>
-        <div className="building__grid">
-          {offerings.map((item, i) => (
-            <motion.div
-              key={item.title}
-              className="building-card"
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.07, duration: 0.4 }}
-              whileHover={{ y: -6 }}
-            >
-              <span className="building-card__icon-wrap">
-                <Icon name={item.icon} size={28} />
-              </span>
-              <h3 className="building-card__title">{item.title}</h3>
-              <p className="building-card__desc">{item.desc}</p>
-              <Link to="/contact" className="building-card__link">
-                Explore
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </motion.div>
-          ))}
+        <div className="building__cards-shell">
+          <HoverEffect items={offerings} />
         </div>
       </div>
     </section>

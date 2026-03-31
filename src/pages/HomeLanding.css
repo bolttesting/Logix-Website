@@ -144,26 +144,23 @@
 .home-landing .building__accent-line {
   background: var(--hl-gradient);
 }
-.home-landing .building-card::before {
-  background: linear-gradient(135deg, rgba(20, 184, 166, 0.05), rgba(167, 139, 250, 0.04));
-}
-.home-landing .building-card:hover {
+.home-landing .card-hover-effect__cell:hover .card-hover-effect__inner {
   border-color: var(--hl-card-hover);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 28px var(--hl-shadow);
 }
-.home-landing .building-card__icon-wrap {
+.home-landing .card-hover-effect__icon {
   background: linear-gradient(135deg, rgba(20, 184, 166, 0.22), rgba(167, 139, 250, 0.12));
   border-color: rgba(20, 184, 166, 0.35);
   color: var(--hl-i-strong);
 }
-.home-landing .building-card:hover .building-card__icon-wrap {
+.home-landing .card-hover-effect__cell:hover .card-hover-effect__icon {
   background: linear-gradient(135deg, rgba(20, 184, 166, 0.32), rgba(167, 139, 250, 0.18));
   border-color: rgba(20, 184, 166, 0.5);
 }
-.home-landing .building-card__link {
+.home-landing .card-hover-effect__cta {
   color: var(--hl-i-strong);
 }
-.home-landing .building-card__link:hover {
+.home-landing .card-hover-effect__cell:hover .card-hover-effect__cta {
   color: var(--hl-e);
 }
 
