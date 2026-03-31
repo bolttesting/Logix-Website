@@ -11,7 +11,7 @@ export default function GlobalJsonLd() {
         '@id': `${siteUrl}/#organization`,
         name: SITE_NAME,
         url: siteUrl,
-        logo: `${siteUrl}/vite.svg`,
+        logo: `${siteUrl}/LC.svg`,
         areaServed: {
           '@type': 'Country',
           name: 'United Kingdom',
