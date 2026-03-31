@@ -1,4 +1,9 @@
-/* Admin Panel Styles */
+/* Admin Panel Styles — always dark chrome; do not inherit site light-theme body text (would be invisible on dark surfaces). */
+.admin-login,
+.admin-layout {
+  color: #e4e4e7;
+}
+
 .admin-layout {
   position: relative;
   z-index: 1;
@@ -85,6 +90,7 @@
 .admin-header h1 {
   font-size: 1.75rem;
   font-weight: 700;
+  color: #fff;
 }
 
 .admin-header__actions {
@@ -103,6 +109,7 @@
 .admin-card h2 {
   font-size: 1.25rem;
   margin-bottom: 1rem;
+  color: #fff;
 }
 
 .admin-table {
@@ -202,7 +209,8 @@
 
 .admin-login {
   position: relative;
-  z-index: 1;
+  z-index: 10;
+  isolation: isolate;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -223,6 +231,7 @@
 .admin-login__card h1 {
   font-size: 1.5rem;
   margin-bottom: 0.25rem;
+  color: #fff;
 }
 
 .admin-login__subtitle {
