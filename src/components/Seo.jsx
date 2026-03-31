@@ -79,8 +79,9 @@ export default function Seo({
     upsertMeta('property', 'og:url', canonical);
     upsertMeta('property', 'og:locale', LOCALE);
     upsertMeta('property', 'og:site_name', SITE_NAME);
-    if (image) {
-      upsertMeta('property', 'og:image', image.startsWith('http') ? image : `${siteUrl}${image}`);
+    if (image != null && image !== '') {
+      const imageStr = typeof image === 'string' ? image : String(image);
+      upsertMeta('property', 'og:image', imageStr.startsWith('http') ? imageStr : `${siteUrl}${imageStr}`);
     } else {
       removeMeta('property', 'og:image');
       removeMeta('name', 'twitter:image');
@@ -89,8 +90,9 @@ export default function Seo({
     upsertMeta('name', 'twitter:card', image ? 'summary_large_image' : 'summary');
     upsertMeta('name', 'twitter:title', pageTitle);
     upsertMeta('name', 'twitter:description', description);
-    if (image) {
-      upsertMeta('name', 'twitter:image', image.startsWith('http') ? image : `${siteUrl}${image}`);
+    if (image != null && image !== '') {
+      const imageStr = typeof image === 'string' ? image : String(image);
+      upsertMeta('name', 'twitter:image', imageStr.startsWith('http') ? imageStr : `${siteUrl}${imageStr}`);
     }
 
     upsertLink('canonical', canonical);
@@ -143,8 +145,9 @@ export default function Seo({
     if (type === 'article' && articleSection) {
       webPage.articleSection = articleSection;
     }
-    if (image) {
-      const imgUrl = image.startsWith('http') ? image : `${siteUrl}${image}`;
+    if (image != null && image !== '') {
+      const imageStr = typeof image === 'string' ? image : String(image);
+      const imgUrl = imageStr.startsWith('http') ? imageStr : `${siteUrl}${imageStr}`;
       webPage.image = [imgUrl];
     }
 

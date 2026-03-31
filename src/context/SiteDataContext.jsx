@@ -95,7 +95,7 @@ export function SiteDataProvider({ children }) {
       if (subsRes.data) setContactSubmissions(subsRes.data);
 
       const svcRes = await supabase.from('services').select('*').order('sort_order');
-      if (svcRes.data?.length) setServices(svcRes.data);
+      if (Array.isArray(svcRes.data) && svcRes.data.length > 0) setServices(svcRes.data);
       else setServices(servicesMenu);
 
       // true = Supabase load finished; do not treat “all tables empty” as failure (avoids re-applying static ids in useEffect)
@@ -136,6 +136,20 @@ export function SiteDataProvider({ children }) {
     [portfolio, portfolioDetails],
   );
 
+  const mergedServicePageContent = useMemo(() => {
+    if (!Array.isArray(services) || services.length === 0) return servicePageContent;
+    const first = services[0];
+    if (first == null || first.page_content == null) return servicePageContent;
+    try {
+      return Object.fromEntries(
+        services.filter((s) => s != null && s.id != null).map((s) => [String(s.id), s.page_content]),
+      );
+    } catch (e) {
+      console.warn('servicePageContent merge failed:', e);
+      return servicePageContent;
+    }
+  }, [services]);
+
   const value = {
     portfolio,
     portfolioDetails,
@@ -144,8 +158,8 @@ export function SiteDataProvider({ children }) {
     blogPosts,
     team,
     testimonials,
-    services,
-    servicePageContent: services.length && services[0]?.page_content ? Object.fromEntries(services.map(s => [s.id, s.page_content])) : servicePageContent,
+    services: Array.isArray(services) ? services : [],
+    servicePageContent: mergedServicePageContent,
     settings,
     contactSubmissions,
     loading,

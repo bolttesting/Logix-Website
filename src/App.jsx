@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -31,13 +31,26 @@ import './pages/PortfolioPage.css'
 import './pages/PortfolioProjectPage.css'
 import './pages/ServicePage.css'
 
+function normalizePathname(p) {
+  if (!p || p === '/') return '/'
+  return p.replace(/\/+$/, '') || '/'
+}
+
 function App() {
-  return (
-    <SiteDataProvider>
+  const { pathname } = useLocation()
+  /** Login must not depend on SiteDataProvider (avoids blank page if context render throws). */
+  const isAdminLogin = normalizePathname(pathname) === '/admin/login'
+
+  const shell = (
+    <>
       <GlobalJsonLd />
-      <div className="grid-bg" />
-      <div className="gradient-orb gradient-orb-1" />
-      <div className="gradient-orb gradient-orb-2" />
+      {!isAdminLogin && (
+        <>
+          <div className="grid-bg" />
+          <div className="gradient-orb gradient-orb-1" />
+          <div className="gradient-orb gradient-orb-2" />
+        </>
+      )}
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/login/" element={<Navigate to="/admin/login" replace />} />
@@ -62,8 +75,13 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ReturnToTop />
-    </SiteDataProvider>
+    </>
   )
+
+  if (isAdminLogin) {
+    return shell
+  }
+  return <SiteDataProvider>{shell}</SiteDataProvider>
 }
 
 export default App
