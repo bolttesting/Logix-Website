@@ -1,8 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const STORAGE_KEY = 'logix-theme';
 
 const ThemeContext = createContext(null);
+
+function normalizePathname(p) {
+  if (!p || p === '/') return '/';
+  return p.replace(/\/+$/, '') || '/';
+}
 
 function readInitialTheme() {
   try {
@@ -18,19 +24,26 @@ function readInitialTheme() {
 }
 
 export function ThemeProvider({ children }) {
+  const { pathname } = useLocation();
+  const isAdminLogin = normalizePathname(pathname) === '/admin/login';
+
   const [theme, setThemeState] = useState(() =>
     typeof window !== 'undefined' ? readInitialTheme() : 'dark',
   );
 
+  /** Admin login uses dark surfaces; forcing light tokens here made text invisible on that page. */
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.style.colorScheme = theme === 'light' ? 'light' : 'dark';
-    try {
-      localStorage.setItem(STORAGE_KEY, theme);
-    } catch {
-      /* ignore */
+    const applied = isAdminLogin ? 'dark' : theme;
+    document.documentElement.setAttribute('data-theme', applied);
+    document.documentElement.style.colorScheme = applied === 'light' ? 'light' : 'dark';
+    if (!isAdminLogin) {
+      try {
+        localStorage.setItem(STORAGE_KEY, theme);
+      } catch {
+        /* ignore */
+      }
     }
-  }, [theme]);
+  }, [theme, isAdminLogin]);
 
   const toggleTheme = () => setThemeState((t) => (t === 'dark' ? 'light' : 'dark'));
 
