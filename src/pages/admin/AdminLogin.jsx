@@ -15,6 +15,7 @@ export default function AdminLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!supabase) return;
     setError('');
     setLoading(true);
     try {
