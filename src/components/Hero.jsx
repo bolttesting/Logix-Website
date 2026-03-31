@@ -4,6 +4,7 @@ import { ShaderAnimation } from './ui/ShaderAnimation';
 import ButtonCrossArrow from './ui/ButtonCrossArrow';
 import ButtonAnimatedGradient from './ui/ButtonAnimatedGradient';
 import AvatarGroup from './ui/avatar-group';
+import { AnimatedText } from './ui/animated-text';
 
 const easeOut = [0.23, 1, 0.32, 1];
 const staggerContainer = {
@@ -23,11 +24,6 @@ const fadeUp = (reduceMotion) => ({
 });
 
 const PILL_LABELS = ['Research-led UX', 'Web & mobile', 'Launch support'];
-const BOARD_ROWS = [
-  { label: 'Discovery & scope', status: 'done', tag: 'Done' },
-  { label: 'Design & prototype', status: 'active', tag: 'In progress' },
-  { label: 'Build & hardening', status: 'queued', tag: 'Queued' },
-];
 
 /** Hero corner avatars (Unsplash); matches “Meet the team” tone */
 const HERO_AVATAR_ITEMS = [
@@ -81,7 +77,7 @@ export default function Hero() {
   const ctaVariant = theme === 'light' ? 'light' : 'dark';
 
   return (
-    <section className="hero" id="hero">
+    <section className="hero hero--centered" id="hero">
       {!reduceMotion && <ShaderAnimation className="hero__shader" />}
       <div className="hero__noise" aria-hidden />
       <div className="hero__glow hero__glow--1" />
@@ -98,9 +94,34 @@ export default function Hero() {
             <span className="hero__badge-dot" />
             Full-service product studio
           </motion.div>
-          <motion.h1 className="hero__title" variants={fadeUp(reduceMotion)}>
-            <span className="hero__title-line">We design and build</span>
-            <span className="hero__title-gradient"> digital products that scale.</span>
+          <motion.h1
+            className={`hero__title${reduceMotion ? '' : ' hero__title--animated'}`}
+            variants={fadeUp(reduceMotion)}
+          >
+            {reduceMotion ? (
+              <>
+                <span className="hero__title-line">We design and build</span>
+                <span className="hero__title-row">
+                  <span className="hero__title-gradient">digital products</span>
+                  <span className="hero__title-tail"> that scale.</span>
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="hero__title-line">We design and build</span>
+                <span className="hero__title-row">
+                  <AnimatedText
+                    text="Digital Products"
+                    tone="hero-gradient"
+                    className="animated-text--inline"
+                    duration={0.055}
+                    delay={0.08}
+                    startDelay={0.12}
+                  />
+                  <span className="hero__title-tail"> that scale.</span>
+                </span>
+              </>
+            )}
           </motion.h1>
           <motion.p className="hero__desc" variants={fadeUp(reduceMotion)}>
             Strategy, product design, and engineering in one team — fewer handoffs, clearer owners, and a
@@ -125,47 +146,6 @@ export default function Hero() {
             Typical kickoff: two-week discovery · then weekly stakeholder demos
           </motion.p>
         </motion.div>
-
-        <motion.div
-          className={`hero__visual${reduceMotion ? '' : ' hero__visual--float'}`}
-          initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: easeOut, delay: 0.08 }}
-          aria-hidden
-        >
-          <div className="hero__visual-frame">
-            <div className="hero__visual-header">
-              <span className="hero__visual-dots" aria-hidden>
-                <span className="hero__visual-dot" />
-                <span className="hero__visual-dot" />
-                <span className="hero__visual-dot" />
-              </span>
-              <span className="hero__visual-title">Delivery board</span>
-              <span className="hero__visual-live">Live</span>
-            </div>
-            <div className="hero__visual-body">
-              <div className="hero__visual-board">
-                {BOARD_ROWS.map((row) => (
-                  <div key={row.label} className={`hero__board-row hero__board-row--${row.status}`}>
-                    <span className="hero__board-dot" />
-                    <span className="hero__board-label">{row.label}</span>
-                    <span className="hero__board-tag">{row.tag}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="hero__visual-metrics">
-              <div className="hero__metric">
-                <span className="hero__metric-value">2 week</span>
-                <span className="hero__metric-label">Discovery sprint</span>
-              </div>
-              <div className="hero__metric">
-                <span className="hero__metric-value">1 team</span>
-                <span className="hero__metric-label">Design + build</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
       </div>
       {!reduceMotion && (
         <motion.div
@@ -179,16 +159,18 @@ export default function Hero() {
         </motion.div>
       )}
 
-      <motion.div
-        className="hero__avatar-group"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.75, duration: 0.45, ease: easeOut }}
-      >
-        <div className="hero__avatar-group__inner" aria-label="Team members">
-          <AvatarGroup items={HERO_AVATAR_ITEMS} maxVisible={5} size="sm" />
-        </div>
-      </motion.div>
+      <div className="hero__avatar-slot">
+        <motion.div
+          className="hero__avatar-group"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.45, ease: easeOut }}
+        >
+          <div className="hero__avatar-group__inner" aria-label="Team members">
+            <AvatarGroup items={HERO_AVATAR_ITEMS} maxVisible={5} size="sm" />
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -36,6 +36,8 @@
   font-size: 0.875rem;
   line-height: 1.58;
   color: var(--text-secondary);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .tcol-card__stars {

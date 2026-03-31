@@ -36,14 +36,23 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 body {
   font-family: var(--font-body);
   background: var(--bg-primary);
   color: var(--text-primary);
-  overflow-x: hidden;
+  overflow-x: clip;
+  max-width: 100%;
   line-height: 1.6;
+}
+
+#root {
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
 }
 
 .grid-bg {

@@ -3,8 +3,21 @@
 .about-tech-arc {
   position: relative;
   width: 100%;
+  /* Scroll-scrub track length — 420vh is excessive on tablets / short viewports */
   min-height: 420vh;
   margin-top: 0;
+}
+
+@media (max-width: 1024px) {
+  .about-tech-arc {
+    min-height: 220vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-tech-arc {
+    min-height: 170vh;
+  }
 }
 
 .about-tech-arc__sticky {

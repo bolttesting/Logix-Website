@@ -1,0 +1,123 @@
+/* Letter stagger + underline — hero uses .animated-text--hero-* modifiers */
+
+.animated-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.animated-text--align-start {
+  align-items: flex-start;
+}
+
+/* Sits inline with trailing static hero copy (e.g. “ that scales.”) */
+.animated-text--inline {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  vertical-align: baseline;
+  gap: 0.25rem;
+  width: auto;
+  max-width: 100%;
+}
+
+.animated-text--inline .animated-text__relative {
+  width: auto;
+}
+
+.hero--centered .animated-text--inline {
+  align-items: center;
+}
+
+.hero--centered .animated-text__letters {
+  justify-content: center;
+}
+
+.animated-text__relative {
+  position: relative;
+  width: 100%;
+}
+
+.animated-text__letters {
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  justify-content: flex-start;
+  row-gap: 0.02em;
+}
+
+.animated-text__letter {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.animated-text__typo {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 4.5vw, 3.45rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
+.animated-text--hero-line-light .animated-text__letter {
+  color: #f4f4f5;
+  font-weight: 600;
+}
+
+.animated-text--hero-gradient .animated-text__letter {
+  background: linear-gradient(105deg, #fdfdfd 0%, var(--hero-accent, #99f6e4) 38%, var(--hero-accent-2, #c4b5fd) 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme='light'] .animated-text--hero-line-light .animated-text__letter {
+  color: #0f172a;
+}
+
+[data-theme='light'] .animated-text--hero-gradient .animated-text__letter {
+  background: linear-gradient(105deg, #0f172a 0%, #0d9488 45%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.animated-text__underline {
+  position: absolute;
+  left: 0;
+  bottom: -0.35rem;
+  height: 4px;
+  border-radius: 999px;
+  transform-origin: center left;
+  /* width driven by motion */
+}
+
+.animated-text--hero-line-light .animated-text__underline {
+  background: linear-gradient(90deg, var(--hero-accent, #99f6e4), var(--hero-accent-2, #c4b5fd));
+  box-shadow: 0 0 12px rgba(20, 184, 166, 0.35);
+}
+
+.animated-text--hero-gradient .animated-text__underline {
+  background: linear-gradient(90deg, #2dd4bf, #a78bfa, #e879f9);
+  opacity: 0.95;
+}
+
+[data-theme='light'] .animated-text--hero-line-light .animated-text__underline {
+  background: linear-gradient(90deg, #0d9488, #7c3aed);
+}
+
+[data-theme='light'] .animated-text--hero-gradient .animated-text__underline {
+  background: linear-gradient(90deg, #0d9488, #7c3aed, #c026d3);
+}
+
+.animated-text--underline-thin .animated-text__underline {
+  height: 3px;
+  bottom: -0.28rem;
+}
+
+.animated-text--underline-thick .animated-text__underline {
+  height: 5px;
+  bottom: -0.42rem;
+}

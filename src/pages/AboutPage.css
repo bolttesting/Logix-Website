@@ -1,7 +1,9 @@
-/* About Page */
+/* About Page — use clip (not hidden) so position:sticky stacking cards keep working */
 .about-page {
   position: relative;
   z-index: 1;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 /* Hero */
@@ -137,6 +139,26 @@
 .about-section--timeline {
   position: relative;
   overflow: hidden;
+}
+
+/* Tech stack scroll-scene: avoid extra padding below the tall scroll track on tablet */
+.about-section--tech-arc {
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .about-section--tech-arc {
+    padding-top: 4rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .about-section--tech-arc .about-section__inner {
+    margin-bottom: 0;
+  }
+
+  .about-section--tech-arc .about-section__header {
+    margin-bottom: 1.75rem;
+  }
 }
 
 .about-section__inner {

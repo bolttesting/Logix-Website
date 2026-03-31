@@ -101,6 +101,7 @@
 
 .about-wedo-stack-card {
   height: 100vh;
+  height: 100dvh;
   min-height: 560px;
   display: flex;
   align-items: center;
@@ -110,6 +111,13 @@
   padding: 1rem;
   box-sizing: border-box;
   /* z-index set inline per index so card N+1 paints above card N */
+}
+
+/* Tablet / touch: stable viewport height so sticky + Framer scroll progress match desktop feel */
+@media (max-width: 1024px) {
+  .about-wedo-stack-card {
+    min-height: min(100dvh, 720px);
+  }
 }
 
 .about-wedo-stack-card__surface {

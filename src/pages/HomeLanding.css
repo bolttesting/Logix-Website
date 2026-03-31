@@ -13,6 +13,9 @@
   --hl-card-hover: rgba(20, 184, 166, 0.45);
   --hl-shadow: rgba(109, 40, 217, 0.2);
   --hl-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  overflow-x: clip;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Expertise */

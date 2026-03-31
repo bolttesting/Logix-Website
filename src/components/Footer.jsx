@@ -1,7 +1,70 @@
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDown } from 'lucide-react';
 import Icon from './Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { TextHoverEffect, FooterBackgroundGradient } from './ui/hover-footer';
+
+const ACCORDION_MQ = '(max-width: 900px)';
+
+function useFooterAccordionMode() {
+  const [narrow, setNarrow] = useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(ACCORDION_MQ).matches : false,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(ACCORDION_MQ);
+    const onChange = () => setNarrow(mq.matches);
+    onChange();
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return narrow;
+}
+
+function FooterAccordionColumn({
+  sectionId,
+  title,
+  isNarrow,
+  isOpen,
+  onToggle,
+  className = '',
+  children,
+}) {
+  if (!isNarrow) {
+    return (
+      <div className={`footer__col ${className}`.trim()}>
+        <h4>{title}</h4>
+        {children}
+      </div>
+    );
+  }
+
+  const panelId = `footer-section-${sectionId}`;
+  const triggerId = `footer-trigger-${sectionId}`;
+
+  return (
+    <div className={`footer__col footer__col--accordion ${isOpen ? 'footer__col--open' : ''} ${className}`.trim()}>
+      <button
+        type="button"
+        className="footer__accordion-trigger"
+        id={triggerId}
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span className="footer__accordion-title">{title}</span>
+        <ChevronDown className="footer__accordion-chevron" size={18} strokeWidth={2} aria-hidden />
+      </button>
+      <div className="footer__accordion-panel" id={panelId} role="region" aria-labelledby={triggerId}>
+        <div className="footer__accordion-panel-inner" inert={!isOpen || undefined}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const quickLinks = [
   { label: 'Home', to: '/' },
@@ -31,6 +94,29 @@ export default function Footer() {
   const { settings } = useSiteData();
   const email = settings?.email || 'info@logixcontact.com';
   const phone = settings?.phone || '+123-456-7890';
+  const isNarrow = useFooterAccordionMode();
+
+  const [open, setOpen] = useState({
+    quick: true,
+    services: false,
+    contact: false,
+  });
+
+  useEffect(() => {
+    if (!isNarrow) {
+      setOpen({ quick: true, services: true, contact: true });
+    } else {
+      setOpen({ quick: true, services: false, contact: false });
+    }
+  }, [isNarrow]);
+
+  const toggle = useCallback(
+    (key) => {
+      if (!isNarrow) return;
+      setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+    },
+    [isNarrow],
+  );
 
   return (
     <footer className="footer">
@@ -44,8 +130,13 @@ export default function Footer() {
             <p className="footer__slogan">Web & App Development Agency</p>
           </div>
           <div className="footer__cols">
-            <div className="footer__col">
-              <h4>Quick Links</h4>
+            <FooterAccordionColumn
+              sectionId="quick"
+              title="Quick Links"
+              isNarrow={isNarrow}
+              isOpen={open.quick}
+              onToggle={() => toggle('quick')}
+            >
               <ul>
                 {quickLinks.map((link) => (
                   <li key={link.label}>
@@ -53,9 +144,14 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="footer__col">
-              <h4>Services</h4>
+            </FooterAccordionColumn>
+            <FooterAccordionColumn
+              sectionId="services"
+              title="Services"
+              isNarrow={isNarrow}
+              isOpen={open.services}
+              onToggle={() => toggle('services')}
+            >
               <ul>
                 {services.map((s) => (
                   <li key={s}>
@@ -63,16 +159,22 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="footer__col footer__col--contact">
-              <h4>Contact</h4>
+            </FooterAccordionColumn>
+            <FooterAccordionColumn
+              sectionId="contact"
+              title="Contact"
+              className="footer__col--contact"
+              isNarrow={isNarrow}
+              isOpen={open.contact}
+              onToggle={() => toggle('contact')}
+            >
               <a href={`mailto:${email}`} className="footer__contact-item">
                 {email}
               </a>
               <a href={`tel:${phone.replace(/\D/g, '')}`} className="footer__contact-item">
                 {phone}
               </a>
-            </div>
+            </FooterAccordionColumn>
           </div>
         </div>
         <div className="footer__bottom">
