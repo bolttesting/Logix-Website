@@ -1,8 +1,7 @@
-import { useMemo } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
 import { useSiteData } from '../context/SiteDataContext';
-import { ShaderAnimation } from './ui/ShaderAnimation';
 import ButtonCrossArrow from './ui/ButtonCrossArrow';
 import ButtonAnimatedGradient from './ui/ButtonAnimatedGradient';
 import AvatarGroup from './ui/avatar-group';
@@ -26,6 +25,11 @@ const fadeUp = (reduceMotion) => ({
 });
 
 const PILL_LABELS = ['Research-led UX', 'Web & mobile', 'Launch support'];
+
+const ShaderAnimation = lazy(async () => {
+  const m = await import('./ui/ShaderAnimation');
+  return { default: m.ShaderAnimation };
+});
 
 /** Hero corner avatars (Unsplash); matches “Meet the team” tone */
 const HERO_AVATAR_ITEMS = [
@@ -103,7 +107,11 @@ export default function Hero() {
 
   return (
     <section className="hero hero--centered" id="hero">
-      {!reduceMotion && <ShaderAnimation className="hero__shader" />}
+      {!reduceMotion && (
+        <Suspense fallback={null}>
+          <ShaderAnimation className="hero__shader" />
+        </Suspense>
+      )}
       <div className="hero__noise" aria-hidden />
       <div className="hero__glow hero__glow--1" />
       <div className="hero__glow hero__glow--2" />

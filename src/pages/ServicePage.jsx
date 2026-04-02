@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { servicesMenu, servicePageContent, subServicePageContent } from '../data/servicesData';
 import Seo from '../components/Seo';
 import { truncateMeta } from '../config/seo';
+import './ServicePage.css';
 
 const serviceThemes = {
   'app-development': {

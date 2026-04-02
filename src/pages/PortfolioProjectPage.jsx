@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
 import { truncateMeta } from '../config/seo';
+import './PortfolioProjectPage.css';
 
 export default function PortfolioProjectPage() {
   const { id } = useParams();

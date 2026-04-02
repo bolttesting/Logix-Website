@@ -313,6 +313,15 @@
   color: var(--text-secondary);
 }
 
+.contact-page__map-skeleton {
+  min-height: min(420px, 55vh);
+  width: 100%;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-card) 88%, transparent);
+  border: 1px solid var(--border-subtle);
+  margin-top: 1rem;
+}
+
 @media (max-width: 900px) {
   .contact-main__inner {
     grid-template-columns: 1fr;

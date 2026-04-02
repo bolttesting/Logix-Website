@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
+import './PortfolioPage.css';
 
 const categories = [
   { id: 'all', label: 'All Projects' },

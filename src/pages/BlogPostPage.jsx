@@ -5,6 +5,7 @@ import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
 import { DEFAULT_DESCRIPTION, truncateMeta } from '../config/seo';
 import { findBlogPostByRouteParam } from '../utils/blogPaths';
+import './BlogPostPage.css';
 
 function toIsoDate(d) {
   if (!d) return undefined;

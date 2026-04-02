@@ -11,6 +11,7 @@ import { Lightbulb, Heart, Shield, Star, Handshake, BadgeCheck } from 'lucide-re
 import { useSiteData } from '../context/SiteDataContext'
 import Seo from '../components/Seo'
 import './HomeLanding.css'
+import './AboutPage.css'
 
 const WHAT_WE_DO_IMAGES = [
   'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=900&q=80&auto=format&fit=crop',

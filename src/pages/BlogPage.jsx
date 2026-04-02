@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
 import { getBlogPostPath } from '../utils/blogPaths';
+import './BlogPage.css';
 
 function formatDateIsoDateOnly(value) {
   if (!value) return undefined;

@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import Icon from '../components/Icons';
 import { useSiteData } from '../context/SiteDataContext';
 import { supabase } from '../lib/supabase';
-import OfficesMapSection from '../components/OfficesMapSection';
 import Seo from '../components/Seo';
 import { contactEmails, contactPhones, telHref } from '../utils/contactLines';
 import { parseFooterSocialLinks } from '../utils/footerSocialLinks';
+import './ContactPage.css';
+
+const OfficesMapSection = lazy(() => import('../components/OfficesMapSection'));
 
 export default function ContactPage() {
   const { settings, refresh } = useSiteData();
@@ -233,7 +235,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <OfficesMapSection />
+      <Suspense fallback={<div className="contact-page__map-skeleton" aria-hidden />}>
+        <OfficesMapSection />
+      </Suspense>
     </main>
   );
 }

@@ -128,3 +128,10 @@ body {
 [data-theme='light'] .gradient-orb {
   opacity: 0.12;
 }
+
+/* Route lazy-load: minimal paint while chunk downloads */
+.page-fallback {
+  min-height: min(50vh, 28rem);
+  width: 100%;
+  flex: 1 1 auto;
+}

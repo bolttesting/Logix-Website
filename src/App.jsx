@@ -1,48 +1,53 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import HomePage from './pages/HomePage'
-import AboutPage from './pages/AboutPage'
-import ContactPage from './pages/ContactPage'
-import BlogPage from './pages/BlogPage'
-import BlogPostPage from './pages/BlogPostPage'
-import PortfolioPage from './pages/PortfolioPage'
-import PortfolioProjectPage from './pages/PortfolioProjectPage'
-import ServicePage from './pages/ServicePage'
-import TermsPage from './pages/policy/TermsPage'
-import PrivacyPage from './pages/policy/PrivacyPage'
-import RefundPolicyPage from './pages/policy/RefundPolicyPage'
-import ServiceAgreementPage from './pages/policy/ServiceAgreementPage'
-import CookiePolicyPage from './pages/policy/CookiePolicyPage'
-import { SiteDataProvider } from './context/SiteDataContext'
-import AdminLayout from './pages/admin/AdminLayout'
-import AdminLogin from './pages/admin/AdminLogin'
-import AdminDashboard from './pages/admin/AdminDashboard'
-import PortfolioAdmin from './pages/admin/PortfolioAdmin'
-import BlogAdmin from './pages/admin/BlogAdmin'
-import TeamAdmin from './pages/admin/TeamAdmin'
-import TestimonialsAdmin from './pages/admin/TestimonialsAdmin'
-import ServicesAdmin from './pages/admin/ServicesAdmin'
-import SettingsAdmin from './pages/admin/SettingsAdmin'
-import ContactsAdmin from './pages/admin/ContactsAdmin'
-import NewsletterAdmin from './pages/admin/NewsletterAdmin'
 import ReturnToTop from './components/ReturnToTop'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import CookieNotice from './components/CookieNotice'
 import GlobalJsonLd from './components/GlobalJsonLd'
+import PageFallback from './components/PageFallback'
+import { SiteDataProvider } from './context/SiteDataContext'
 import './App.css'
-import './pages/AboutPage.css'
-import './pages/ContactPage.css'
-import './pages/BlogPage.css'
-import './pages/BlogPostPage.css'
-import './pages/PortfolioPage.css'
-import './pages/PortfolioProjectPage.css'
-import './pages/ServicePage.css'
+
+const HomePage = lazy(() => import('./pages/HomePage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const BlogPage = lazy(() => import('./pages/BlogPage'))
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
+const PortfolioPage = lazy(() => import('./pages/PortfolioPage'))
+const PortfolioProjectPage = lazy(() => import('./pages/PortfolioProjectPage'))
+const ServicePage = lazy(() => import('./pages/ServicePage'))
+const TermsPage = lazy(() => import('./pages/policy/TermsPage'))
+const PrivacyPage = lazy(() => import('./pages/policy/PrivacyPage'))
+const RefundPolicyPage = lazy(() => import('./pages/policy/RefundPolicyPage'))
+const ServiceAgreementPage = lazy(() => import('./pages/policy/ServiceAgreementPage'))
+const CookiePolicyPage = lazy(() => import('./pages/policy/CookiePolicyPage'))
+const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
+const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
+const PortfolioAdmin = lazy(() => import('./pages/admin/PortfolioAdmin'))
+const BlogAdmin = lazy(() => import('./pages/admin/BlogAdmin'))
+const TeamAdmin = lazy(() => import('./pages/admin/TeamAdmin'))
+const TestimonialsAdmin = lazy(() => import('./pages/admin/TestimonialsAdmin'))
+const ServicesAdmin = lazy(() => import('./pages/admin/ServicesAdmin'))
+const SettingsAdmin = lazy(() => import('./pages/admin/SettingsAdmin'))
+const ContactsAdmin = lazy(() => import('./pages/admin/ContactsAdmin'))
+const NewsletterAdmin = lazy(() => import('./pages/admin/NewsletterAdmin'))
 
 function normalizePathname(p) {
   if (!p || p === '/') return '/'
   return p.replace(/\/+$/, '') || '/'
+}
+
+function PublicRoute({ children }) {
+  return (
+    <>
+      <Navbar />
+      <Suspense fallback={<PageFallback />}>{children}</Suspense>
+      <Footer />
+    </>
+  )
 }
 
 function App() {
@@ -80,32 +85,91 @@ function App() {
         </>
       )}
       <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route path="portfolio" element={<PortfolioAdmin />} />
-          <Route path="blog" element={<BlogAdmin />} />
-          <Route path="team" element={<TeamAdmin />} />
-          <Route path="testimonials" element={<TestimonialsAdmin />} />
-          <Route path="services" element={<ServicesAdmin />} />
-          <Route path="settings" element={<SettingsAdmin />} />
-          <Route path="contacts" element={<ContactsAdmin />} />
-          <Route path="newsletter" element={<NewsletterAdmin />} />
+        <Route
+          path="/admin/login"
+          element={(
+            <Suspense fallback={<PageFallback />}>
+              <AdminLogin />
+            </Suspense>
+          )}
+        />
+        <Route
+          path="/admin"
+          element={(
+            <Suspense fallback={<PageFallback />}>
+              <AdminLayout />
+            </Suspense>
+          )}
+        >
+          <Route index element={(
+            <Suspense fallback={<PageFallback />}>
+              <AdminDashboard />
+            </Suspense>
+          )}
+          />
+          <Route path="portfolio" element={(
+            <Suspense fallback={<PageFallback />}>
+              <PortfolioAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="blog" element={(
+            <Suspense fallback={<PageFallback />}>
+              <BlogAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="team" element={(
+            <Suspense fallback={<PageFallback />}>
+              <TeamAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="testimonials" element={(
+            <Suspense fallback={<PageFallback />}>
+              <TestimonialsAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="services" element={(
+            <Suspense fallback={<PageFallback />}>
+              <ServicesAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="settings" element={(
+            <Suspense fallback={<PageFallback />}>
+              <SettingsAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="contacts" element={(
+            <Suspense fallback={<PageFallback />}>
+              <ContactsAdmin />
+            </Suspense>
+          )}
+          />
+          <Route path="newsletter" element={(
+            <Suspense fallback={<PageFallback />}>
+              <NewsletterAdmin />
+            </Suspense>
+          )}
+          />
         </Route>
-        <Route path="/" element={<><Navbar /><HomePage /><Footer /></>} />
-        <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />
-        <Route path="/contact" element={<><Navbar /><ContactPage /><Footer /></>} />
-        <Route path="/blog" element={<><Navbar /><BlogPage /><Footer /></>} />
-        <Route path="/blog/:id" element={<><Navbar /><BlogPostPage /><Footer /></>} />
-        <Route path="/portfolio" element={<><Navbar /><PortfolioPage /><Footer /></>} />
-        <Route path="/portfolio/:id" element={<><Navbar /><PortfolioProjectPage /><Footer /></>} />
-        <Route path="/services/:slug" element={<><Navbar /><ServicePage /><Footer /></>} />
-        <Route path="/services/:slug/:sub" element={<><Navbar /><ServicePage /><Footer /></>} />
-        <Route path="/legal/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
-        <Route path="/legal/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
-        <Route path="/legal/refunds" element={<><Navbar /><RefundPolicyPage /><Footer /></>} />
-        <Route path="/legal/service-agreement" element={<><Navbar /><ServiceAgreementPage /><Footer /></>} />
-        <Route path="/legal/cookie-policy" element={<><Navbar /><CookiePolicyPage /><Footer /></>} />
+        <Route path="/" element={<PublicRoute><HomePage /></PublicRoute>} />
+        <Route path="/about" element={<PublicRoute><AboutPage /></PublicRoute>} />
+        <Route path="/contact" element={<PublicRoute><ContactPage /></PublicRoute>} />
+        <Route path="/blog" element={<PublicRoute><BlogPage /></PublicRoute>} />
+        <Route path="/blog/:id" element={<PublicRoute><BlogPostPage /></PublicRoute>} />
+        <Route path="/portfolio" element={<PublicRoute><PortfolioPage /></PublicRoute>} />
+        <Route path="/portfolio/:id" element={<PublicRoute><PortfolioProjectPage /></PublicRoute>} />
+        <Route path="/services/:slug" element={<PublicRoute><ServicePage /></PublicRoute>} />
+        <Route path="/services/:slug/:sub" element={<PublicRoute><ServicePage /></PublicRoute>} />
+        <Route path="/legal/terms" element={<PublicRoute><TermsPage /></PublicRoute>} />
+        <Route path="/legal/privacy" element={<PublicRoute><PrivacyPage /></PublicRoute>} />
+        <Route path="/legal/refunds" element={<PublicRoute><RefundPolicyPage /></PublicRoute>} />
+        <Route path="/legal/service-agreement" element={<PublicRoute><ServiceAgreementPage /></PublicRoute>} />
+        <Route path="/legal/cookie-policy" element={<PublicRoute><CookiePolicyPage /></PublicRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ReturnToTop />
