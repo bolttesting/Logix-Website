@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { useSiteData } from '../context/SiteDataContext';
 import { WorldMap } from './ui/world-map';
+import { contactPhones, telHref } from '../utils/contactLines';
 import './OfficesMapSection.css';
 
 /** Approximate coords for map arcs (office areas). */
@@ -46,7 +48,9 @@ export const OFFICE_LOCATIONS = [
 
 export default function OfficesMapSection() {
   const { theme } = useTheme();
+  const { settings } = useSiteData();
   const isLight = theme === 'light';
+  const fallbackPhone = contactPhones(settings)?.[0] || null;
 
   return (
     <section className="section offices-map" id="offices" aria-labelledby="offices-map-heading">
@@ -88,6 +92,9 @@ export default function OfficesMapSection() {
 
         <ul className="offices-map__grid">
           {OFFICE_LOCATIONS.map((office, index) => (
+            (() => {
+              const phone = office.phone || fallbackPhone;
+              return (
             <motion.li
               key={office.id}
               className="offices-map__card"
@@ -100,13 +107,15 @@ export default function OfficesMapSection() {
               <a href={`mailto:${office.email}`} className="offices-map__link">
                 {office.email}
               </a>
-              {office.phone ? (
-                <a href={`tel:${office.phone.replace(/\s/g, '')}`} className="offices-map__phone">
-                  {office.phone}
+              {phone ? (
+                <a href={telHref(phone)} className="offices-map__phone">
+                  {phone}
                 </a>
               ) : null}
               <p className="offices-map__address">{office.address}</p>
             </motion.li>
+              );
+            })()
           ))}
         </ul>
       </div>

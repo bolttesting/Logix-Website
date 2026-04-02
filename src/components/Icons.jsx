@@ -240,6 +240,40 @@ const icons = {
       <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
     </svg>
   ),
+  facebook: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  ),
+  youtube: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.5 15.5 15 12l-4.5-3.5v7z" fill="currentColor" stroke="none" />
+      <rect x="2.5" y="7" width="19" height="10" rx="3" />
+    </svg>
+  ),
+  github: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 19c-5 1.5-5-2.5-7-3" />
+      <path d="M16 22v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+    </svg>
+  ),
+  whatsapp: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.5 11.5a8.5 8.5 0 0 1-12.9 7.3L3 20l1.4-4.4A8.5 8.5 0 1 1 20.5 11.5Z" />
+      <path d="M8.8 8.7c.3-.7.6-.7 1-.7h.7c.2 0 .5.1.7.5l.9 2c.1.3.1.6-.1.8l-.5.6c-.2.2-.2.5 0 .8.6 1 1.5 1.9 2.5 2.5.3.2.6.2.8 0l.6-.5c.2-.2.5-.2.8-.1l2 .9c.4.2.5.5.5.7v.7c0 .4 0 .7-.7 1-1 .4-2.6.1-4.5-1-1.8-1-3.8-3-4.8-4.8-1.1-1.9-1.4-3.5-1-4.5Z" />
+    </svg>
+  ),
+  tiktok: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10 12a4 4 0 1 0 4 4V3c1.1 2.1 3 3.4 5 3.6V10c-2.3-.2-4.1-1.2-5-2.6V16a6 6 0 1 1-6-6Z" />
+    </svg>
+  ),
+  telegram: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 3 2 11l8 2 2 8 4-6 6-12Z" />
+      <path d="M10 13 22 3" />
+    </svg>
+  ),
   arrowRight: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M7 17 17 7" />
