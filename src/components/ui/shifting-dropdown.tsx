@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -51,8 +52,27 @@ function ServicesPanel() {
 
 export default function ServicesDropdown() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const overlayId = useId().replace(/:/g, '');
   const [open, setOpen] = useState(false);
+  const [panelShiftX, setPanelShiftX] = useState(0);
+
+  const updatePanelOffset = useCallback(() => {
+    if (!open) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const rect = panel.getBoundingClientRect();
+    const viewportPadding = 10;
+    let shift = 0;
+
+    if (rect.left < viewportPadding) {
+      shift = viewportPadding - rect.left;
+    } else if (rect.right > window.innerWidth - viewportPadding) {
+      shift = (window.innerWidth - viewportPadding) - rect.right;
+    }
+    setPanelShiftX(shift);
+  }, [open]);
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
@@ -63,6 +83,17 @@ export default function ServicesDropdown() {
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, []);
+
+  useLayoutEffect(() => {
+    updatePanelOffset();
+  }, [open, updatePanelOffset]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const onResize = () => updatePanelOffset();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [open, updatePanelOffset]);
 
   return (
     <div
@@ -95,6 +126,7 @@ export default function ServicesDropdown() {
           {open ? (
             <motion.div
               key="mega"
+              ref={panelRef}
               id={`${overlayId}-overlay-content`}
               role="region"
               aria-label="Services menu"
@@ -103,6 +135,7 @@ export default function ServicesDropdown() {
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
               className="shifting-dropdown__panel"
+              style={{ '--shift-x': `${panelShiftX}px` } as CSSProperties}
             >
               <div className="shifting-dropdown__bridge" aria-hidden />
               <Nub overlayId={overlayId} />

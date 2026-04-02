@@ -46,9 +46,9 @@
 
 .shifting-dropdown__panel {
   position: absolute;
-  right: 0;
+  left: 50%;
   top: calc(100% + 0.35rem);
-  transform: none;
+  transform: translateX(calc(-50% + var(--shift-x, 0px)));
   width: min(720px, calc(100vw - 2rem));
   max-width: 94vw;
   border-radius: 12px;
@@ -58,13 +58,6 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   padding: 1rem 1.15rem 1.1rem;
   text-align: left;
-}
-
-@media (max-width: 900px) {
-  .shifting-dropdown__panel {
-    right: -0.25rem;
-    width: min(720px, calc(100vw - 1rem));
-  }
 }
 
 .shifting-dropdown__nub {
