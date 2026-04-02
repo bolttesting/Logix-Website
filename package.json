@@ -16,6 +16,7 @@
     "@supabase/supabase-js": "^2.98.0",
     "@vercel/analytics": "^2.0.1",
     "cobe": "^2.0.1",
+    "dompurify": "^3.3.3",
     "dotted-map": "^3.1.0",
     "framer-motion": "^12.34.5",
     "lucide-react": "^1.7.0",

@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import DOMPurify from 'dompurify';
 import { useSiteData } from '../context/SiteDataContext';
 import Seo from '../components/Seo';
 import { DEFAULT_DESCRIPTION, truncateMeta } from '../config/seo';
@@ -31,11 +32,38 @@ function defaultBlogKeywords(category) {
   return [c, 'UK tech blog', 'web development', 'software', 'Logix Contact'].filter(Boolean).join(', ');
 }
 
+function escapeHtml(text) {
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function toRenderableHtml(rawContent) {
+  const raw = String(rawContent || '').trim();
+  if (!raw) return '<p>Content coming soon.</p>';
+
+  const hasHtml = /<\s*\/?\s*(h[1-6]|p|ul|ol|li|strong|em|a|blockquote|br)\b/i.test(raw);
+  if (hasHtml) return raw;
+
+  // Backward-compatible fallback for plain-text posts saved as paragraphs.
+  return raw
+    .split(/\n{2,}/)
+    .map((para) => `<p>${escapeHtml(para).replace(/\n/g, '<br />')}</p>`)
+    .join('');
+}
+
 export default function BlogPostPage() {
   const { id: routeParam } = useParams();
   const { blogPosts = [] } = useSiteData();
   const post = findBlogPostByRouteParam(blogPosts, routeParam);
   const content = post?.content || post?.excerpt || fallbackContent[routeParam] || 'Content coming soon.';
+  const contentHtml = DOMPurify.sanitize(toRenderableHtml(content), {
+    ALLOWED_TAGS: ['p', 'h2', 'h3', 'h4', 'ul', 'ol', 'li', 'strong', 'em', 'a', 'blockquote', 'br'],
+    ALLOWED_ATTR: ['href', 'target', 'rel'],
+  });
 
   if (!post || post.published === false) {
     return (
@@ -106,11 +134,8 @@ export default function BlogPostPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-        >
-          {String(content).split('\n\n').map((para, i) => (
-            <p key={i}>{para}</p>
-          ))}
-        </motion.div>
+          dangerouslySetInnerHTML={{ __html: contentHtml }}
+        />
       </article>
     </main>
   );

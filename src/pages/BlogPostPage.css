@@ -88,3 +88,57 @@
   font-size: 1.2rem;
   color: var(--text-primary);
 }
+
+.blog-post__content h2,
+.blog-post__content h3,
+.blog-post__content h4 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  line-height: 1.3;
+  margin: 2rem 0 0.8rem;
+}
+
+.blog-post__content h2 {
+  font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+}
+
+.blog-post__content h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.4rem);
+}
+
+.blog-post__content h4 {
+  font-size: 1.1rem;
+}
+
+.blog-post__content ul,
+.blog-post__content ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.blog-post__content li {
+  margin: 0.45rem 0;
+  line-height: 1.7;
+}
+
+.blog-post__content strong {
+  color: var(--text-primary);
+}
+
+.blog-post__content a {
+  color: var(--accent-blue-light);
+}
+
+.blog-post__content a:hover {
+  color: var(--neon-green);
+}
+
+.blog-post__content blockquote {
+  margin: 1.4rem 0;
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--accent-orange);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-radius: 8px;
+}
