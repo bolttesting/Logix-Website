@@ -41,17 +41,55 @@ function escapeHtml(text) {
     .replaceAll("'", '&#39;');
 }
 
+function linkifyText(text) {
+  const escaped = escapeHtml(text);
+  const withMarkdownLinks = escaped.replace(
+    /\[([^\]]+)\]\(([^)\s]+)\)/g,
+    (_m, label, href) => `<a href="${href}">${label}</a>`,
+  );
+  return withMarkdownLinks.replace(
+    /\b((?:https?:\/\/)?(?:www\.)?[a-z0-9.-]+\.[a-z]{2,}(?:\/[^\s<]*)?)/gi,
+    (match) => {
+      if (match.includes('">')) return match;
+      return `<a href="${match}">${match}</a>`;
+    },
+  );
+}
+
+function normalizeAnchorHrefs(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, 'text/html');
+  const anchors = doc.querySelectorAll('a[href]');
+  anchors.forEach((a) => {
+    const rawHref = (a.getAttribute('href') || '').trim();
+    if (!rawHref) return;
+
+    const isRelative = rawHref.startsWith('/') || rawHref.startsWith('#');
+    const isProtocol = /^(https?:|mailto:|tel:)/i.test(rawHref);
+    const looksLikeDomain = /^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i.test(rawHref);
+    const nextHref = !isRelative && !isProtocol && looksLikeDomain ? `https://${rawHref}` : rawHref;
+
+    a.setAttribute('href', nextHref);
+    const isExternal = /^https?:\/\//i.test(nextHref);
+    if (isExternal) {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+  return doc.body.innerHTML;
+}
+
 function toRenderableHtml(rawContent) {
   const raw = String(rawContent || '').trim();
   if (!raw) return '<p>Content coming soon.</p>';
 
   const hasHtml = /<\s*\/?\s*(h[1-6]|p|ul|ol|li|strong|em|a|blockquote|br)\b/i.test(raw);
-  if (hasHtml) return raw;
+  if (hasHtml) return normalizeAnchorHrefs(raw);
 
   // Backward-compatible fallback for plain-text posts saved as paragraphs.
   return raw
     .split(/\n{2,}/)
-    .map((para) => `<p>${escapeHtml(para).replace(/\n/g, '<br />')}</p>`)
+    .map((para) => `<p>${linkifyText(para).replace(/\n/g, '<br />')}</p>`)
     .join('');
 }
 
