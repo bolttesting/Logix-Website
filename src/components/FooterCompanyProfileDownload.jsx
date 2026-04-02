@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import DownloadButton from './ui/DownloadButton';
 
-/** Served from `public/` — add the PDF file with this exact name. */
-const COMPANY_PROFILE_HREF = '/Logix Contact Company Profile.pdf';
+/** Served from `public/`. Keep filename URL-safe for reliable downloads. */
+const COMPANY_PROFILE_HREF = '/company-profile.pdf';
 const COMPANY_PROFILE_FILENAME = 'Logix Contact Company Profile.pdf';
 
 export default function FooterCompanyProfileDownload() {
