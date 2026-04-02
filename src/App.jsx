@@ -98,6 +98,7 @@ function App() {
         <Route path="/portfolio" element={<><Navbar /><PortfolioPage /><Footer /></>} />
         <Route path="/portfolio/:id" element={<><Navbar /><PortfolioProjectPage /><Footer /></>} />
         <Route path="/services/:slug" element={<><Navbar /><ServicePage /><Footer /></>} />
+        <Route path="/services/:slug/:sub" element={<><Navbar /><ServicePage /><Footer /></>} />
         <Route path="/legal/terms" element={<><Navbar /><TermsPage /><Footer /></>} />
         <Route path="/legal/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
         <Route path="/legal/refunds" element={<><Navbar /><RefundPolicyPage /><Footer /></>} />

@@ -6,9 +6,26 @@
   <url><loc>https://logixcontact.co.uk/blog</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://logixcontact.co.uk/portfolio</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://logixcontact.co.uk/services/app-development</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/app-development/frontend-development</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/app-development/backend-engineering</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/app-development/app-innovation</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/app-development/hybrid-app-development</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://logixcontact.co.uk/services/web-development</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/web-development/next-level-experiences</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/web-development/mern-mean-power</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/web-development/php-back-end-solutions</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/web-development/cms-solutions</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://logixcontact.co.uk/services/desktop-development</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/desktop-development/robust-apps-with-dotnet</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/desktop-development/unity-immersion</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://logixcontact.co.uk/services/seo-services</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/seo-services/seo-audits-and-analysis</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/seo-services/keyword-research</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://logixcontact.co.uk/services/digital-marketing</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/digital-marketing/brand-presence</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://logixcontact.co.uk/services/ui-ux-design</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/ui-ux-design/figma-mastery</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/ui-ux-design/adobe-xd-and-illustrator-mastery</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/ui-ux-design/rive-animation-magic</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://logixcontact.co.uk/services/ui-ux-design/interactive-prototyping</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 </urlset>

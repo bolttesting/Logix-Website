@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Icon from '../components/Icons';
 import { useTheme } from '../context/ThemeContext';
-import { servicesMenu, servicePageContent } from '../data/servicesData';
+import { servicesMenu, servicePageContent, subServicePageContent } from '../data/servicesData';
 import Seo from '../components/Seo';
 import { truncateMeta } from '../config/seo';
 
@@ -46,7 +46,7 @@ const serviceThemes = {
 };
 
 export default function ServicePage() {
-  const { slug } = useParams();
+  const { slug, sub } = useParams();
   const { theme: colorTheme } = useTheme();
   const service = servicesMenu.find((s) => s.id === slug);
   const theme = serviceThemes[slug] || serviceThemes['app-development'];
@@ -69,11 +69,19 @@ export default function ServicePage() {
     );
   }
 
+  const subItem = sub ? service.items.find((i) => i.slug === sub) : null;
+  const subContent = sub ? subServicePageContent?.[slug]?.[sub] : null;
+
+  const cities = 'London, Manchester, Birmingham, Leeds, Bristol, Edinburgh, Glasgow';
+  const seoTitle = subItem ? `${subItem.title} (${service.title})` : service.title;
+  const seoPath = subItem ? `${service.path}/${subItem.slug}` : service.path;
   const seoDescription = truncateMeta(
-    pageContent?.overview ||
+    (subContent?.overview ?? (subItem ? subItem.desc : pageContent?.overview)) ||
       `${service.title} for UK businesses — design, build, and launch with Logix Contact.`,
   );
-  const seoKeywords = `${service.title}, ${service.title} UK, Logix Contact, digital agency United Kingdom, software development`;
+  const seoKeywords = subItem
+    ? `${subItem.title}, ${service.title}, ${service.title} UK, ${subItem.title} UK, ${cities}, Logix Contact`
+    : `${service.title}, ${service.title} UK, ${cities}, Logix Contact, digital agency United Kingdom, software development`;
 
   const processSteps = pageContent?.process || [];
   const stepItems = processSteps.map((s) => (typeof s === 'string' ? { title: s, desc: '' } : s));
@@ -81,10 +89,10 @@ export default function ServicePage() {
   return (
     <main className="service-page" style={{ '--service-accent': theme.accent }}>
       <Seo
-        title={service.title}
+        title={seoTitle}
         description={seoDescription}
         keywords={seoKeywords}
-        path={service.path}
+        path={seoPath}
       />
       {/* Hero */}
       <section className="service-hero" style={{ background: heroBg }}>
@@ -111,7 +119,7 @@ export default function ServicePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            {pageContent?.tagline || service.title}
+            {subContent?.tagline || (subItem ? subItem.title : pageContent?.tagline) || service.title}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -119,13 +127,24 @@ export default function ServicePage() {
             transition={{ delay: 0.5 }}
             className="service-hero__tagline"
           >
-            {pageContent?.overview || `${service.items.length} specialized offerings to power your digital success`}
+            {subContent?.overview ||
+              (subItem ? subItem.desc : pageContent?.overview) ||
+              `${service.items.length} specialized offerings to power your digital success`}
           </motion.p>
+          <p className="service-hero__uk">Serving UK teams across {cities}.</p>
+          <div className="service-hero__cta">
+            <Link to="/contact" className="service-hero__btn service-hero__btn--primary">
+              Get a Free Quote
+            </Link>
+            <Link to="/portfolio" className="service-hero__btn service-hero__btn--secondary">
+              See Our Work
+            </Link>
+          </div>
         </div>
       </section>
 
       {/* Stats bar */}
-      {pageContent?.stats && pageContent.stats.length > 0 && (
+      {!subItem && pageContent?.stats && pageContent.stats.length > 0 && (
         <section className="service-stats">
           <div className="service-content__inner">
             <div className="service-stats__grid">
@@ -147,6 +166,22 @@ export default function ServicePage() {
         </section>
       )}
 
+      <nav className="service-breadcrumbs" aria-label="Breadcrumb">
+        <div className="service-content__inner">
+          <Link to="/">Home</Link>
+          <span aria-hidden> / </span>
+          <Link to={service.path}>Services</Link>
+          <span aria-hidden> / </span>
+          <Link to={service.path}>{service.title}</Link>
+          {subItem ? (
+            <>
+              <span aria-hidden> / </span>
+              <span aria-current="page">{subItem.title}</span>
+            </>
+          ) : null}
+        </div>
+      </nav>
+
       {/* What We Offer */}
       <section className="service-content">
         <div className="service-content__inner">
@@ -160,7 +195,7 @@ export default function ServicePage() {
             <h2>What We Offer</h2>
           </motion.div>
           <div className="service-offerings">
-            {service.items.map((item, i) => (
+            {(subItem ? [subItem] : service.items).map((item, i) => (
               <motion.div
                 key={item.title}
                 className="service-offering"
@@ -173,9 +208,26 @@ export default function ServicePage() {
                 <span className="service-offering__icon"><Icon name={item.icon} size={28} /></span>
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
+                {!subItem && item.slug ? (
+                  <Link className="service-offering__link" to={`${service.path}/${item.slug}`}>
+                    Learn more →
+                  </Link>
+                ) : null}
               </motion.div>
             ))}
           </div>
+
+          {subItem && subContent?.whatYouGet?.length ? (
+            <div className="service-subdeliver">
+              <span className="service-section__badge">What you get</span>
+              <h2>Deliverables</h2>
+              <ul className="service-subdeliver__list">
+                {subContent.whatYouGet.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
           {/* Technologies */}
           {pageContent?.highlights && (
@@ -236,7 +288,7 @@ export default function ServicePage() {
           )}
 
           {/* Benefits */}
-          {pageContent?.benefits && (
+          {!subItem && pageContent?.benefits && (
             <motion.div
               className="service-benefits"
               initial={{ opacity: 0 }}
@@ -265,8 +317,40 @@ export default function ServicePage() {
             </motion.div>
           )}
 
+          {subItem && subContent?.faqs?.length ? (
+            <div className="service-faq">
+              <span className="service-section__badge">FAQ</span>
+              <h2>Frequently asked questions</h2>
+              <div className="service-faq__list">
+                {subContent.faqs.map(([q, a]) => (
+                  <details key={q} className="service-faq__item">
+                    <summary>{q}</summary>
+                    <p>{a}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
+          <div className="service-related">
+            <span className="service-section__badge">Explore more</span>
+            <h2>Related services</h2>
+            <div className="service-related__grid">
+              {servicesMenu
+                .filter((s) => s.id !== service.id)
+                .slice(0, 4)
+                .map((s) => (
+                  <Link key={s.id} to={s.path} className="service-related__card">
+                    <Icon name={serviceThemes[s.id]?.icon || 'globe'} size={20} />
+                    <span>{s.title}</span>
+                  </Link>
+                ))}
+            </div>
+          </div>
+
           {/* Why Choose */}
-          <motion.div
+          {!subItem ? (
+            <motion.div
             className="service-why"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -292,6 +376,7 @@ export default function ServicePage() {
               </div>
             </div>
           </motion.div>
+          ) : null}
 
           {/* CTA */}
           <motion.div

@@ -27,7 +27,11 @@ function ServicesPanel() {
                   {category.title}
                 </Link>
                 {category.items.slice(0, 3).map((item) => (
-                  <Link key={item.title} to={category.path} className="shifting-dropdown__sub">
+                  <Link
+                    key={item.title}
+                    to={item.slug ? `${category.path}/${item.slug}` : category.path}
+                    className="shifting-dropdown__sub"
+                  >
                     <Icon name={item.icon} size={16} />
                     <span>{item.title}</span>
                   </Link>
