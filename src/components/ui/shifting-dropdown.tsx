@@ -95,6 +95,20 @@ export default function ServicesDropdown() {
     return () => window.removeEventListener('resize', onResize);
   }, [open, updatePanelOffset]);
 
+  useEffect(() => {
+    if (!open || !panelRef.current) return undefined;
+    const panel = panelRef.current;
+    const ro = new ResizeObserver(() => updatePanelOffset());
+    ro.observe(panel);
+    const raf1 = requestAnimationFrame(() => updatePanelOffset());
+    const raf2 = requestAnimationFrame(() => updatePanelOffset());
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      ro.disconnect();
+    };
+  }, [open, updatePanelOffset]);
+
   return (
     <div
       className="shifting-dropdown"
