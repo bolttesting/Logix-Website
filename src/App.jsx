@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -42,9 +43,28 @@ function normalizePathname(p) {
 }
 
 function App() {
-  const { pathname } = useLocation()
+  const location = useLocation()
+  const { pathname, hash } = location
   /** Login must not depend on SiteDataProvider (avoids blank page if context render throws). */
   const isAdminLogin = normalizePathname(pathname) === '/admin/login'
+
+  // React Router SPA navigation does not automatically reset scroll position.
+  // Scroll to the top (or to the hash target) whenever the route changes.
+  useEffect(() => {
+    if (isAdminLogin) return
+
+    if (hash) {
+      const id = hash.replace('#', '')
+      requestAnimationFrame(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' })
+        else window.scrollTo({ top: 0, behavior: 'auto' })
+      })
+      return
+    }
+
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [pathname, hash, isAdminLogin])
 
   const shell = (
     <>
