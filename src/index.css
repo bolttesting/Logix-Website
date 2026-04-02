@@ -129,9 +129,23 @@ body {
   opacity: 0.12;
 }
 
-/* Route lazy-load: minimal paint while chunk downloads */
+/* Screen-reader-only labels (form controls, etc.) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Route lazy-load: tall placeholder until the route chunk paints — avoids footer flashing above the fold (lazy HomePage). */
 .page-fallback {
-  min-height: min(50vh, 28rem);
   width: 100%;
   flex: 1 1 auto;
+  min-height: calc(100vh - 6rem);
+  min-height: calc(100dvh - 6rem);
 }

@@ -12,6 +12,20 @@
   color: #ffffff;
 }
 
+/* Service cards: dark-teal CTA on white card (WCAG AA) */
+[data-theme='light'] .card-hover-effect__cta {
+  color: #0f766e;
+}
+[data-theme='light'] .card-hover-effect__cell:hover .card-hover-effect__cta {
+  color: #5b21b6;
+}
+[data-theme='light'] .home-landing .card-hover-effect__cta {
+  color: #0f766e;
+}
+[data-theme='light'] .home-landing .card-hover-effect__cell:hover .card-hover-effect__cta {
+  color: #5b21b6;
+}
+
 /* —— Footer map gradient —— */
 [data-theme='light'] .footer__bg-gradient {
   background: radial-gradient(125% 125% at 50% 10%, rgba(13, 148, 136, 0.12) 50%, rgba(59, 130, 246, 0.08) 100%);

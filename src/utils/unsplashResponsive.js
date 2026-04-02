@@ -37,12 +37,12 @@ export function unsplashAvatarImgProps(imageUrl, sizes) {
     return { src: imageUrl, srcSet: undefined, sizes: undefined };
   }
   try {
-    const common = { auto: 'format', fit: 'crop', q: '72' };
-    const widths = [48, 64, 96, 128];
+    const common = { auto: 'format', fit: 'crop', q: '65' };
+    const widths = [40, 56, 72, 96];
     const srcSet = buildSrcSet(imageUrl, widths, common);
     const srcU = new URL(imageUrl);
     Object.entries(common).forEach(([k, v]) => srcU.searchParams.set(k, v));
-    srcU.searchParams.set('w', '96');
+    srcU.searchParams.set('w', '72');
     return { src: srcU.toString(), srcSet, sizes };
   } catch {
     return { src: imageUrl, srcSet: undefined, sizes: undefined };

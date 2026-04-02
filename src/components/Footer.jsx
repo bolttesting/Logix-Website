@@ -39,7 +39,7 @@ function FooterAccordionColumn({
   if (!isNarrow) {
     return (
       <div className={`footer__col ${className}`.trim()}>
-        <h4>{title}</h4>
+        <h3 className="footer__col-title">{title}</h3>
         {children}
       </div>
     );
@@ -131,6 +131,7 @@ export default function Footer() {
     <footer className="footer">
       <FooterBackgroundGradient />
       <div className="footer__inner">
+        <h2 className="sr-only">Site footer</h2>
         <div className="footer__top">
           <div className="footer__brand">
             <Link to="/" className="footer__brand-link" aria-label="Logix Contact home">

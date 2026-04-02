@@ -64,7 +64,11 @@ export default function CalculateCost() {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
+            <label htmlFor="calculate-service" className="sr-only">
+              Service you need
+            </label>
             <select
+              id="calculate-service"
               value={form.service}
               onChange={(e) => setForm({ ...form, service: e.target.value })}
               className="calculate__select"

@@ -158,10 +158,10 @@
   border-color: rgba(20, 184, 166, 0.5);
 }
 .home-landing .card-hover-effect__cta {
-  color: var(--hl-i-strong);
+  color: var(--hl-i);
 }
 .home-landing .card-hover-effect__cell:hover .card-hover-effect__cta {
-  color: var(--hl-e);
+  color: #ddd6fe;
 }
 
 /* Calculate */
@@ -208,7 +208,7 @@
 
 /* Commits */
 .home-landing .commits__orbital-hint {
-  color: var(--hl-i-strong);
+  color: var(--hl-i);
 }
 
 /* Testimonials */

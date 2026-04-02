@@ -41,11 +41,17 @@ export default function CookieNotice() {
   if (!visible) return null;
 
   return (
-    <aside className="cookie-notice" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <div
+      className="cookie-notice"
+      role="dialog"
+      aria-modal="false"
+      aria-live="polite"
+      aria-labelledby="cookie-notice-heading"
+    >
       <div className="cookie-notice__card">
         <div className="cookie-notice__head">
           <span className="cookie-notice__emoji" aria-hidden>🍪</span>
-          <h2>Cookie Notice</h2>
+          <h2 id="cookie-notice-heading">Cookie Notice</h2>
         </div>
         <p className="cookie-notice__text">
           We use essential cookies to run the site and optional analytics cookies to improve performance.
@@ -99,6 +105,6 @@ export default function CookieNotice() {
           </div>
         </div>
       ) : null}
-    </aside>
+    </div>
   );
 }

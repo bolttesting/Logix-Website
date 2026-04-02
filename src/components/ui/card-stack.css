@@ -186,22 +186,38 @@
   gap: 0.5rem;
 }
 
+/* 44×44px minimum touch target; visual dot via ::after (WCAG 2.5.5). */
 .card-stack__dot {
-  width: 8px;
-  height: 8px;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border: none;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.28);
+  background: transparent;
   cursor: pointer;
+}
+
+.card-stack__dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
   transition: background 0.2s ease, transform 0.2s ease;
 }
 
-.card-stack__dot:hover {
+.card-stack__dot:hover::after {
   background: rgba(255, 255, 255, 0.45);
 }
 
-.card-stack__dot--on {
+.card-stack__dot--on::after {
   background: var(--text-primary);
   transform: scale(1.1);
 }

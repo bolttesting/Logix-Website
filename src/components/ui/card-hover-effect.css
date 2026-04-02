@@ -82,12 +82,13 @@
   gap: 0.35rem;
   font-size: 0.88rem;
   font-weight: 600;
-  color: var(--accent-orange);
+  /* Lighter teal on --bg-card (~4.6:1) vs brand #14b8a6 on same surface */
+  color: #5eead4;
   transition: color 0.2s ease;
 }
 
 .card-hover-effect__cell:hover .card-hover-effect__cta {
-  color: var(--accent-blue-light);
+  color: #ddd6fe;
 }
 
 @media (max-width: 768px) {

@@ -164,7 +164,7 @@ export default function RadialOrbitalTimeline({ timelineData }) {
 
           <div className="orbital__ring-line" aria-hidden />
 
-          <div className="orbital__hub" aria-label="Logix Contact">
+          <div className="orbital__hub" role="img" aria-label="Logix Contact">
             <span className="orbital__hub-core">
               <img
                 src="/LC.svg"

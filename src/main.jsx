@@ -10,6 +10,9 @@ import './index.css'
 import './theme-light.css'
 import App from './App.jsx'
 
+/** Start fetching the home page chunk immediately; matches `lazy()` in App and cuts time on `/` with an empty fallback. */
+void import('./pages/HomePage')
+
 function AnalyticsGate() {
   const [enabled, setEnabled] = useState(false)
 
