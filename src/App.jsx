@@ -14,6 +14,7 @@ import TermsPage from './pages/policy/TermsPage'
 import PrivacyPage from './pages/policy/PrivacyPage'
 import RefundPolicyPage from './pages/policy/RefundPolicyPage'
 import ServiceAgreementPage from './pages/policy/ServiceAgreementPage'
+import CookiePolicyPage from './pages/policy/CookiePolicyPage'
 import { SiteDataProvider } from './context/SiteDataContext'
 import AdminLayout from './pages/admin/AdminLayout'
 import AdminLogin from './pages/admin/AdminLogin'
@@ -28,6 +29,7 @@ import ContactsAdmin from './pages/admin/ContactsAdmin'
 import NewsletterAdmin from './pages/admin/NewsletterAdmin'
 import ReturnToTop from './components/ReturnToTop'
 import WhatsAppFloat from './components/WhatsAppFloat'
+import CookieNotice from './components/CookieNotice'
 import GlobalJsonLd from './components/GlobalJsonLd'
 import './App.css'
 import './pages/AboutPage.css'
@@ -103,10 +105,12 @@ function App() {
         <Route path="/legal/privacy" element={<><Navbar /><PrivacyPage /><Footer /></>} />
         <Route path="/legal/refunds" element={<><Navbar /><RefundPolicyPage /><Footer /></>} />
         <Route path="/legal/service-agreement" element={<><Navbar /><ServiceAgreementPage /><Footer /></>} />
+        <Route path="/legal/cookie-policy" element={<><Navbar /><CookiePolicyPage /><Footer /></>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <ReturnToTop />
       {!isAdminLogin && <WhatsAppFloat />}
+      {!isAdminLogin && <CookieNotice />}
     </>
   )
 

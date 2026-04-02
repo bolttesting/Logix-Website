@@ -91,6 +91,7 @@ const services = [
 const policyLinks = [
   { label: 'Terms & Conditions', to: '/legal/terms' },
   { label: 'Privacy Policy', to: '/legal/privacy' },
+  { label: 'Cookie Policy', to: '/legal/cookie-policy' },
   { label: 'Refund Policy', to: '/legal/refunds' },
   { label: 'Service & contract policy', to: '/legal/service-agreement' },
 ];
