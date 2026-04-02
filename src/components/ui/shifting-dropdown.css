@@ -48,7 +48,7 @@
   position: absolute;
   left: 50%;
   top: calc(100% + 0.35rem);
-  transform: translateX(calc(-50% + var(--shift-x, 0px)));
+  transform: translateX(calc(-50% + var(--base-shift-x, -120px) + var(--shift-x, 0px)));
   width: min(760px, calc(100vw - 1rem));
   max-width: calc(100vw - 1rem);
   border-radius: 12px;
