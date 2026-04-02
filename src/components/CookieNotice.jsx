@@ -1,16 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getCookiePrefs, hasCookieDecision, setCookiePrefs } from '../utils/cookieConsent';
 import './CookieNotice.css';
-
-const COOKIE_KEY = 'lc_cookie_consent_v1';
 
 export default function CookieNotice() {
   const [visible, setVisible] = useState(false);
+  const [showPrefs, setShowPrefs] = useState(false);
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
 
   useEffect(() => {
     try {
-      const existing = window.localStorage.getItem(COOKIE_KEY);
-      setVisible(existing !== 'accepted');
+      const prefs = getCookiePrefs();
+      setAnalyticsEnabled(Boolean(prefs.analytics));
+      setVisible(!hasCookieDecision());
     } catch {
       setVisible(true);
     }
@@ -18,12 +20,21 @@ export default function CookieNotice() {
 
   const year = useMemo(() => new Date().getFullYear(), []);
 
-  const acceptCookies = () => {
-    try {
-      window.localStorage.setItem(COOKIE_KEY, 'accepted');
-    } catch {
-      // Non-blocking: still hide the banner even if storage fails.
-    }
+  const acceptAllCookies = () => {
+    setCookiePrefs('accepted', { essential: true, analytics: true });
+    setVisible(false);
+  };
+
+  const rejectNonEssential = () => {
+    setCookiePrefs('rejected', { essential: true, analytics: false });
+    setVisible(false);
+  };
+
+  const savePreferences = () => {
+    setCookiePrefs(analyticsEnabled ? 'accepted' : 'rejected', {
+      essential: true,
+      analytics: analyticsEnabled,
+    });
     setVisible(false);
   };
 
@@ -37,21 +48,57 @@ export default function CookieNotice() {
           <h2>Cookie Notice</h2>
         </div>
         <p className="cookie-notice__text">
-          We use essential and analytics cookies to improve your experience, understand website performance,
-          and support our services in the UK. By clicking Accept, you agree to our use of cookies.
+          We use essential cookies to run the site and optional analytics cookies to improve performance.
+          Accepting cookies does not collect your email address.
           {' '}
           <Link to="/legal/cookie-policy">Read cookie policy</Link>.
         </p>
         <div className="cookie-notice__actions">
-          <Link className="cookie-notice__prefs" to="/legal/cookie-policy">
+          <button type="button" className="cookie-notice__prefs" onClick={() => setShowPrefs(true)}>
             Manage your preferences
-          </Link>
-          <button type="button" className="cookie-notice__accept" onClick={acceptCookies}>
-            Accept
+          </button>
+          <button type="button" className="cookie-notice__reject" onClick={rejectNonEssential}>
+            Reject
+          </button>
+          <button type="button" className="cookie-notice__accept" onClick={acceptAllCookies}>
+            Accept all
           </button>
         </div>
         <p className="cookie-notice__meta">Logix Contact · {year}</p>
       </div>
+      {showPrefs ? (
+        <div className="cookie-notice__modal-backdrop" role="presentation" onClick={() => setShowPrefs(false)}>
+          <div
+            className="cookie-notice__modal"
+            role="dialog"
+            aria-label="Cookie preferences"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Cookie Preferences</h3>
+            <p>Choose which cookies you allow. Essential cookies are always on for website functionality.</p>
+            <label className="cookie-notice__toggle">
+              <span>Essential cookies</span>
+              <input type="checkbox" checked disabled />
+            </label>
+            <label className="cookie-notice__toggle">
+              <span>Analytics cookies</span>
+              <input
+                type="checkbox"
+                checked={analyticsEnabled}
+                onChange={(e) => setAnalyticsEnabled(e.target.checked)}
+              />
+            </label>
+            <div className="cookie-notice__modal-actions">
+              <button type="button" className="cookie-notice__modal-cancel" onClick={() => setShowPrefs(false)}>
+                Cancel
+              </button>
+              <button type="button" className="cookie-notice__accept" onClick={savePreferences}>
+                Save preferences
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </aside>
   );
 }

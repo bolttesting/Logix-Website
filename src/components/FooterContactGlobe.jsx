@@ -21,19 +21,16 @@ const presenceArcs = [
     id: 'london-dubai',
     from: LONDON,
     to: DUBAI,
-    label: 'London — Dubai',
   },
   {
     id: 'dubai-pakistan',
     from: DUBAI,
     to: PAKISTAN,
-    label: 'Dubai — Pakistan',
   },
   {
     id: 'london-pakistan',
     from: LONDON,
     to: PAKISTAN,
-    label: 'London — Pakistan',
   },
 ];
 
