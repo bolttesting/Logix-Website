@@ -47,6 +47,10 @@ export const adminApi = {
     list: () => supabase?.from('contact_submissions').select('*').order('created_at', { ascending: false }),
     delete: (id) => unwrap(requireSupabase().from('contact_submissions').delete().eq('id', id)),
   },
+  newsletter: {
+    list: () => supabase?.from('newsletter_subscribers').select('*').order('created_at', { ascending: false }),
+    delete: (id) => unwrap(requireSupabase().from('newsletter_subscribers').delete().eq('id', id)),
+  },
   services: {
     list: () => supabase?.from('services').select('*').order('sort_order'),
     upsert: (data) => unwrap(requireSupabase().from('services').upsert(data, { onConflict: 'id' }).select().single()),

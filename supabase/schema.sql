@@ -116,6 +116,17 @@ CREATE TABLE IF NOT EXISTS contact_submissions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Newsletter subscribers (email capture from homepage)
+CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Keep emails unique (case-insensitive)
+CREATE UNIQUE INDEX IF NOT EXISTS newsletter_subscribers_email_unique
+  ON newsletter_subscribers (lower(email));
+
 -- Enable RLS (Row Level Security) - allow public read for portfolio, blog, team, testimonials, services, site_settings
 -- Admin write requires auth
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
@@ -125,6 +136,7 @@ ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE newsletter_subscribers ENABLE ROW LEVEL SECURITY;
 
 -- Idempotent policies (safe to re-run after a partial or full previous run)
 DROP POLICY IF EXISTS "Public read site_settings" ON site_settings;
@@ -141,6 +153,8 @@ DROP POLICY IF EXISTS "Public read services" ON services;
 DROP POLICY IF EXISTS "Admin all services" ON services;
 DROP POLICY IF EXISTS "Public insert contact_submissions" ON contact_submissions;
 DROP POLICY IF EXISTS "Admin all contact_submissions" ON contact_submissions;
+DROP POLICY IF EXISTS "Public insert newsletter_subscribers" ON newsletter_subscribers;
+DROP POLICY IF EXISTS "Admin all newsletter_subscribers" ON newsletter_subscribers;
 
 -- Public can read everything
 CREATE POLICY "Public read site_settings" ON site_settings FOR SELECT USING (true);
@@ -153,6 +167,9 @@ CREATE POLICY "Public read services" ON services FOR SELECT USING (true);
 -- Public can insert contact submissions
 CREATE POLICY "Public insert contact_submissions" ON contact_submissions FOR INSERT WITH CHECK (true);
 
+-- Public can insert newsletter signups
+CREATE POLICY "Public insert newsletter_subscribers" ON newsletter_subscribers FOR INSERT WITH CHECK (true);
+
 -- Authenticated users (admins) can do everything
 CREATE POLICY "Admin all site_settings" ON site_settings FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all portfolio" ON portfolio FOR ALL USING (auth.role() = 'authenticated');
@@ -161,6 +178,7 @@ CREATE POLICY "Admin all team_members" ON team_members FOR ALL USING (auth.role(
 CREATE POLICY "Admin all testimonials" ON testimonials FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all services" ON services FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin all contact_submissions" ON contact_submissions FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "Admin all newsletter_subscribers" ON newsletter_subscribers FOR ALL USING (auth.role() = 'authenticated');
 
 -- Unique URL slugs for blog posts (optional column; multiple NULLs allowed)
 CREATE UNIQUE INDEX IF NOT EXISTS blog_posts_slug_unique ON blog_posts (slug) WHERE slug IS NOT NULL AND btrim(slug) <> '';

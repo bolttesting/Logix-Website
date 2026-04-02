@@ -25,6 +25,7 @@ import TestimonialsAdmin from './pages/admin/TestimonialsAdmin'
 import ServicesAdmin from './pages/admin/ServicesAdmin'
 import SettingsAdmin from './pages/admin/SettingsAdmin'
 import ContactsAdmin from './pages/admin/ContactsAdmin'
+import NewsletterAdmin from './pages/admin/NewsletterAdmin'
 import ReturnToTop from './components/ReturnToTop'
 import WhatsAppFloat from './components/WhatsAppFloat'
 import GlobalJsonLd from './components/GlobalJsonLd'
@@ -87,6 +88,7 @@ function App() {
           <Route path="services" element={<ServicesAdmin />} />
           <Route path="settings" element={<SettingsAdmin />} />
           <Route path="contacts" element={<ContactsAdmin />} />
+          <Route path="newsletter" element={<NewsletterAdmin />} />
         </Route>
         <Route path="/" element={<><Navbar /><HomePage /><Footer /></>} />
         <Route path="/about" element={<><Navbar /><AboutPage /><Footer /></>} />

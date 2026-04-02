@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import SlideButton from './ui/SlideButton';
+import { supabase } from '../lib/supabase';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -14,8 +15,15 @@ export default function Newsletter() {
     if (!EMAIL_RE.test(addr)) {
       throw new Error('Invalid email');
     }
-    // Hook up a real API or Supabase table when ready; for now simulate success.
-    await new Promise((r) => setTimeout(r, 1100));
+    if (!supabase) {
+      throw new Error('Newsletter signup is not configured');
+    }
+    const normalized = addr.toLowerCase();
+    const { error } = await supabase.from('newsletter_subscribers').insert({ email: normalized });
+    // Ignore duplicate signup attempts (unique index)
+    if (error && error.code !== '23505') {
+      throw new Error(error.message || 'Signup failed');
+    }
     setEmail('');
   }, [email]);
 
@@ -49,7 +57,7 @@ export default function Newsletter() {
             className="newsletter__slide"
             disabled={!emailOk}
             onConfirm={handleConfirm}
-            hint="Slide to send"
+            hint="Slide to subscribe"
           />
         </motion.form>
       </div>

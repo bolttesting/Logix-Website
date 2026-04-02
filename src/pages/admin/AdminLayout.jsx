@@ -64,6 +64,7 @@ export default function AdminLayout() {
     { to: '/admin/services', end: false, label: 'Services' },
     { to: '/admin/settings', end: false, label: 'Settings' },
     { to: '/admin/contacts', end: false, label: 'Contact Submissions' },
+    { to: '/admin/newsletter', end: false, label: 'Newsletter' },
   ];
 
   return (
