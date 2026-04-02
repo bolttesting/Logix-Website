@@ -15,37 +15,30 @@ const SERVICE_COLUMNS = [
   servicesMenu.slice(4, 6),
 ];
 
-function ServicesPanel() {
-  const firstPath = servicesMenu[0]?.path ?? '/services/app-development';
+function ServicesPanelGrid() {
   return (
-    <div>
-      <div className="shifting-dropdown__services-grid">
-        {SERVICE_COLUMNS.map((col, ci) => (
-          <div key={ci}>
-            {col.map((category) => (
-              <div key={category.id} className="shifting-dropdown__category-block">
-                <Link to={category.path} className="shifting-dropdown__col-title">
-                  {category.title}
+    <div className="shifting-dropdown__services-grid">
+      {SERVICE_COLUMNS.map((col, ci) => (
+        <div key={ci}>
+          {col.map((category) => (
+            <div key={category.id} className="shifting-dropdown__category-block">
+              <Link to={category.path} className="shifting-dropdown__col-title">
+                {category.title}
+              </Link>
+              {category.items.slice(0, 3).map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.slug ? `${category.path}/${item.slug}` : category.path}
+                  className="shifting-dropdown__sub"
+                >
+                  <Icon name={item.icon} size={16} />
+                  <span>{item.title}</span>
                 </Link>
-                {category.items.slice(0, 3).map((item) => (
-                  <Link
-                    key={item.title}
-                    to={item.slug ? `${category.path}/${item.slug}` : category.path}
-                    className="shifting-dropdown__sub"
-                  >
-                    <Icon name={item.icon} size={16} />
-                    <span>{item.title}</span>
-                  </Link>
-                ))}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-      <Link to={firstPath} className="shifting-dropdown__footer-link">
-        <span>View all capabilities</span>
-        <ArrowRight size={16} aria-hidden />
-      </Link>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -159,9 +152,16 @@ export default function ServicesDropdown() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
                 >
-                  <ServicesPanel />
+                  <ServicesPanelGrid />
                 </motion.div>
               </div>
+              <Link
+                to={servicesMenu[0]?.path ?? '/services/app-development'}
+                className="shifting-dropdown__footer-link"
+              >
+                <span>View all capabilities</span>
+                <ArrowRight size={16} aria-hidden />
+              </Link>
             </motion.div>
           ) : null}
         </AnimatePresence>
