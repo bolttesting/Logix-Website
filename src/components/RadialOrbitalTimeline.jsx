@@ -167,11 +167,12 @@ export default function RadialOrbitalTimeline({ timelineData }) {
           <div className="orbital__hub" aria-label="Logix Contact">
             <span className="orbital__hub-core">
               <img
-                src="/LC.png"
+                src="/LC.svg"
                 alt=""
                 width={48}
                 height={48}
                 decoding="async"
+                fetchPriority="low"
                 className="orbital__hub-logo"
               />
             </span>
