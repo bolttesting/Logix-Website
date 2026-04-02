@@ -2108,7 +2108,8 @@
 }
 
 .footer__brand-mark .text-hover-effect {
-  pointer-events: auto;
+  /* Keep purely decorative so it never blocks footer interactions (e.g. download button). */
+  pointer-events: none;
 }
 
 .footer__top {
@@ -2125,6 +2126,8 @@
   max-width: min(260px, 100%);
   text-align: center;
   justify-self: center;
+  position: relative;
+  z-index: 3;
 }
 
 .footer__brand-link {
