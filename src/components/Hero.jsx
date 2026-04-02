@@ -26,10 +26,7 @@ const fadeUp = (reduceMotion) => ({
 
 const PILL_LABELS = ['Research-led UX', 'Web & mobile', 'Launch support'];
 
-const ShaderAnimation = lazy(async () => {
-  const m = await import('./ui/ShaderAnimation');
-  return { default: m.ShaderAnimation };
-});
+const ShaderAnimation = lazy(() => import('./ui/ShaderAnimation'));
 
 /** Hero corner avatars (Unsplash); matches “Meet the team” tone */
 const HERO_AVATAR_ITEMS = [

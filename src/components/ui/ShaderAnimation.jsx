@@ -122,3 +122,5 @@ export function ShaderAnimation({ className = '', style = {} }) {
     />
   );
 }
+
+export default ShaderAnimation;
