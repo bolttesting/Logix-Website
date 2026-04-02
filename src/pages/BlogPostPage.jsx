@@ -120,6 +120,16 @@ export default function BlogPostPage() {
   }
 
   const cover = post.image || post.cover_image || post.coverImage;
+  const authorName = (post.author_name || post.authorName || '').trim();
+  const authorImage = post.author_image || post.authorImage || '';
+  const authorInitials = authorName
+    ? authorName
+        .split(/\s+/)
+        .map((x) => x[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'LC';
   const ogImage = (post.og_image && post.og_image.trim()) || cover;
   const metaDescRaw =
     post.seo_description?.trim() || post.excerpt || String(post.content || '').slice(0, 220);
@@ -151,11 +161,25 @@ export default function BlogPostPage() {
           <Link to="/blog" className="blog-post__back">← Back to Blog</Link>
           <span className="blog-post__category">{post.category}</span>
           <h1>{post.title}</h1>
-          <time dateTime={formatDateIsoDateOnly(post.date)}>
-            {post.date && !Number.isNaN(new Date(post.date).getTime())
-              ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-              : ''}
-          </time>
+          <div className="blog-post__meta">
+            {authorName ? (
+              <div className="blog-post__author">
+                {authorImage ? (
+                  <img className="blog-post__author-avatar" src={authorImage} alt={authorName} />
+                ) : (
+                  <span className="blog-post__author-avatar blog-post__author-avatar--fallback" aria-hidden>
+                    {authorInitials}
+                  </span>
+                )}
+                <span className="blog-post__author-name">{authorName}</span>
+              </div>
+            ) : null}
+            <time dateTime={formatDateIsoDateOnly(post.date)}>
+              {post.date && !Number.isNaN(new Date(post.date).getTime())
+                ? new Date(post.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                : ''}
+            </time>
+          </div>
         </motion.div>
         {cover ? (
           <motion.div

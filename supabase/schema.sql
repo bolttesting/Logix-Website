@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS blog_posts (
   seo_description TEXT,
   seo_keywords TEXT,
   og_image TEXT,
-  author_name TEXT
+  author_name TEXT,
+  author_image TEXT
 );
 
 -- If blog_posts already existed from an older schema, CREATE TABLE above is skipped — add missing columns
@@ -64,6 +65,7 @@ ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS seo_description TEXT;
 ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS seo_keywords TEXT;
 ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS og_image TEXT;
 ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS author_name TEXT;
+ALTER TABLE blog_posts ADD COLUMN IF NOT EXISTS author_image TEXT;
 
 -- Team members
 CREATE TABLE IF NOT EXISTS team_members (

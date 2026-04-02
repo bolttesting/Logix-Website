@@ -24,6 +24,7 @@ function emptyForm() {
     seo_keywords: '',
     og_image: '',
     author_name: '',
+    author_image: '',
   };
 }
 
@@ -91,6 +92,7 @@ export default function BlogAdmin() {
         seo_keywords: form.seo_keywords.trim() || null,
         og_image: form.og_image.trim() || null,
         author_name: form.author_name.trim() || null,
+        author_image: form.author_image.trim() || null,
         updated_at: now,
       };
       if (editing) {
@@ -134,6 +136,7 @@ export default function BlogAdmin() {
       seo_keywords: item.seo_keywords || '',
       og_image: item.og_image || '',
       author_name: item.author_name || '',
+      author_image: item.author_image || item.authorImage || '',
     });
     setEditorOpen(true);
   };
@@ -246,6 +249,15 @@ export default function BlogAdmin() {
                 onChange={(e) => setForm({ ...form, author_name: e.target.value })}
                 placeholder="Shown in article schema &amp; og:article:author"
               />
+            </div>
+            <div className="admin-form__field">
+              <AdminImageUpload
+                label="Author image (optional)"
+                folder="blog-authors"
+                value={form.author_image}
+                onChange={(url) => setForm({ ...form, author_image: url })}
+              />
+              <span className="admin-field-hint">Shown next to the author name on the single blog post page.</span>
             </div>
             <div className="admin-form__field">
               <AdminImageUpload
