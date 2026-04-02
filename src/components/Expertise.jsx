@@ -1,9 +1,29 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import FeatureCarousel from './FeatureCarousel';
+const FeatureCarousel = lazy(() => import('./FeatureCarousel'));
 
 export default function Expertise() {
+  const [loadCarousel, setLoadCarousel] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const root = sectionRef.current;
+    if (!root) return undefined;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setLoadCarousel(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '280px 0px', threshold: 0 },
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <section className="section expertise" id="services">
+    <section ref={sectionRef} className="section expertise" id="services">
       <div className="expertise__glow expertise__glow--1" />
       <div className="section__inner">
         <motion.div
@@ -24,7 +44,21 @@ export default function Expertise() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.08 }}
         >
-          <FeatureCarousel />
+          {loadCarousel ? (
+            <Suspense
+              fallback={(
+                <div
+                  className="expertise__carousel-placeholder"
+                  aria-busy="true"
+                  aria-label="Loading"
+                />
+              )}
+            >
+              <FeatureCarousel />
+            </Suspense>
+          ) : (
+            <div className="expertise__carousel-placeholder" aria-hidden />
+          )}
         </motion.div>
       </div>
     </section>

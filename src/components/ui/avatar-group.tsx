@@ -1,7 +1,18 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { unsplashAvatarImgProps } from '@/utils/unsplashResponsive'
 import './avatar-group.css'
+
+const AVATAR_IMG_SIZES_SM = '56px'
+const AVATAR_IMG_SIZES_MD = '72px'
+const AVATAR_IMG_SIZES_LG = '96px'
+
+function avatarSizesForGroup(size: 'sm' | 'md' | 'lg') {
+  if (size === 'lg') return AVATAR_IMG_SIZES_LG
+  if (size === 'sm') return AVATAR_IMG_SIZES_SM
+  return AVATAR_IMG_SIZES_MD
+}
 
 export interface AvatarItem {
   id: number | string
@@ -24,6 +35,7 @@ function AvatarSlot({
   isHovered,
   onHover,
   onLeave,
+  imgSizes,
 }: {
   item: AvatarItem
   index: number
@@ -31,8 +43,10 @@ function AvatarSlot({
   isHovered: boolean
   onHover: () => void
   onLeave: () => void
+  imgSizes: string
 }) {
   const z = totalItems - index
+  const { src, srcSet, sizes } = unsplashAvatarImgProps(item.image, imgSizes)
 
   return (
     <div
@@ -76,7 +90,9 @@ function AvatarSlot({
         >
           <span className="avatar-group__img-wrap">
             <img
-              src={item.image}
+              src={src}
+              srcSet={srcSet}
+              sizes={sizes}
               alt={`${item.name}, ${item.designation}`}
               className="avatar-group__img"
               draggable={false}
@@ -118,6 +134,7 @@ export default function AvatarGroup({
           onLeave={() => {
             setHoveredId((id) => (id === item.id ? null : id))
           }}
+          imgSizes={avatarSizesForGroup(size)}
         />
       ))}
       {remainingCount > 0 ? (

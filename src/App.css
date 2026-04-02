@@ -978,6 +978,23 @@
   border-radius: 2px;
 }
 
+/* Reserve space until FeatureCarousel lazy-loads (avoids CLS). */
+.expertise__carousel-placeholder {
+  min-height: 600px;
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .expertise__carousel-placeholder {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    border-radius: 3.5rem;
+  }
+}
+
 .expertise__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -2105,6 +2122,9 @@
   margin-top: -10rem;
   margin-bottom: -7rem;
   pointer-events: none;
+  /* Stable box before SVG text metrics / fonts resolve (reduces CLS). */
+  contain: layout style;
+  overflow: hidden;
 }
 
 .footer__brand-mark .text-hover-effect {
@@ -2322,12 +2342,15 @@
 }
 
 .footer__globe-skeleton {
+  display: block;
+  width: min(240px, 100%);
   aspect-ratio: 1;
   max-width: 240px;
   border-radius: 50%;
   background: linear-gradient(135deg, rgba(20, 184, 166, 0.08), rgba(124, 58, 237, 0.06));
   border: 1px solid var(--border-subtle);
   animation: footer-globe-pulse 1.2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes footer-globe-pulse {

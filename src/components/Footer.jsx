@@ -135,11 +135,12 @@ export default function Footer() {
           <div className="footer__brand">
             <Link to="/" className="footer__brand-link" aria-label="Logix Contact home">
               <img
-                src="/LC.png"
+                src="/LC.svg"
                 alt=""
                 width={64}
                 height={64}
                 decoding="async"
+                fetchPriority="low"
                 className="footer__logo-mark"
               />
               <span className="footer__logo" aria-hidden="true">

@@ -4,6 +4,14 @@ const PresenceGlobe = lazy(() =>
   import('@/components/ui/cobe-globe').then((mod) => ({ default: mod.Globe })),
 );
 
+function globeEligible() {
+  if (typeof window === 'undefined') return false;
+  return (
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !window.matchMedia('(max-width: 768px)').matches
+  );
+}
+
 /** [lat, lng] — COBE convention */
 const LONDON = [51.5074, -0.1278];
 const DUBAI = [25.2048, 55.2708];
@@ -39,7 +47,8 @@ const presenceArcs = [
  * Hidden on small screens / reduced motion.
  */
 export default function FooterContactGlobe() {
-  const [show, setShow] = useState(false);
+  /** First paint must match desktop globe slot — avoids large CLS from null → 240px mount. */
+  const [show, setShow] = useState(globeEligible);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -58,7 +67,7 @@ export default function FooterContactGlobe() {
 
   return (
     <div className="footer__globe-wrap" aria-hidden>
-      <Suspense fallback={<div className="footer__globe-skeleton" />}>
+      <Suspense fallback={<div className="footer__globe-skeleton" aria-hidden />}>
         <PresenceGlobe
           className="footer__globe-cdn"
           markers={presenceMarkers}

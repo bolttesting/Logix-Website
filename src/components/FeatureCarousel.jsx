@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Icon from './Icons';
+import { unsplashImgProps } from '../utils/unsplashResponsive';
 import './FeatureCarousel.css';
+
+/** Right panel ~ full width on mobile; ~48–52% viewport on desktop (60% of ~80% content). */
+const CAROUSEL_IMAGE_SIZES =
+  '(max-width: 767px) 92vw, (max-width: 1023px) 88vw, 48vw';
 
 const FEATURES = [
   {
@@ -193,7 +198,7 @@ export default function FeatureCarousel() {
                   className="feature-carousel__card"
                 >
                   <img
-                    src={feature.image}
+                    {...unsplashImgProps(feature.image, CAROUSEL_IMAGE_SIZES)}
                     alt={`${feature.label} — ${feature.description}`}
                     className={
                       'feature-carousel__card-img ' +
