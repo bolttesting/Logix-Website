@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react'
+import { useEffect, Suspense } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
@@ -8,32 +8,33 @@ import CookieNotice from './components/CookieNotice'
 import GlobalJsonLd from './components/GlobalJsonLd'
 import PageFallback from './components/PageFallback'
 import { SiteDataProvider } from './context/SiteDataContext'
+import { lazyWithRetry } from './utils/lazyWithRetry'
 import './App.css'
 
-const HomePage = lazy(() => import('./pages/HomePage'))
-const AboutPage = lazy(() => import('./pages/AboutPage'))
-const ContactPage = lazy(() => import('./pages/ContactPage'))
-const BlogPage = lazy(() => import('./pages/BlogPage'))
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'))
-const PortfolioPage = lazy(() => import('./pages/PortfolioPage'))
-const PortfolioProjectPage = lazy(() => import('./pages/PortfolioProjectPage'))
-const ServicePage = lazy(() => import('./pages/ServicePage'))
-const TermsPage = lazy(() => import('./pages/policy/TermsPage'))
-const PrivacyPage = lazy(() => import('./pages/policy/PrivacyPage'))
-const RefundPolicyPage = lazy(() => import('./pages/policy/RefundPolicyPage'))
-const ServiceAgreementPage = lazy(() => import('./pages/policy/ServiceAgreementPage'))
-const CookiePolicyPage = lazy(() => import('./pages/policy/CookiePolicyPage'))
-const AdminLayout = lazy(() => import('./pages/admin/AdminLayout'))
-const AdminLogin = lazy(() => import('./pages/admin/AdminLogin'))
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
-const PortfolioAdmin = lazy(() => import('./pages/admin/PortfolioAdmin'))
-const BlogAdmin = lazy(() => import('./pages/admin/BlogAdmin'))
-const TeamAdmin = lazy(() => import('./pages/admin/TeamAdmin'))
-const TestimonialsAdmin = lazy(() => import('./pages/admin/TestimonialsAdmin'))
-const ServicesAdmin = lazy(() => import('./pages/admin/ServicesAdmin'))
-const SettingsAdmin = lazy(() => import('./pages/admin/SettingsAdmin'))
-const ContactsAdmin = lazy(() => import('./pages/admin/ContactsAdmin'))
-const NewsletterAdmin = lazy(() => import('./pages/admin/NewsletterAdmin'))
+const HomePage = lazyWithRetry(() => import('./pages/HomePage'))
+const AboutPage = lazyWithRetry(() => import('./pages/AboutPage'))
+const ContactPage = lazyWithRetry(() => import('./pages/ContactPage'))
+const BlogPage = lazyWithRetry(() => import('./pages/BlogPage'))
+const BlogPostPage = lazyWithRetry(() => import('./pages/BlogPostPage'))
+const PortfolioPage = lazyWithRetry(() => import('./pages/PortfolioPage'))
+const PortfolioProjectPage = lazyWithRetry(() => import('./pages/PortfolioProjectPage'))
+const ServicePage = lazyWithRetry(() => import('./pages/ServicePage'))
+const TermsPage = lazyWithRetry(() => import('./pages/policy/TermsPage'))
+const PrivacyPage = lazyWithRetry(() => import('./pages/policy/PrivacyPage'))
+const RefundPolicyPage = lazyWithRetry(() => import('./pages/policy/RefundPolicyPage'))
+const ServiceAgreementPage = lazyWithRetry(() => import('./pages/policy/ServiceAgreementPage'))
+const CookiePolicyPage = lazyWithRetry(() => import('./pages/policy/CookiePolicyPage'))
+const AdminLayout = lazyWithRetry(() => import('./pages/admin/AdminLayout'))
+const AdminLogin = lazyWithRetry(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard = lazyWithRetry(() => import('./pages/admin/AdminDashboard'))
+const PortfolioAdmin = lazyWithRetry(() => import('./pages/admin/PortfolioAdmin'))
+const BlogAdmin = lazyWithRetry(() => import('./pages/admin/BlogAdmin'))
+const TeamAdmin = lazyWithRetry(() => import('./pages/admin/TeamAdmin'))
+const TestimonialsAdmin = lazyWithRetry(() => import('./pages/admin/TestimonialsAdmin'))
+const ServicesAdmin = lazyWithRetry(() => import('./pages/admin/ServicesAdmin'))
+const SettingsAdmin = lazyWithRetry(() => import('./pages/admin/SettingsAdmin'))
+const ContactsAdmin = lazyWithRetry(() => import('./pages/admin/ContactsAdmin'))
+const NewsletterAdmin = lazyWithRetry(() => import('./pages/admin/NewsletterAdmin'))
 
 function normalizePathname(p) {
   if (!p || p === '/') return '/'

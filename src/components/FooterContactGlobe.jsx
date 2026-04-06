@@ -1,6 +1,7 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
+import { lazyWithRetry } from '../utils/lazyWithRetry';
 
-const PresenceGlobe = lazy(() =>
+const PresenceGlobe = lazyWithRetry(() =>
   import('@/components/ui/cobe-globe').then((mod) => ({ default: mod.Globe })),
 );
 
