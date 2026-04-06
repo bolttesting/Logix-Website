@@ -55,6 +55,18 @@ function App() {
   const { pathname, hash } = location
   /** Login must not depend on SiteDataProvider (avoids blank page if context render throws). */
   const isAdminLogin = normalizePathname(pathname) === '/admin/login'
+  const isAdminRoute = normalizePathname(pathname).startsWith('/admin')
+
+  // Ensure admin URLs are crawlable (so Google can read noindex) but never indexed.
+  useEffect(() => {
+    let robots = document.querySelector('meta[name="robots"]')
+    if (!robots) {
+      robots = document.createElement('meta')
+      robots.setAttribute('name', 'robots')
+      document.head.appendChild(robots)
+    }
+    robots.setAttribute('content', isAdminRoute ? 'noindex, nofollow' : 'index, follow')
+  }, [isAdminRoute])
 
   // React Router SPA navigation does not automatically reset scroll position.
   // Scroll to the top (or to the hash target) whenever the route changes.
