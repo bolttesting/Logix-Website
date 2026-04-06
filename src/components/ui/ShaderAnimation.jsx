@@ -69,13 +69,32 @@ export function ShaderAnimation({ className = '', style = {} }) {
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    let renderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    } catch (error) {
+      // Some devices/browsers intermittently fail to create a WebGL context.
+      // Keep the page usable by disabling only this decorative background.
+      console.warn('ShaderAnimation: WebGL unavailable, skipping background.', error);
+      geometry.dispose();
+      material.dispose();
+      return undefined;
+    }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
 
     container.appendChild(renderer.domElement);
+    let stopped = false;
+
+    const onContextLost = (event) => {
+      event.preventDefault();
+      stopped = true;
+      cancelAnimationFrame(rafRef.current);
+    };
+    renderer.domElement.addEventListener('webglcontextlost', onContextLost, false);
 
     const onWindowResize = () => {
+      if (stopped) return;
       const width = container.clientWidth;
       const height = container.clientHeight;
       renderer.setSize(width, height);
@@ -87,16 +106,25 @@ export function ShaderAnimation({ className = '', style = {} }) {
     window.addEventListener('resize', onWindowResize, false);
 
     const animate = () => {
+      if (stopped) return;
       rafRef.current = requestAnimationFrame(animate);
       uniforms.time.value += 0.05;
-      renderer.render(scene, camera);
+      try {
+        renderer.render(scene, camera);
+      } catch (error) {
+        stopped = true;
+        cancelAnimationFrame(rafRef.current);
+        console.warn('ShaderAnimation: render stopped after WebGL error.', error);
+      }
     };
 
     animate();
 
     return () => {
+      stopped = true;
       cancelAnimationFrame(rafRef.current);
       window.removeEventListener('resize', onWindowResize);
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
       if (renderer.domElement.parentNode === container) {
         container.removeChild(renderer.domElement);
       }
